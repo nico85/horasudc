@@ -1,0 +1,43 @@
+.form-group {
+    padding: 1%;
+}
+
+.radio {
+    padding: 1%;
+}
+
+.campos {
+    float: left;
+}
+
+.table-fixed tbody {
+    height: 480px;
+    overflow-y: auto;
+    width: auto;
+}
+
+.table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+}
+
+.otros {
+    width: 120px;
+}
+
+.desc {
+    width: 360px;
+}
+
+#indices_cons {
+    width: 63%;
+}
+
+.boton-img {
+    height: 35px;
+    width: 35px;
+}
+
+.boton {
+    float: right;
+    padding: 5px;
+}

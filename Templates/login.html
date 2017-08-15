@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load static %}
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "css/style-login.css" %}" rel="stylesheet">
+</head>
+<body>
+    <form action="{% url 'login' %}" method="post" accept-charset="utf-8">
+        <div class="imgcontainer">
+            <img src="{% static "img/logo_udc.png" %}" alt="Avatar">
+        </div>
+        <div class="container">
+            {% csrf_token %}
+            <label><b>Usuario</b></label>
+            <input id="id_username" type="text" placeholder="Ingrese su Usuario" name="username" required>
+
+            <label><b>Contraseña</b></label>
+            <input id="id_password" type="password" placeholder="Ingrese su Contraseña" name="password" required>
+
+            <!--<input type="checkbox" checked="checked"> Rercordar Usuario y Contraseña-->
+
+            <input type="hidden" name="next" value="{{ next }}" />
+            <button type="submit">Ingresar</button>
+        </div>
+    </form>
+</body>
+</html>

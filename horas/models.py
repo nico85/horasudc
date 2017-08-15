@@ -75,9 +75,20 @@ class PersonalTipo (models.Model):
         return self.tipo_personal
 
 class Personal (models.Model):
+    HOMBRE = 'Hombre'
+    MUJER = 'Mujer'
+    ARRAY_SEXO = (
+        (HOMBRE, 'Hombre'),
+        (MUJER, 'Mujer'),
+    )
     cuil = models.CharField(max_length=11)
     apellido = models.CharField(max_length=40)
     nombre = models.CharField(max_length=40)
+    sexo = models.CharField(
+        max_length=20,
+        choices=ARRAY_SEXO,
+        default=MUJER,
+    )
     legajo_numero = models.IntegerField()
     telefono = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField('e-mail', blank=True)
@@ -90,7 +101,7 @@ class Personal (models.Model):
         verbose_name_plural = 'Personal'
 
     def __str__(self):
-        return '%s, %s' %(self.apellido, nombre)
+        return '%s, %s' %(self.apellido, self.nombre)
 
 class PersonalHoras (models.Model):
     personal = models.ForeignKey(Personal)

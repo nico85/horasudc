@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block titulo %}Personal{% endblock %}
+
+{% block contenido %}
+
+    <h2>Lista del Personal de la UDC</h2>
+
+    {% if personas.count > 0 %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Apellido y Nombre</th>
+                    <th>Sexo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>CUIL</th>
+                    <th>Tipo</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in personas %}
+                    <tr>
+                    <td>{{ p.apellido }}, {{ p.nombre }}</td>
+                    <td>{{ p.sexo }}</td>
+                    <td>{{ p.fecha_nacimiento }}</td>
+                    <td>{{ p.cuil }}</td>
+                    <td>{{ p.personal_tipo.tipo_personal }}</td>
+                    <td><a href="../../admin/horas/personal/"><i class="glyphicon glyphicon-pencil"></iclass></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <h1>No existe ninguna persona cargada aún!</h1>
+    {% endif %}
+
+{% endblock %}

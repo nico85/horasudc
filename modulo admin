@@ -1,2 +1,13 @@
-user: nicolas
-pass: nrnfubuntu
+SuperAdmin
+user: nicolas | pass: nrnfubuntu
+
+Admin
+user: adminudc | pass: nrnfubuntu
+
+DataEntry:
+user: dataentryudc | pass: nrnfubuntu
+
+Consultas
+user: consultaudc | pass: nrnfubuntu
+
+
