@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titulo %}Agregar Persona{% endblock %}
+
+{% block contenido %}
+    <h1>Agregar una nueva Persona al sistema</h1>
+
+        <form action="/personas/nueva/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Agregar</button>
+        </form>
+    <hr>
+    <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+{% endblock %}

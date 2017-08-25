@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block titulo %}Personal de la UDC{% endblock %}
+{% block cabecera %}
+    {% load static %}
+    <script src="{% static "js/List.js" %}"></script>
+{% endblock %}
+
+{% block contenido %}
+
+    <h2>Lista del Personal de la UDC</h2>
+
+    <div class="well well-sm">
+        <a href="/personas/nueva/" class="btn btn-info"> Agregar Persona</a>
+    </div>
+
+    {% if personas.count > 0 %}
+        <p>Actualmente hay {{ personas.count }} personas.</p>
+        <div id="datospersonas">
+            <div>
+                <input class="search" placeholder="Buscar por apellido/nombre" id="inputBuscarPersona">
+                <button class="sort" data-sort="apenom">Apellido</button>
+            </div>
+            <br>
+            <table class="table table-hover table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Apellido y Nombre</th>
+                        <th>CUIL</th>
+                        <th>Horas cátedras</th>
+                        <th>horas docente</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    {% for p in personas %}
+                        <tr>
+                        <td class="apenom">{{ p.apellidos }}, {{ p.nombres }}</td>
+                        <td>{{ p.cuil }}</td>
+                        <td>
+                            {% if p.personahoras_set.count > 0 %}
+                                <a href="/horascatedras/{{ p.id }}/lista" class="btn btn-info btn-sm" title="Ver las horas cátedras">
+                                    <i class="glyphicon glyphicon-pencil"></i> Ver
+                                </a>
+                            {% else %}
+                                <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras">
+                                    <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p.docentehoras_set.count > 0 %}
+                                <a href="/horasdocentes/{{ p.id }}/lista" class="btn btn-warning  btn-sm" title="Ver las materias asignadas">
+                                    <i class="glyphicon glyphicon-pencil"></i> Ver
+                                </a>
+                            {% else %}
+                                <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia" title="Asignar una materias">
+                                    <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/personas/{{ p.id }}/editar/"><i class="glyphicon glyphicon-pencil"></i></a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <h1>No existe ninguna persona cargada aún!</h1>
+    {% endif %}
+
+<script>
+    var options = {
+        valueNames: ["apenom"]
+    };
+    var personasList = new List("datospersonas", options)
+</script>
+
+{% endblock %}

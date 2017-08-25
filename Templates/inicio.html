@@ -2,9 +2,23 @@
 {% block titulo %}Inicio{% endblock %}
 
 {% block contenido %}
-    <div>
-        <h2>Hola, este es el Inicio!</h2>
-        <p>El Sistema de Gestión de Horas Cátedras de la Universidad del Chubut....</p>
+    <div class="well well-lg">
+        <div>
+            <h3>Sistema de Gestión de Horas Cátedras de la Universidad del Chubut</h3>
+            <div>
+                <p>Version actual {{ version }}</p>
+                <ul>
+                    Cambios de la versión
+                    {% if cambios.count > 1 %}
+                        {% for c in cambios %}
+                            <li>{{ c }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>{{ cambios }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

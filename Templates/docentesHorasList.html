@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block titulo %}Listado de Horas del docente{% endblock %}
+
+{% block contenido %}
+
+    <h1>Listado de horas de docencia asignadas a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
+    <div class="well well-sm">
+        <a href="/horasdocentes/{{ persona.id }}/asignar/" class="btn btn-info"> Asignar otra materia</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Resolución</th>
+                    <th>Sede</th>
+                    <th>Materia</th>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Horas semanales</th>
+                    <th>Horas total materia</th>
+                    <th>Docente Tipo</th>
+                    <th>Porcentaje</th>
+                    <th>Hs. Inst.</th>
+                    <th>Total a Liquidar</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in dochoras %}
+                    <tr>
+                        <td>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</td>
+                        <td>{{ doc.sede.sede_nombre }}</td>
+                        <td>{{ doc.materia.materia_nombre }}</td>
+                        <td>{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
+                        <td>{{ doc.fecha_fin | date:"d/m/Y" }}</td>
+                        <td>{{ doc.materia.hs_semanales }}</td>
+                        <td>{{ doc.materia.hs_total_materia }}</td>
+                        <td>{{ doc.docente_tipo.tipo_docente }}</td>
+                        <td>{{ doc.porcentaje_aplicado }} %</td>
+                        <td>{{ doc.hs_institucionales }}</td>
+                        <td>
+                            {% for l in lista_hs %}
+                                {% if doc.id == l.id_doc %}
+                                    {{ l.tot_hs }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td><a href="/horasdocentes/{{ doc.id }}/editar/" class="btn btn-info">
+                            <i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+    </div>
+{% endblock %}

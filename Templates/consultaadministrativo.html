@@ -1,11 +1,81 @@
 {% extends 'base.html' %}
+
 {% block titulo %}Consulta Administrativos{% endblock %}
 
 {% block contenido %}
-
-    <h2>Consulta del Personal Administrativo de la UDC</h2>
-
-
-    <hr>
-
+    <div class="col-sm-12">
+        <div id="form-izquierda" class="col-sm-2 well well-sm">
+            <h5>Filtrar por:</h5>
+            <form action="/administrativos/" method="post" id="form-cons-doc">
+                {% csrf_token %}
+                <hr>
+                <div id="anio">
+                    <label for="anio">Año: </label>
+                    <select class="form-control" id="anio" name="anio">
+                        <option selected value="0">Todos</option>
+                        {% for a in anios %}
+                            <option value="{{ a }}">{{ a }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr>
+                <div id="dependencia">
+                    <label for="dependencia">Dependencia: </label>
+                    <select class="form-control" id="dependencia" name="dependencia">
+                        <option selected value="0">Todas</option>
+                        {% for dep in dependencias %}
+                            <option value="{{dep.id }}">{{ dep.dependencia_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr>
+                <button type="submit" style="width: 100%" class="btn btn-info">
+                    <img src="../static/img/icono_filtrar-white_24.png">
+                    Filtrar
+                </button>
+            </form>
+        </div>
+        <div id="contenido-consulta" clasS="col-sm-10">
+            {% if administrativos.count > 0 %}
+                <h5>Lista del Personal con horas cátedras de la Universidad del Chubut</h5>
+                <h6>(se encontraron {{ administrativos.count }} resultados, de un total de {{ total_adms }} personas)</h6>
+                <table class="table table-hover table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Legajo</th>
+                            <th>Nombre y Apellido</th>
+                            <th>CUIL</th>
+                            <th>Resolución</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>Horas Cátedras</th>
+                            <th>Dependencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in administrativos %}
+                            <tr>
+                                <td>{{ p.persona.legajo_numero }}</td>
+                                <td>{{ p.persona.apellidos }}, {{ p.persona.nombres }}</td>
+                                <td>{{ p.persona.cuil }}</td>
+                                <td>{{ p.resolucion_numero }}/{{ p.resolucion_anio }}-UDC</td>
+                                <td>{{ p.fecha_inicio | date:"d/m/Y" }}</td>
+                                <td>{{ p.fecha_fin | date:"d/m/Y" }}</td>
+                                <td>{{ p.hs_catedras }}</td>
+                                <td>{{ p.dependencia.dependencia_nombre }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div align="right">
+                    <a href="/admin/export/xls/" class="btn btn-success">
+                        <img src="../static/img/icon_excel-white_24.png"></a>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <h3>No se encontró ningún resultado según los filtros marcados.</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

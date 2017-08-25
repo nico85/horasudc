@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block titulo %}Agregar materia{% endblock %}
+
+{% block contenido %}
+    <h1>Asignar una materia a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
+    <div class="well well-sm">
+        <a href="/horasdocentes/{{ persona.id }}/asignar/" class="btn btn-info"> Asignar otra materia</a>
+    </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Asignar</button>
+        </form>
+
+    <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+{% endblock %}

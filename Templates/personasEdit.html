@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar Persona{% endblock %}
+
+{% block contenido %}
+    <h1>Editar los datos de {{ persona.apellidos }}, {{ persona.nombres }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+
+    <hr>
+    <a href="/personas/" class="btn btn-warning"> volver a la lista</a>
+{% endblock %}

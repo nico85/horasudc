@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar materia asignada{% endblock %}
+
+{% block contenido %}
+    <h1>Editar las materias de {{ dochoras.persona.apellidos }}, {{ dochoras.persona.nombres }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar cambios</button>
+        </form>
+
+    <hr>
+    <div>
+        <a href="/personas/" class="btn btn-warning"> Todas la Personas</a>
+    </div>
+{% endblock %}

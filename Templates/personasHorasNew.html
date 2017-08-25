@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titulo %}Agregar horas cátedras{% endblock %}
+
+{% block contenido %}
+    <h1>Asignar horas cátedras a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Asignar</button>
+        </form>
+
+    <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+{% endblock %}

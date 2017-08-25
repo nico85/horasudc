@@ -7,28 +7,32 @@
         <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
         <script src="{% static "jquery/jquery-3.2.1.js" %}"></script>
         <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+        <script src="{% static "js/List.js" %}"></script>
         <script src="{% static "js/funciones.js" %}"></script>
+
         {% block cabecera %}{% endblock %}
     </head>
     <body>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="../">Gestión de Horas Cátedras - UDC</a>
+                    <a class="navbar-brand" href="/inicio/">
+                        <i class="glyphicon glyphicon-time"></i> Inicio
+                    </a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li id="nav_auto"><a href="../inicio/personal">Personal</a></li>
+                    <li id="nav_auto"><a href="/personas"><i class="glyphicon glyphicon-user"></i> Personal</a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Consultas<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-question-sign"></i> Consultas<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li><a href="../inicio/administrativo">Personal Administrativo</a></li>
-                          <li><a href="../inicio/docente">Personal Docente</a></li>
+                          <li><a href="/administrativos"><i class="glyphicon glyphicon-duplicate"></i> Personal Administrativo</a></li>
+                          <li><a href="/docentes"><i class="glyphicon glyphicon-education"></i> Personal Docente</a></li>
                         </ul>
                     </li>
                     <!--<li id="nav_cons"><a href="../">Blabla</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../logout/"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                    <li><a href="../inicio/logout"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                 </ul>
             </div>
         </nav>

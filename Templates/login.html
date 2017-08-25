@@ -9,8 +9,11 @@
 </head>
 <body>
     <form action="{% url 'login' %}" method="post" accept-charset="utf-8">
-        <div class="imgcontainer">
-            <img src="{% static "img/logo_udc.png" %}" alt="Avatar">
+        <div class="imgcontainer" style="margin-top: 40px">
+            <img src="{% static "img/logo_udc.png" %}" alt="Universidad del Chubut">
+        </div>
+        <div class="imgcontainer" style="margin-top: 20px">
+            <img src="{% static "img/icon_reloj-color_512.png" %}" width="200px" height="200px" alt="Sistema de Gestión de horas cátedras">
         </div>
         <div class="container">
             {% csrf_token %}

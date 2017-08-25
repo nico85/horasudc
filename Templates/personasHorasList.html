@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block titulo %}Listado de Horas cátedras{% endblock %}
+
+{% block contenido %}
+    {% if perhscat.count > 0 %}
+        <h3>Listado de horas cátedras asignadas a {{ persona.apellidos }}, {{ persona.nombres }}</h3>
+        <div class="well well-sm">
+            <a href="/horascatedras/{{ persona.id }}/asignar/" class="btn btn-info"> Asignar más horas cátedras</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Resolución</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                        <th>Horas</th>
+                        <th>Dependencia</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for adm in perhscat %}
+                        <tr>
+                            <td>{{ adm.resolucion_numero }}/{{ adm.resolucion_anio }}-UDC</td>
+                            <td>{{ adm.fecha_inicio | date:"d/m/Y" }}</td>
+                            <td>{{ adm.fecha_fin | date:"d/m/Y" }}</td>
+                            <td>{{ adm.hs_catedras }}</td>
+                            <td>{{ adm.dependencia.dependencia_nombre }}</td>
+                            <td><a href="/horascatedras/{{ adm.id }}/editar/" class="btn btn-info">
+                                <i class="glyphicon glyphicon-pencil"></i> Editar</a></td>
+                        </tr>
+
+        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="well well-sm">
+            <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+        </div>
+    {% else %}
+        <h3 class="alert alert-warning"> {{ persona.apellidos }}, {{ persona.nombres }} no tiene ninguna hora cátedra asignada! </h3>
+    {% endif %}
+{% endblock %}
