@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Version(models.Model):
-    version_sistema = models.CharField(max_length=4)
+    version_sistema = models.CharField(max_length=8)
 
     def __str__(self):
         return self.version_sistema

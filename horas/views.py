@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from horas.forms import PersonaForm, PersonaHorasForm, DocenteHorasForm
 
@@ -28,13 +29,29 @@ def inicio(request):
 
 @login_required()
 def personasList(request):
+
     #grupo = request.user.groups.get()
     grupo = 'superusuario'
-    personas = Persona.objects.all().order_by('apellidos')
+    todas_las_personas = Persona.objects.all().order_by('apellidos')
     docentes = DocenteHoras.objects.all()
     administrativos = PersonaHoras.objects.all()
 
+    paginator = Paginator(todas_las_personas, 10)  # Show 10 contacts per page
+
+    page = request.GET.get('page', 1)
+
+    try:
+        personas = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        personas = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        personas = paginator.page(paginator.num_pages)
+
     return render(request, 'personasList.html', {
+        'page': page,
+        'paginator': paginator,
         'personas': personas,
         'grupo': grupo,
         'docentes': docentes,

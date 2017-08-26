@@ -1,0 +1,4 @@
+INSERT INTO public.horas_periodo(id, periodo_nombre, fecha_inicio, fecha_fin) VALUES 
+(1, '1er. Cuatrimestre', '2017-03-01', '2017-06-30'),
+(2, '2do. Cuatrimestre', '2017-08-01', '2017-12-20'),
+(3, 'Anual', '2017-03-01', '2017-12-20');

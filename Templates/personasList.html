@@ -13,7 +13,7 @@
         <a href="/personas/nueva/" class="btn btn-info"> Agregar Persona</a>
     </div>
 
-    {% if personas.count > 0 %}
+    {% if personas %}
         <p>Actualmente hay {{ personas.count }} personas.</p>
         <div id="datospersonas">
             <div>
@@ -53,20 +53,45 @@
                                     <i class="glyphicon glyphicon-pencil"></i> Ver
                                 </a>
                             {% else %}
-                                <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia" title="Asignar una materias">
+                                <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia">
                                     <i class="glyphicon glyphicon-plus-sign"></i> Asignar
                                 </a>
                             {% endif %}
                         </td>
                         <td>
-                            <a href="/personas/{{ p.id }}/editar/"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="/personas/{{ p.id }}/editar/" class="btn btn-danger btn-sm" title="Editar Datos de la Persona">
+                                <i class="glyphicon glyphicon-pencil"></i> Datos</a>
                         </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% if personas.has_other_pages %}
+              <ul class="pagination">
+                {% if personas.has_previous %}
+                  <li><a href="?page={{ personas.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in personas.paginator.page_range %}
+                  {% if personas.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if personas.has_next %}
+                  <li><a href="?page={{ personas.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+            {% endif %}
         </div>
     {% else %}
+        Personas: {{ personas.count }}<br>
+        {{ page }}<br>
+        Paginator: {{ paginator.count }} - {{ paginator.num_pages }}
         <h1>No existe ninguna persona cargada aún!</h1>
     {% endif %}
 

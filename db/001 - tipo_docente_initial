@@ -1,0 +1,6 @@
+INSERT INTO 
+public.horas_tipodocente (id, tipo_docente, porcentaje_aplicado, hs_institucionales) VALUES 
+(1, 'Titular UDC', 75, 4),
+(2, 'Ayudante UDC', 50, 2),
+(3, 'Titular UNCO', 50, 3),
+(4, 'Ayudante UNCO', 0, 2);
