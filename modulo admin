@@ -1,13 +1,13 @@
-SuperAdmin
+"SuperAdmin": Control total de la base desde el admin de django.
 user: nicolas | pass: nrnfubuntu
 
-Admin
+Grupo "Administrador": login, ABM de las tablas y Usuarios de la base
 user: adminudc | pass: nrnfubuntu
 
-DataEntry:
+Grupo "Data Entry": login, Alta y Modificacion a las tablas de comunes de la base
 user: dataentryudc | pass: nrnfubuntu
 
-Consultas
+Grupo "Consulta": solo login y consultas
 user: consultaudc | pass: nrnfubuntu
 
 
