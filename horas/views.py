@@ -191,7 +191,7 @@ def personasHorasList(request, pid):
 
 @login_required()
 def personasHorasNew(request, pid):
-    if request.method == 'POST@login_required()':
+    if request.method == 'POST':
         form = PersonaHorasForm(request.POST)
         if form.is_valid():
             perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
