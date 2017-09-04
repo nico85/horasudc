@@ -84,11 +84,11 @@ DATABASES = {
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'horasudc',
-            'USER': 'sistemas',
-            'PASSWORD': 's1st3m4s',
+            'NAME': '',
+            'USER': '',
+            'PASSWORD': '',
             'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'PORT': '',
     }
 }
 
