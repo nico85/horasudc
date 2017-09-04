@@ -1,4 +1,4 @@
-INSERT INTO public.horas_version(id, version_sistema) VALUES 
-(1, '1.0.0'),
-(2, '1.0.1');
+INSERT INTO public.horas_version(version_sistema) VALUES
+('1.0.0'),
+('1.0.1');
 

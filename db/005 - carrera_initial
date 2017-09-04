@@ -1,12 +1,12 @@
-INSERT INTO public.horas_carrera(id, carrera_nombre, carrera_abreviada) VALUES 
-(1, 'Técnico Superior en Desarrollo de Software', 'DES01'),
-(2, 'Técnico Superior en Enfermería', 'ENF01'),
-(3, 'Licenciatura en Administración de Áreas Naturales', 'LAN'),
-(4, 'Licenciatura en Administración Pública', 'LAP'),
-(5, 'Licenciatura en Enfermería', 'LE'),
-(6, 'Licenciatura en Redes y Telecomunicaciones', 'LRT'),
-(7, 'Técnico Superior en Redes y Telecomunicaciones', 'RED01'),
-(8, 'Técnico Universitario en Desarrollo de Software', 'TDS'),
-(9, 'Técnico Universitario en Administración de Emprendimientos Agropecuarios', 'TEA'),
-(10, 'Técnico Universitario en Gestión de la Información de Salud', 'TGI'),
-(11, 'Técnico Universitario en Paleontología', 'TUP');
+INSERT INTO public.horas_carrera(carrera_nombre, carrera_abreviada) VALUES
+('Técnico Superior en Desarrollo de Software', 'DES01'),
+('Técnico Superior en Enfermería', 'ENF01'),
+('Licenciatura en Administración de Áreas Naturales', 'LAN'),
+('Licenciatura en Administración Pública', 'LAP'),
+('Licenciatura en Enfermería', 'LE'),
+('Licenciatura en Redes y Telecomunicaciones', 'LRT'),
+('Técnico Superior en Redes y Telecomunicaciones', 'RED01'),
+('Técnico Universitario en Desarrollo de Software', 'TDS'),
+('Técnico Universitario en Administración de Emprendimientos Agropecuarios', 'TEA'),
+('Técnico Universitario en Gestión de la Información de Salud', 'TGI'),
+('Técnico Universitario en Paleontología', 'TUP');

@@ -67,7 +67,7 @@ class Periodo (models.Model):
 
 
 class Materia (models.Model):
-    materia_nombre = models.CharField(max_length=100)
+    materia_nombre = models.CharField(max_length=400)
     plan = models.ForeignKey(Plan)
     hs_semanales = models.IntegerField(null=True)
     hs_total_materia = models.IntegerField(null=True)

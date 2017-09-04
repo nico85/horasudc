@@ -1,0 +1,6 @@
+INSERT INTO public.horas_sede(sede_nombre) VALUES
+('Rawson'),
+('Trelew'),
+('Puerto Madryn'),
+('Esquel'),
+('Gaiman');

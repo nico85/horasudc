@@ -1,6 +1,7 @@
-INSERT INTO public.horas_cambio(id, detalle, version_id) VALUES 
-(1, 'Versión Inicial del Sistema de Horas (cátedras y docentes) de la Universidad del Chubut, aplicando las necesidades planteadas en conjunto con el aŕea de Personal, 08/2015.',1),
-(2,'Agrego filtrado de personas y ordenar por apellido en la lista de Personas',2),
-(3,'Agrego "exportar" a excel en la consuta de Administrativos',2),
-(4,'Agrego "exportar" a excel en la consuta de Docentes',2);
+--Antes de insertar estos valores, se debe comprobar en la tabla "Version" el ID de cada versión
+INSERT INTO public.horas_cambio(detalle, version_id) VALUES
+('Versión Inicial del Sistema de Horas (cátedras y docentes) de la Universidad del Chubut, aplicando las necesidades planteadas en conjunto con el aŕea de Personal, 08/2015.',5),
+('Agrego filtrado de personas y ordenar por apellido en la lista de Personas',6),
+('Agrego "exportar" a excel en la consuta de Administrativos',6),
+('Agrego "exportar" a excel en la consuta de Docentes',6);
 
