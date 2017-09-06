@@ -366,8 +366,8 @@ def export_doc_xls(request):
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xls"'
 
     writer = csv.writer(response)
-    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'Resolución', 'Horas Materia',
-                     'Hs total materia', 'Hs a liquidar', 'Año academico', 'Periodo'])
+    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'Resolucion', 'Horas Materia',
+                     'Hs total materia', 'Hs a liquidar', 'Anio academico', 'Periodo'])
 
     for doc in docentes:
         apenom = str(doc.persona.apellidos) + ', ' + str(doc.persona.nombres)
