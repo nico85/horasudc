@@ -7,14 +7,14 @@ from django.db import models
 class Version(models.Model):
     version_sistema = models.CharField(max_length=8)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.version_sistema
 
 class Cambio(models.Model):
     version = models.ForeignKey(Version)
     detalle = models.TextField(blank=True, null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.detalle
 
 class Sede (models.Model):
@@ -23,7 +23,7 @@ class Sede (models.Model):
     class Meta:
         verbose_name_plural = 'Sedes'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.sede_nombre
 
 class Carrera (models.Model):
@@ -34,7 +34,7 @@ class Carrera (models.Model):
     class Meta:
         verbose_name_plural = 'Carreras'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.carrera_nombre
 
 class Plan (models.Model):
@@ -51,7 +51,7 @@ class Plan (models.Model):
     class Meta:
         verbose_name_plural = 'Planes'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.plan_nombre
 
 class Periodo (models.Model):
@@ -63,7 +63,7 @@ class Periodo (models.Model):
         ordering = ['id']
         verbose_name_plural = 'Periodos'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.periodo_nombre
 
 
@@ -92,7 +92,7 @@ class TipoDocente (models.Model):
     class Meta:
         verbose_name_plural = 'Tipo de Docente'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.tipo_docente
 
 class Persona (models.Model):
@@ -100,8 +100,8 @@ class Persona (models.Model):
     apellidos = models.CharField('Apellido/s', max_length=40)
     nombres = models.CharField('Nombre/s', max_length=40)
     sexo = models.CharField(max_length=20, default='Sin Especificar')
-    legajo_numero = models.IntegerField('Legajo numero', unique=True)
-    telefono = models.CharField('Telefono', max_length=30, blank=True, null=True,)
+    legajo_numero = models.IntegerField('Legajo número', unique=True)
+    telefono = models.CharField('Teléfono', max_length=30, blank=True, null=True,)
     email = models.EmailField('E-mail', blank=True)
     fecha_nacimiento = models.DateField('Fecha de nacimiento', blank=True, null=True,)
     antiguedad = models.IntegerField()
@@ -111,7 +111,7 @@ class Persona (models.Model):
         ordering = ['apellidos']
         verbose_name_plural = 'Personas'
 
-    def __str__(self):
+    def __unicode__(self):
         return '%s, %s' %(self.apellidos, self.nombres)
 
 class Dependencia(models.Model):
@@ -120,14 +120,14 @@ class Dependencia(models.Model):
     class Meta:
         verbose_name_plural = 'Dependencias'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.dependencia_nombre
 
 class PersonaHoras (models.Model):
     persona = models.ForeignKey(Persona)
-    resolucion_numero = models.IntegerField('Resolucion numero')
-    resolucion_anio = models.CharField('Resolucion anio', max_length=10)
-    hs_catedras = models.IntegerField('Horas catedras')
+    resolucion_numero = models.IntegerField('Resolución número')
+    resolucion_anio = models.CharField('Resolución año', max_length=10)
+    hs_catedras = models.IntegerField('Horas cátedras')
     fecha_inicio = models.DateField('Fecha de Inicio')
     fecha_fin = models.DateField('Fecha de Fin')
     dependencia = models.ForeignKey(Dependencia)
@@ -140,8 +140,8 @@ class DocenteHoras (models.Model):
     materia = models.ForeignKey(Materia)
     sede = models.ForeignKey(Sede)
     docente_tipo = models.ForeignKey(TipoDocente)
-    resolucion_numero = models.CharField('Resolucion numero', max_length=40)
-    resolucion_anio = models.CharField('Resolucion anio', max_length=10)
+    resolucion_numero = models.CharField('Resolución número', max_length=40)
+    resolucion_anio = models.CharField('Resolución año', max_length=10)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     remunerado = models.CharField(max_length=30)
