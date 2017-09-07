@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.admin.utils import model_format_dict
 from django.db import models
 
