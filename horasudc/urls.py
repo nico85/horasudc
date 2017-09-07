@@ -22,7 +22,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^horas/admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(pattern_name='inicio', permanent=False)),
+    url(r'^horas/$', RedirectView.as_view(pattern_name='inicio', permanent=False)),
     url(r'^horas/inicio/$', views.inicio, name='inicio'),
     url(regex=r'^horas/inicio/login/$', view=login, kwargs={'template_name': 'login.html'}, name='login'),
     url(regex=r'^horas/inicio/logout/$', view=logout, kwargs={'next_page': '/inicio'}, name='logout'),
