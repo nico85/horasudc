@@ -78,7 +78,10 @@ class Materia (models.Model):
     class Meta:
         verbose_name_plural = 'Materias'
 
-    def __str__(self):
+    #def __str__(self):
+    #    return self.materia_nombre
+
+    def __unicode__(self):
         return self.materia_nombre
 
 class TipoDocente (models.Model):
