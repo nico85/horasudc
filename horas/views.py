@@ -37,27 +37,39 @@ def personasList(request):
     docentes = DocenteHoras.objects.all()
     administrativos = PersonaHoras.objects.all()
 
-    paginator = Paginator(todas_las_personas, 10)  # Show 10 contacts per page
+    personas = todas_las_personas
 
-    page = request.GET.get('page', 1)
 
-    try:
-        personas = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        personas = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        personas = paginator.page(paginator.num_pages)
+    if len(todas_las_personas) > 0:
 
-    return render(request, 'personasList.html', {
-        'page': page,
-        'paginator': paginator,
-        'personas': personas,
-        'grupo': grupo,
-        'docentes': docentes,
-        'administrativos': administrativos,
-    })
+        paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
+
+        page = request.GET.get('page', 1)
+
+        try:
+            personas = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            personas = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            personas = paginator.page(paginator.num_pages)
+
+        return render(request, 'personasList.html', {
+            'page': page,
+            'paginator': paginator,
+            'personas': personas,
+            'grupo': grupo,
+            'docentes': docentes,
+            'administrativos': administrativos,
+        })
+    else:
+        return render(request, 'personasList.html', {
+            'personas': personas,
+            'grupo': grupo,
+            'docentes': docentes,
+            'administrativos': administrativos,
+        })
 
 @login_required()
 def personasNew(request):

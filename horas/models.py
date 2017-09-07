@@ -7,12 +7,18 @@ from django.db import models
 class Version(models.Model):
     version_sistema = models.CharField(max_length=8)
 
+    def __str__(self):
+        return self.version_sistema
+
     def __unicode__(self):
         return self.version_sistema
 
 class Cambio(models.Model):
     version = models.ForeignKey(Version)
     detalle = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.detalle
 
     def __unicode__(self):
         return self.detalle
@@ -26,6 +32,9 @@ class Sede (models.Model):
     def __unicode__(self):
         return self.sede_nombre
 
+    def __str__(self):
+        return self.sede_nombre
+
 class Carrera (models.Model):
     carrera_nombre = models.CharField(max_length=230, unique=True)
     carrera_abreviada = models.CharField(max_length=10, unique=True, blank=True, null=True)
@@ -35,6 +44,9 @@ class Carrera (models.Model):
         verbose_name_plural = 'Carreras'
 
     def __unicode__(self):
+        return self.carrera_nombre
+
+    def __str__(self):
         return self.carrera_nombre
 
 class Plan (models.Model):
@@ -54,6 +66,9 @@ class Plan (models.Model):
     def __unicode__(self):
         return self.plan_nombre
 
+    def __str__(self):
+        return self.plan_nombre
+
 class Periodo (models.Model):
     periodo_nombre = models.CharField(max_length=30)
     fecha_inicio = models.DateField()
@@ -64,6 +79,9 @@ class Periodo (models.Model):
         verbose_name_plural = 'Periodos'
 
     def __unicode__(self):
+        return self.periodo_nombre
+
+    def __str__(self):
         return self.periodo_nombre
 
 
@@ -78,10 +96,10 @@ class Materia (models.Model):
     class Meta:
         verbose_name_plural = 'Materias'
 
-    #def __str__(self):
-    #    return self.materia_nombre
-
     def __unicode__(self):
+        return self.materia_nombre
+
+    def __str__(self):
         return self.materia_nombre
 
 class TipoDocente (models.Model):
@@ -95,11 +113,14 @@ class TipoDocente (models.Model):
     def __unicode__(self):
         return self.tipo_docente
 
+    def __str__(self):
+        return self.tipo_docente
+
 class Persona (models.Model):
-    cuil = models.CharField('C.U.I.L.', max_length=11, unique=True)
+    cuil = models.CharField('C.U.I.L.', max_length=11)
     apellidos = models.CharField('Apellido/s', max_length=40)
     nombres = models.CharField('Nombre/s', max_length=40)
-    sexo = models.CharField(max_length=20, default='Sin Especificar')
+    sexo = models.CharField(max_length=20)
     legajo_numero = models.IntegerField('Legajo número', unique=True)
     telefono = models.CharField('Teléfono', max_length=30, blank=True, null=True,)
     email = models.EmailField('E-mail', blank=True)
@@ -114,13 +135,19 @@ class Persona (models.Model):
     def __unicode__(self):
         return '%s, %s' %(self.apellidos, self.nombres)
 
+    def __str__(self):
+        return '%s, %s' %(self.apellidos, self.nombres)
+
 class Dependencia(models.Model):
-    dependencia_nombre = models.CharField(max_length=30)
+    dependencia_nombre = models.CharField(max_length=200)
 
     class Meta:
         verbose_name_plural = 'Dependencias'
 
     def __unicode__(self):
+        return self.dependencia_nombre
+
+    def __str__(self):
         return self.dependencia_nombre
 
 class PersonaHoras (models.Model):

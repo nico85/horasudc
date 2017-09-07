@@ -23,6 +23,9 @@ class MateriaAdmin(admin.ModelAdmin):
 class DocenteHorasAdmin(admin.ModelAdmin):
     list_display = ('persona', 'resolucion_numero', 'resolucion_anio', 'fecha_inicio', 'fecha_fin', 'persona_id')
 
+class DependenciaAdmin(admin.ModelAdmin):
+    list_display = ('dependencia_nombre',)
+
 
 admin.site.register(Sede)
 admin.site.register(Carrera, CarreraAdmin)
@@ -33,6 +36,6 @@ admin.site.register(TipoDocente)
 admin.site.register(Persona, PersonaAdmin)
 admin.site.register(PersonaHoras, PersonaHorasAdmin)
 admin.site.register(DocenteHoras, DocenteHorasAdmin)
-admin.site.register(Dependencia)
+admin.site.register(Dependencia, DependenciaAdmin)
 admin.site.register(Version)
 admin.site.register(Cambio)

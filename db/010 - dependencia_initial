@@ -1,0 +1,18 @@
+INSERT INTO public.horas_dependencia(dependencia_nombre) VALUES
+('Rectoría'),
+('Vicerectoría'),
+('Secretaría Academica'),
+('Secretaría Administrativa'),
+('Dirección Unidad Académica de Producción, Ambiente y Desarrollo Sostenible'),
+('Dirección Unidad Académica de Salud Social y Comunitaria'),
+('Dirección de Administración'),
+('Dirección Asesoría Legal'),
+('Área Despacho'),
+('Área Educación a Distancia y Tecnologías Educativas'),
+('Área de tesorería'),
+('Área de Asesoría Legal'),
+('Área Informática'),
+('Área de Personal'),
+('Área Títulos y Certificaciones'),
+('Área de Alumnos'),
+('División Bedelía');
