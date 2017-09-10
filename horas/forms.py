@@ -5,7 +5,7 @@ class PersonaForm(forms.ModelForm):
 
     class Meta:
         model = Persona
-        fields = ('apellidos', 'nombres', 'cuil', 'legajo_numero', 'telefono', 'email', 'fecha_nacimiento', 'cuil', 'sexo', 'activo', 'antiguedad')
+        fields = ('apellidos', 'nombres', 'cuil', 'legajo_numero', 'telefono', 'email', 'fecha_nacimiento', 'sexo', 'activo', 'antiguedad')
 
 class PersonaHorasForm(forms.ModelForm):
 

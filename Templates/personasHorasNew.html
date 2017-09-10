@@ -2,13 +2,67 @@
 {% block titulo %}Agregar horas cátedras{% endblock %}
 
 {% block contenido %}
-    <h1>Asignar horas cátedras a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
-
+    <h3>Asignar horas cátedras a <b>{{ persona.apellidos }}, {{ persona.nombres }}</b></h3>
+    <div class="well form-horizontal">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Asignar</button>
-        </form>
+            <!--{{ form.as_p }}
+            <hr><hr>-->
+              <div class="form-group">
+                <label for="resolucion_numero" class="col-sm-2 control-label">Resolución Número (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required>
+                </div>
+              </div>
 
-    <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+              <div class="form-group">
+                <label for="resolucion_anio" class="col-sm-2 control-label">Año</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="resolucion_anio" name="resolucion_anio" required>
+                        {% for anio in anios %}
+                            <option value="{{ anio }}">{{ anio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="hs_catedras" class="col-sm-2 control-label">Horas cátedras a asignar (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_hs_catedras" name="hs_catedras" class="col-sm-12" placeholder="Cantidad de horas cátedras" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_inicio" class="col-sm-2 control-label">Asignar desde (*)</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta (*)</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dependencia" class="col-sm-2 control-label">Dependencia</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="dependencia" name="dependencia">
+                        <option selected>Seleccionar</option>
+                        {% for d in dependencias %}
+                            <option value="{{ d.id }}">{{ d.dependencia_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button type="submit" class="save btn btn-success">Asignar</button>
+                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+              </div>
+        </form>
+    </div>
 {% endblock %}

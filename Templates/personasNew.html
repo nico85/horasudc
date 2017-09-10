@@ -2,13 +2,89 @@
 {% block titulo %}Agregar Persona{% endblock %}
 
 {% block contenido %}
-    <h1>Agregar una nueva Persona al sistema</h1>
-
+    <h3>Agregar una nueva Persona al sistema</h3>
+    <div class="well form-horizontal">
         <form action="/personas/nueva/" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Agregar</button>
+            <!--{{ form.as_p }}
+            <hr><hr> -->
+              <div class="form-group">
+                <label for="apellidos" class="col-sm-2 control-label">Apellido/s (*)</label>
+                <div class="col-sm-5">
+                    <input type="text" id="id_apellidos" maxlength="40" class="col-sm-12" name="apellidos" placeholder="Ingrese su apellido o apellidos" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="nombres" class="col-sm-2 control-label">Nombre/s (*)</label>
+                <div class="col-sm-5">
+                    <input type="text" id="id_nombres" maxlength="40" class="col-sm-12" name="nombres" placeholder="Ingrese su nombre o nombres" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cuil" class="col-sm-2 control-label">C.U.I.L. (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_cuil" name="cuil" maxlength="11" minlength="11" class="col-sm-12" placeholder="Ingrese el C.U.I.L." required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="legajo_numero" class="col-sm-2 control-label">Número de Legajo (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_legajo_numero" name="legajo_numero" class="col-sm-12" placeholder="Ingrese el legajo de la Persona" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="telefono" class="col-sm-2 control-label">Teléfono</label>
+                <div class="col-sm-3">
+                    <input type="tel" id="id_telefono" name="telefono" placeholder="Ingrese el teléfono" name="telefono">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">E-Mail</label>
+                <div class="col-sm-5">
+                    <input type="email" id="id_email" name="email" placeholder="Ingrese el correo electrónico" name="email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="Ingrese la fecha" name="fecha_nacimiento" step="1" max="1999-01-31">
+                </div>
+              </div>
+
+              <!--<div class="form-group">
+                <label for="anios" class="col-sm-1 control-label">Año</label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="anios" name="anios">
+                        {% for anio in anios %}
+                            <option value="{{ anio }}">{{ anio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div> -->
+
+              <div class="form-group">
+                  <label for="sexo" class="col-sm-2 control-label">Sexo (*)</label>
+                  <div class="radio col-sm-5">
+                      {% for s in sexos %}
+                          <label>
+                            <input type="radio" name="sexo" id="id_sexo" value="{{ s }}" required>
+                            {{ s }}
+                          </label>
+                      {% endfor %}
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="antiguedad" class="col-sm-2 control-label">Antiguedad (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_antiguedad" name="antiguedad" placeholder="Ingrese la antiguedad" name="antiguedad" required>
+                </div>
+              </div>
+              <input type="hidden" name="activo" value="1" id="id_activo" name="activo">
+              <div class="btn-group">
+                <button type="submit" class="save btn btn-success">Agregar</button>
+                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+              </div>
         </form>
-    <hr>
-    <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+    </div>
+
 {% endblock %}

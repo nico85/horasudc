@@ -73,21 +73,39 @@ def personasList(request):
 
 @login_required()
 def personasNew(request):
+    #obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i=0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    #Fin obtener el arreglo de años
+    lista_sexo = ['Femenino', 'Masculino']
     if request.method == 'POST':
         form = PersonaForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/personas/')
         else:
-            return render(request, 'personasNew.html', {'form': form})
+            return render(request, 'personasNew.html', {
+                'form': form,
+                'sexos': lista_sexo,
+            })
     else:
         form = PersonaForm()
-        return render(request, 'personasNew.html', {'form': form})
+        return render(request, 'personasNew.html', {
+            'form': form,
+            'sexos': lista_sexo,
+        })
 
 
 @login_required()
 def personasEdit(request, pid):
     persona = get_object_or_404(Persona, id=pid)
+    lista_sexo = ['Femenino', 'Masculino']
     if request.method == 'POST':
         form = PersonaForm(request.POST, instance=persona)
         if form.is_valid():
@@ -103,6 +121,7 @@ def personasEdit(request, pid):
         return render(request, 'personasEdit.html', {
             'persona': persona,
             'form': form,
+            'sexos': lista_sexo,
         })
 
 @login_required()
@@ -204,6 +223,19 @@ def personasHorasList(request, pid):
 
 @login_required()
 def personasHorasNew(request, pid):
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    # Fin obtener el arreglo de años
+    form = PersonaHorasForm()
+    persona = Persona.objects.get(id=pid)
+    dependencias = Dependencia.objects.all()
     if request.method == 'POST':
         form = PersonaHorasForm(request.POST)
         if form.is_valid():
@@ -217,18 +249,21 @@ def personasHorasNew(request, pid):
                 'persona': persona,
             })
         else:
+            t
             form = PersonaHorasForm()
             persona = Persona.objects.get(id=pid)
             return render(request, 'personasHorasNew.html', {
                 'persona': persona,
                 'form': form,
+                'anios': lista_anios,
+                'dependencias': dependencias,
             })
     else:
-        form = PersonaHorasForm()
-        persona = Persona.objects.get(id=pid)
         return render(request, 'personasHorasNew.html', {
             'persona': persona,
             'form': form,
+            'anios': lista_anios,
+            'dependencias': dependencias,
         })
 
 @login_required()
@@ -237,6 +272,17 @@ def personasHorasEdit(request, phid):
     form = PersonaHorasForm(instance=pershoras)
     persona = Persona.objects.get(id=pershoras.persona_id)
     pid = persona.id
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    # Fin obtener el arreglo de años
+    dependencias = Dependencia.objects.all()
     if request.method == 'POST':
         form = PersonaHorasForm(request.POST, instance=pershoras)
         if form.is_valid():
@@ -245,11 +291,21 @@ def personasHorasEdit(request, phid):
             new_perhs.save()
             url = '/horascatedras/'+ str(persona.id) + '/lista/'
             return redirect(url)
+        else:
+            return render(request, 'personasHorasEdit.html', {
+                'perhscat': pershoras,
+                'persona': persona,
+                'form': form,
+                'anios': lista_anios,
+                'dependencias': dependencias,
+            })
     else:
         return render(request, 'personasHorasEdit.html', {
             'perhscat': pershoras,
             'persona': persona,
             'form': form,
+            'anios': lista_anios,
+            'dependencias': dependencias,
         })
 
 @login_required()

@@ -2,15 +2,74 @@
 {% block titulo %}Editar Horas cátedras{% endblock %}
 
 {% block contenido %}
-    <h1>Editar las horas cátedras de {{ persona.apellidos }}, {{ persona.nombres }}</h1>
-
+    <h3>Editar las horas cátedras de <b>{{ persona.apellidos }}, {{ persona.nombres }}</b></h3>
+    <div class="well form-horizontal">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Guardar</button>
+            <!--{{ form.as_p }}
+            <hr><hr>-->
+              <div class="form-group">
+                <label for="resolucion_numero" class="col-sm-2 control-label">Resolución Número (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required value="{{ perhscat.resolucion_numero }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="resolucion_anio" class="col-sm-2 control-label">Año</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="resolucion_anio" name="resolucion_anio" required>
+                        {% for anio in anios %}
+                            {% if perhscat.resolucion_anio == anio %}
+                                <option value="{{ anio }}" selected>{{ anio }}</option>
+                            {% else %}
+                                <option value="{{ anio }}">{{ anio }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="hs_catedras" class="col-sm-2 control-label">Horas cátedras a asignar (*)</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_hs_catedras" name="hs_catedras" class="col-sm-12" placeholder="Cantidad de horas cátedras" required value="{{ perhscat.hs_catedras }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_inicio" class="col-sm-2 control-label">Asignar desde (*)</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required value="{{ perhscat.fecha_inicio }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta (*)</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required value="{{ perhscat.fecha_fin }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dependencia" class="col-sm-2 control-label">Dependencia/{{ perhscat.dependencia_id }}</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="dependencia" name="dependencia">
+                        {% for d in dependencias %}
+                            {% if perhscat.dependencia_id == d.id %}
+                                <option value="{{ d.id }}" selected>{{ d.dependencia_nombre }}</option>
+                            {% else %}
+                                <option value="{{ d.id }}">{{ d.dependencia_nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button type="submit" class="save btn btn-success">Asignar</button>
+                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+              </div>
         </form>
-    <hr>
-    <div>
-        <a href="/personas/" class="btn btn-warning"> Todas la Personas</a>
     </div>
 {% endblock %}
