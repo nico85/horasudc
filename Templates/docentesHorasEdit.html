@@ -2,16 +2,139 @@
 {% block titulo %}Editar materia asignada{% endblock %}
 
 {% block contenido %}
-    <h1>Editar las materias de {{ dochoras.persona.apellidos }}, {{ dochoras.persona.nombres }}</h1>
-
+    <h3>Editar las materias de {{ dochoras.persona.apellidos }}, {{ dochoras.persona.nombres }}</h3>
+    <div class="well form-horizontal">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Guardar cambios</button>
-        </form>
+            <!--{{ form.as_p }}
+            <hr><hr>-->
+              <div class="form-group">
+                <label for="resolucion_numero" class="col-sm-2 control-label">Resolución Número</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required value="{{ dochoras.resolucion_numero }}">
+                </div>
+              </div>
 
-    <hr>
-    <div>
-        <a href="/personas/" class="btn btn-warning"> Todas la Personas</a>
+              <div class="form-group">
+                <label for="resolucion_anio" class="col-sm-2 control-label">Año</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="resolucion_anio" name="resolucion_anio" required>
+                        {% for anio in anios %}
+                            {% if dochoras.resolucion_anio == anio %}
+                                <option value="{{ anio }}" selected>{{ anio }}</option>
+                            {% else %}
+                                <option value="{{ anio }}">{{ anio }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="remunerado" class="col-sm-2 control-label">Remunerado</label>
+                  <div class="radio col-sm-5">
+                      {% for r in remunerados %}
+                          {% if dochoras.remunerado == r %}
+                              <label>
+                                <input type="radio" name="remunerado" id="id_remunerado" value="{{ r }}" required checked>
+                                {{ r }}
+                              </label>
+                          {% else %}
+                            <label>
+                                <input type="radio" name="remunerado" id="id_remunerado" value="{{ r }}" required>
+                                {{ r }}
+                              </label>
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="carrera" class="col-sm-2 control-label">Carrera</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="carrera" name="carrera">
+                        {% for c in carreras %}
+                            {% if dochoras.materia.plan.carrera == c.id %}
+                                <option value="{{ c.id }}" selected>{{ c.carrera_nombre }}</option>
+                            {% else %}
+                                <option value="{{ c.id }}">{{ c.carrera_nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="materia" class="col-sm-2 control-label">Materia</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="materia" name="materia">
+                        {% for m in materias %}
+                            {% if dochoras.materia.id == m.id %}
+                                <option value="{{ m.id }}" selected>{{ m.materia_nombre }}</option>
+                            {% else %}
+                                <option value="{{ m.id }}">{{ m.materia_nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="sede" class="col-sm-2 control-label">Sede</label>
+                  <div class="radio col-sm-5">
+                      {% for s in sedes %}
+                          {% if dochoras.sede_id == s.id %}
+                              <label>
+                                <input type="radio" name="sede" id="id_sede" value="{{ s.id }}" required checked>
+                                {{ s.sede_nombre }}
+                              </label>
+                          {% else %}
+                              <label>
+                                <input type="radio" name="sede" id="id_sede" value="{{ s.id }}" required>
+                                {{ s.sede_nombre }}
+                              </label>
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="docente_tipo" class="col-sm-2 control-label">Tipo de Docente</label>
+                  <div class="radio col-sm-5">
+                      {% for dt in docenteTipos %}
+                          {% if dochoras.docente_tipo_id == dt.id %}
+                              <label>
+                                <input type="radio" name="docente_tipo" id="id_docente_tipo" value="{{ dt.id }}" required checked>
+                                {{ dt.tipo_docente }}
+                              </label>
+                          {% else %}
+                              <label>
+                                <input type="radio" name="docente_tipo" id="id_docente_tipo" value="{{ dt.id }}" required>
+                                {{ dt.tipo_docente }}
+                              </label>
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_inicio" class="col-sm-2 control-label">Asignar desde</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required value="{{ dochoras.fecha_inicio | date:"d/m/Y" }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required value="{{ dochoras.fecha_fin | date:"d/m/Y" }}">
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button type="submit" class="save btn btn-success">Guardar cambios</button>
+                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+              </div>
+        </form>
     </div>
 {% endblock %}

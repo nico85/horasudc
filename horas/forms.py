@@ -17,4 +17,4 @@ class DocenteHorasForm(forms.ModelForm):
 
     class Meta:
         model = DocenteHoras
-        fields = ('resolucion_numero', 'resolucion_anio', 'remunerado', 'materia', 'sede', 'docente_tipo')
+        fields = ('resolucion_numero', 'resolucion_anio', 'remunerado', 'materia', 'sede', 'docente_tipo', 'fecha_inicio', 'fecha_fin')

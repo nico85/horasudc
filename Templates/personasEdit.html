@@ -52,9 +52,9 @@
                 <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento</label>
                 <div class="col-sm-3">
                     {% if persona.fecha_nacimiento %}
-                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="Ingrese la fecha" name="fecha_nacimiento" step="1" max="1999-01-31" value="{{ persona.fecha_nacimiento }}">
+                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="{{ persona.fecha_nacimiento | date:"d/m/Y" }}">
                     {% else %}
-                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="Ingrese la fecha" name="fecha_nacimiento" step="1" max="1999-01-31" value="">
+                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="">
                     {% endif %}
                 </div>
               </div>
@@ -80,7 +80,26 @@
                     <input type="number" id="id_antiguedad" name="antiguedad" placeholder="Ingrese la antiguedad" name="antiguedad" required value="{{ persona.antiguedad }}">
                 </div>
               </div>
-              <input type="hidden" name="activo" value="1" id="id_activo" name="activo">
+              <div class="form-group">
+                  <label for="activo" class="col-sm-2 control-label">Activo (*)</label>
+                  <div class="radio col-sm-5">
+                      {% if persona.activo == '1' %}
+                          <label>
+                              <input type="radio" name="activo" id="id_activo" value="{{ persona.activo }}" required checked> Activo
+                          </label>
+                          <label>
+                              <input type="radio" name="activo" id="id_activo" value="0" required> Inactivo
+                          </label>
+                      {% else %}
+                          <label>
+                              <input type="radio" name="activo" id="id_activo" value="1" required> Activo
+                          </label>
+                          <label>
+                              <input type="radio" name="activo" id="id_activo" value="{{ persona.activo }}" required checked> Inactivo
+                          </label>
+                      {% endif %}
+                  </div>
+              </div>
               <div class="btn-group">
                 <button type="submit" class="save btn btn-success">Guardar</button>
                 <a href="/personas" class="btn btn-warning"> volver a la lista</a>

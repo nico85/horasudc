@@ -2,16 +2,106 @@
 {% block titulo %}Agregar materia{% endblock %}
 
 {% block contenido %}
-    <h1>Asignar una materia a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
-    <div class="well well-sm">
-        <a href="/horasdocentes/{{ persona.id }}/asignar/" class="btn btn-info"> Asignar otra materia</a>
-    </div>
-
+    <h3>Asignar una materia a {{ persona.apellidos }}, {{ persona.nombres }}</h3>
+    <div class="well form-horizontal">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Asignar</button>
-        </form>
+            <!--{{ form.as_p }}
+            <hr><hr> -->
+              <div class="form-group">
+                <label for="resolucion_numero" class="col-sm-2 control-label">Resolución Número</label>
+                <div class="col-sm-3">
+                    <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required>
+                </div>
+              </div>
 
-    <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
+              <div class="form-group">
+                <label for="resolucion_anio" class="col-sm-2 control-label">Año</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="resolucion_anio" name="resolucion_anio" required>
+                        {% for anio in anios %}
+                            <option value="{{ anio }}">{{ anio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="remunerado" class="col-sm-2 control-label">Remunerado</label>
+                  <div class="radio col-sm-5">
+                      {% for r in remunerados %}
+                          <label>
+                            <input type="radio" name="remunerado" id="id_remunerado" value="{{ r }}" required>
+                            {{ r }}
+                          </label>
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="carrera" class="col-sm-2 control-label">Carrera</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="carrera" name="carrera">
+                        {% for c in carreras %}
+                            <option value="{{ c.id }}">{{ c.carrera_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="materia" class="col-sm-2 control-label">Materia</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="materia" name="materia">
+                        {% for m in materias %}
+                            <option value="{{ m.id }}">{{ m.materia_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="sede" class="col-sm-2 control-label">Sede</label>
+                  <div class="radio col-sm-5">
+                      {% for s in sedes %}
+                          <label>
+                            <input type="radio" name="sede" id="id_sede" value="{{ s.id }}" required>
+                            {{ s.sede_nombre }}
+                          </label>
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="docente_tipo" class="col-sm-2 control-label">Tipo de Docente</label>
+                  <div class="radio col-sm-5">
+                      {% for dt in docenteTipos %}
+                          <label>
+                            <input type="radio" name="docente_tipo" id="id_docente_tipo" value="{{ dt.id }}" required>
+                            {{ dt.tipo_docente }}
+                          </label>
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_inicio" class="col-sm-2 control-label">Asignar desde</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta</label>
+                <div class="col-sm-3">
+                    <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button type="submit" class="save btn btn-success">Asignar</button>
+                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+              </div>
+        </form>
+    </div>
 {% endblock %}

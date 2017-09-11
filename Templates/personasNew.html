@@ -4,6 +4,16 @@
 {% block contenido %}
     <h3>Agregar una nueva Persona al sistema</h3>
     <div class="well form-horizontal">
+
+        {% if errors %}
+            <div class="alert alert-danger">
+                <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <form action="/personas/nueva/" method="POST">
             {% csrf_token %}
             <!--{{ form.as_p }}
@@ -47,20 +57,9 @@
               <div class="form-group">
                 <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento</label>
                 <div class="col-sm-3">
-                    <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="Ingrese la fecha" name="fecha_nacimiento" step="1" max="1999-01-31">
+                    <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento">
                 </div>
               </div>
-
-              <!--<div class="form-group">
-                <label for="anios" class="col-sm-1 control-label">Año</label>
-                <div class="col-sm-2">
-                    <select class="form-control" id="anios" name="anios">
-                        {% for anio in anios %}
-                            <option value="{{ anio }}">{{ anio }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-              </div> -->
 
               <div class="form-group">
                   <label for="sexo" class="col-sm-2 control-label">Sexo (*)</label>

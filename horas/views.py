@@ -38,11 +38,11 @@ def personasList(request):
     administrativos = PersonaHoras.objects.all()
 
     personas = todas_las_personas
-
+    cantPersonas = len(todas_las_personas)
 
     if len(todas_las_personas) > 0:
 
-        paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
+        '''paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
 
         page = request.GET.get('page', 1)
 
@@ -54,14 +54,15 @@ def personasList(request):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             personas = paginator.page(paginator.num_pages)
-
+        '''
         return render(request, 'personasList.html', {
-            'page': page,
-            'paginator': paginator,
+            #'page': page,
+            #'paginator': paginator,
             'personas': personas,
             'grupo': grupo,
             'docentes': docentes,
             'administrativos': administrativos,
+            'cantPersonas': cantPersonas,
         })
     else:
         return render(request, 'personasList.html', {
@@ -69,20 +70,11 @@ def personasList(request):
             'grupo': grupo,
             'docentes': docentes,
             'administrativos': administrativos,
+            'cantPersonas': cantPersonas,
         })
 
 @login_required()
 def personasNew(request):
-    #obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i=0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    #Fin obtener el arreglo de años
     lista_sexo = ['Femenino', 'Masculino']
     if request.method == 'POST':
         form = PersonaForm(request.POST)
@@ -115,6 +107,7 @@ def personasEdit(request, pid):
             return render(request, 'personasEdit.html', {
                 'persona': persona,
                 'form': form,
+                'sexos': lista_sexo,
             })
     else:
         form = PersonaForm(instance=persona)
@@ -249,7 +242,6 @@ def personasHorasNew(request, pid):
                 'persona': persona,
             })
         else:
-            t
             form = PersonaHorasForm()
             persona = Persona.objects.get(id=pid)
             return render(request, 'personasHorasNew.html', {
@@ -342,8 +334,24 @@ def docenteHorasList(request, pid):
 
 @login_required()
 def docenteHorasNew(request, pid):
+    lista_remunerado = ['Remunerado', 'Ad Honorem']
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    # Fin obtener el arreglo de años
+    sedes = Sede.objects.all()
+    carreras = Carrera.objects.all()
+    materias = Materia.objects.all()
+    docenteTipos = TipoDocente.objects.all()
+    form = DocenteHorasForm()
+    persona = Persona.objects.get(id=pid)
     if request.method == 'POST':
-        persona = Persona.objects.get(id=pid)
         form = DocenteHorasForm(request.POST)
         if form.is_valid():
             mat = Materia.objects.get(id=request.POST['materia'])
@@ -362,22 +370,45 @@ def docenteHorasNew(request, pid):
                 'pid': pid,
             })
         else:
-            #form = DocenteHorasForm()
-            #persona = Persona.objects.get(id=pid)
             return render(request, 'docentesHorasNew.html', {
                 'persona': persona,
                 'form': form,
+                'carreras': carreras,
+                'sedes': sedes,
+                'materias': materias,
+                'remunerados': lista_remunerado,
+                'docenteTipos': docenteTipos,
+                'anios': lista_anios,
             })
     else:
-        form = DocenteHorasForm()
-        persona = Persona.objects.get(id=pid)
         return render(request, 'docentesHorasNew.html', {
             'persona': persona,
             'form': form,
+            'carreras': carreras,
+            'sedes': sedes,
+            'materias': materias,
+            'remunerados': lista_remunerado,
+            'docenteTipos': docenteTipos,
+            'anios': lista_anios,
         })
 
 @login_required()
 def docenteHorasEdit(request, dhid):
+    lista_remunerado = ['Remunerado', 'Ad Honorem']
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = str(anio_actual - i)
+        i += 1
+    # Fin obtener el arreglo de años
+    sedes = Sede.objects.all()
+    carreras = Carrera.objects.all()
+    materias = Materia.objects.all()
+    docenteTipos = TipoDocente.objects.all()
     dochoras = DocenteHoras.objects.get(id=dhid)
     form = DocenteHorasForm(instance=dochoras)
     persona = Persona.objects.get(id=dochoras.persona.id)
@@ -400,6 +431,12 @@ def docenteHorasEdit(request, dhid):
         return render(request, 'docentesHorasEdit.html', {
             'dochoras': dochoras,
             'form': form,
+            'sedes': sedes,
+            'carreras': carreras,
+            'docenteTipos': docenteTipos,
+            'materias': materias,
+            'remunerados': lista_remunerado,
+            'anios': lista_anios,
         })
 
 @login_required()
