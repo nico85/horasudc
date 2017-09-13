@@ -3,6 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Página no disponible</title>
+        {% load static %}
+        <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+        <script src="{% static "jquery/jquery-3.2.1.js" %}"></script>
+        <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+        <script src="{% static "js/List.js" %}"></script>
+        <script src="{% static "js/funciones.js" %}"></script>
+        <script src="{% static "js/prefixfree.min.js" %}"></script>
+        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+        {% block cabecera %}{% endblock %}
     </head>
     <body>
         <div class="alert alert-danger">

@@ -40,32 +40,47 @@ def personasList(request):
     personas = todas_las_personas
     cantPersonas = len(todas_las_personas)
 
-    if len(todas_las_personas) > 0:
+    if request.method == 'GET':
 
-        '''paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
+        if len(todas_las_personas) > 0:
 
-        page = request.GET.get('page', 1)
-
-        try:
-            personas = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            personas = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            personas = paginator.page(paginator.num_pages)
-        '''
-        return render(request, 'personasList.html', {
-            #'page': page,
-            #'paginator': paginator,
-            'personas': personas,
-            'grupo': grupo,
-            'docentes': docentes,
-            'administrativos': administrativos,
-            'cantPersonas': cantPersonas,
-        })
+            '''paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
+    
+            page = request.GET.get('page', 1)
+    
+            try:
+                personas = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                personas = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                personas = paginator.page(paginator.num_pages)
+            '''
+            return render(request, 'personasList.html', {
+                #'page': page,
+                #'paginator': paginator,
+                'personas': personas,
+                'grupo': grupo,
+                'docentes': docentes,
+                'administrativos': administrativos,
+                'cantPersonas': cantPersonas,
+            })
+        else:
+            return render(request, 'personasList.html', {
+                'personas': personas,
+                'grupo': grupo,
+                'docentes': docentes,
+                'administrativos': administrativos,
+                'cantPersonas': cantPersonas,
+            })
     else:
+
+        if 'estado' in request.POST and int(request.POST['estado']) > -1:
+            personas = personas.filter(activo=request.POST['estado'])
         return render(request, 'personasList.html', {
+            # 'page': page,
+            # 'paginator': paginator,
             'personas': personas,
             'grupo': grupo,
             'docentes': docentes,
@@ -347,7 +362,7 @@ def docenteHorasNew(request, pid):
     # Fin obtener el arreglo de años
     sedes = Sede.objects.all()
     carreras = Carrera.objects.all()
-    materias = Materia.objects.all()
+    materias = Materia.objects.all().order_by('plan__carrera_id','anio_academico','periodo_id')
     docenteTipos = TipoDocente.objects.all()
     form = DocenteHorasForm()
     persona = Persona.objects.get(id=pid)

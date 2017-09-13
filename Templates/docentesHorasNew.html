@@ -41,9 +41,10 @@
               <div class="form-group">
                 <label for="carrera" class="col-sm-2 control-label">Carrera</label>
                 <div class="col-sm-5">
-                    <select class="form-control" id="carrera" name="carrera">
+                    <select class="form-control" id="id_carrera" name="carrera" onchange="filtroPorCarrera()">
+                        <option value="-1" selected>Seleccionar</option>
                         {% for c in carreras %}
-                            <option value="{{ c.id }}">{{ c.carrera_nombre }}</option>
+                            <option value="{{ c.carrera_abreviada }}">({{ c.carrera_abreviada }}) {{ c.carrera_nombre }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -52,15 +53,28 @@
               <div class="form-group">
                 <label for="materia" class="col-sm-2 control-label">Materia</label>
                 <div class="col-sm-8">
-                    <select class="form-control" id="materia" name="materia">
+                    <select class="form-control" id="id_materia" name="materia">
+                        <option value="-1" selected>Seleccionar</option>
                         {% for m in materias %}
-                            <option value="{{ m.id }}">{{ m.materia_nombre }}</option>
+                            <option value="{{ m.id }}">({{ m.plan.carrera.carrera_abreviada }}) | Año {{ m.anio_academico }} - {{ m.periodo.periodo_nombre }} | {{ m.materia_nombre }}</option>
                         {% endfor %}
                     </select>
                 </div>
               </div>
 
               <div class="form-group">
+                <label for="sede" class="col-sm-2 control-label">Sede</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="id_sede" name="sede">
+                        <option value="-1" selected>Seleccionar</option>
+                        {% for s in sedes %}
+                            <option value="{{ s.id }}">{{ s.sede_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+
+              <!--<div class="form-group">
                   <label for="sede" class="col-sm-2 control-label">Sede</label>
                   <div class="radio col-sm-5">
                       {% for s in sedes %}
@@ -70,7 +84,7 @@
                           </label>
                       {% endfor %}
                   </div>
-              </div>
+              </div>-->
 
               <div class="form-group">
                   <label for="docente_tipo" class="col-sm-2 control-label">Tipo de Docente</label>

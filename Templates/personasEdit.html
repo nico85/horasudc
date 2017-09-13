@@ -52,7 +52,7 @@
                 <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento</label>
                 <div class="col-sm-3">
                     {% if persona.fecha_nacimiento %}
-                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="{{ persona.fecha_nacimiento | date:"d/m/Y" }}">
+                        <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="{{ persona.fecha_nacimiento | date:"Y-m-d" }}">
                     {% else %}
                         <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="">
                     {% endif %}

@@ -1,6 +1,8 @@
 /**
  * Created by eloy on 09/05/17.
  */
+
+/*
 $(document).ready(function () {
     var $clone = $(this).find('tr.hide').clone(true).removeClass('hide table-line');
     $clone.addClass('nro_precio');
@@ -68,4 +70,5 @@ $(document).on('change', '.pesos', function(){
             }
         });
     }
-});
+})
+*/

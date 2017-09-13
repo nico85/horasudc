@@ -17,7 +17,7 @@
         <form action="/personas/nueva/" method="POST">
             {% csrf_token %}
             <!--{{ form.as_p }}
-            <hr><hr> -->
+            <hr><hr>-->
               <div class="form-group">
                 <label for="apellidos" class="col-sm-2 control-label">Apellido/s (*)</label>
                 <div class="col-sm-5">
@@ -54,10 +54,17 @@
                     <input type="email" id="id_email" name="email" placeholder="Ingrese el correo electrónico" name="email">
                 </div>
               </div>
-              <div class="form-group">
+              <!--<div class="form-group">
                 <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento</label>
                 <div class="col-sm-3">
-                    <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento">
+                    <input type="date" id="id_fecha_nacimiento" placeholder="AAAA-MM-DD" name="fecha_nacimiento">
+                </div>
+              </div>-->
+              <div class="form-group">
+                <label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha de Nacimiento (YYYY-MM-DD)</label>
+                <div class="col-sm-3">
+                    <!--{{ form.fecha_nacimiento }}-->
+                    <input type="date" id="id_fecha_nacimiento" placeholder="AAAA-MM-DD" name="fecha_nacimiento">
                 </div>
               </div>
 
@@ -83,7 +90,14 @@
                 <button type="submit" class="save btn btn-success">Agregar</button>
                 <a href="/personas" class="btn btn-warning"> volver a la lista</a>
               </div>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
         </form>
     </div>
+
+    <script>
+        webshims.setOptions('form-ext',{types: 'date'});
+        webshims.polifill('forms forms-ext');
+    </script>
 
 {% endblock %}

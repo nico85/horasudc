@@ -2,115 +2,127 @@
 {% block titulo %}Personal de la UDC{% endblock %}
 {% block cabecera %}
     {% load static %}
-    <script src="{% static "js/List.js" %}"></script>
+    <script src="{% static "js/List.js" %}" xmlns="http://www.w3.org/1999/html"></script>
 {% endblock %}
 
 {% block contenido %}
 
-    <h2>Lista del Personal de la UDC</h2>
+    <div>
+        <div>
+            <h2>Lista del Personal de la UDC</h2>
+        </div>
 
-    <div class="well well-sm">
-        <a href="/personas/nueva/" class="btn btn-info"> Agregar Persona</a>
-    </div>
+        <div class="well well-sm">
+            <a href="/personas/nueva/" class="btn btn-info"> Agregar Persona</a>
+        </div>
 
-    {% if personas %}
-        <p>Actualmente hay {{ cantPersonas }} registros.</p>
-        <div id="datospersonas">
-            <div>
-                <input class="search col-sm-4" style="margin-bottom: 10px" placeholder="Buscar por apellido/nombre" id="inputBuscarPersona">
-                <!--<button class="sort" data-sort="apenom">Apellido</button>-->
-            </div>
-            <br>
-            <table class="table table-hover table-bordered table-condensed">
-                <thead>
-                    <tr style="background-color: #5bc0de;">
-                        <th class="sort" data-sort="apenom">Apellido/s y Nombre/s <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
-                        <th>Legajo</th>
-                        <th>C.U.I.L.</th>
-                        <th>Horas cátedras</th>
-                        <th>Horas docente</th>
-                        <th>Editar</th>
-                    </tr>
-                </thead>
-                <tbody class="list">
-                    {% for p in personas %}
-                        {% if p.activo == '1' %}
-                        <tr style="color: black">
-                        {% else %}
-                        <tr style="color: red" title="Inactivo en el Sistema">
-                        {% endif %}
-                        <td class="apenom">{{ p.apellidos }}, {{ p.nombres }}</td>
-                        <td>{{ p.legajo_numero }}</td>
-                        <td>{{ p.cuil }}</td>
-                        <td>
-                            {% if p.personahoras_set.count > 0 %}
-                                <a href="/horascatedras/{{ p.id }}/lista" class="btn btn-info btn-sm" title="Ver las horas cátedras">
-                                    <i class="glyphicon glyphicon-pencil"></i> Ver
-                                </a>
-                            {% else %}
-                                {% if p.activo == '1' %}
-                                    <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                    </a>
-                                {% else %}
-                                    <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras" disabled="disabled">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                    </a>
-                                {% endif %}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if p.docentehoras_set.count > 0 %}
-                                <a href="/horasdocentes/{{ p.id }}/lista" class="btn btn-warning  btn-sm" title="Ver las materias asignadas">
-                                    <i class="glyphicon glyphicon-pencil"></i> Ver
-                                </a>
-                            {% else %}
-                                {% if p.activo == '1' %}
-                                    <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                    </a>
-                                {% else %}
-                                    <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia" disabled="disabled">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                    </a>
-                                {% endif %}
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/personas/{{ p.id }}/editar/" class="btn btn-danger btn-sm" title="Editar Datos de la Persona">
-                                <i class="glyphicon glyphicon-pencil"></i> Datos</a>
-                        </td>
+        {% if personas %}
+            <p>Actualmente hay {{ cantPersonas }} registros.</p>
+            <div id="datospersonas">
+                <div>
+                    <input class="search col-sm-4" style="margin-bottom: 10px" placeholder="Buscar por apellido/nombre" id="inputBuscarPersona">
+                    <!--<button class="sort" data-sort="apenom">Apellido</button>-->
+                    <div style="margin-left: 40px">
+                        <form id="form" method="post">
+                            {% csrf_token %}
+                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
+                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
+                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <table class="table table-hover table-bordered table-condensed">
+                    <thead>
+                        <tr style="background-color: #5bc0de;">
+                            <th class="sort" data-sort="apenom">Apellido/s y Nombre/s <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                            <th>Legajo</th>
+                            <th>C.U.I.L.</th>
+                            <th>Horas cátedras</th>
+                            <th>Horas docente</th>
+                            <th>Editar</th>
                         </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% for p in personas %}
+                            {% if p.activo == '1' %}
+                            <tr style="color: black">
+                            {% else %}
+                            <tr style="color: red" title="Inactivo en el Sistema">
+                            {% endif %}
+                            <td class="apenom">{{ p.apellidos }}, {{ p.nombres }}</td>
+                            <td>{{ p.legajo_numero }}</td>
+                            <td>{{ p.cuil }}</td>
+                            <td>
+                                {% if p.personahoras_set.count > 0 %}
+                                    <a href="/horascatedras/{{ p.id }}/lista" class="btn btn-info btn-sm" title="Ver las horas cátedras">
+                                        <i class="glyphicon glyphicon-pencil"></i> Ver
+                                    </a>
+                                {% else %}
+                                    {% if p.activo == '1' %}
+                                        <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras">
+                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                        </a>
+                                    {% else %}
+                                        <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras" disabled="disabled">
+                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if p.docentehoras_set.count > 0 %}
+                                    <a href="/horasdocentes/{{ p.id }}/lista" class="btn btn-warning  btn-sm" title="Ver las materias asignadas">
+                                        <i class="glyphicon glyphicon-pencil"></i> Ver
+                                    </a>
+                                {% else %}
+                                    {% if p.activo == '1' %}
+                                        <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia">
+                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                        </a>
+                                    {% else %}
+                                        <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia" disabled="disabled">
+                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/personas/{{ p.id }}/editar/" class="btn btn-danger btn-sm" title="Editar Datos de la Persona">
+                                    <i class="glyphicon glyphicon-pencil"></i> Datos</a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if personas.has_other_pages %}
+                  <ul class="pagination">
+                    {% if personas.has_previous %}
+                      <li><a href="?page={{ personas.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in personas.paginator.page_range %}
+                      {% if personas.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
                     {% endfor %}
-                </tbody>
-            </table>
-            {% if personas.has_other_pages %}
-              <ul class="pagination">
-                {% if personas.has_previous %}
-                  <li><a href="?page={{ personas.previous_page_number }}">&laquo;</a></li>
-                {% else %}
-                  <li class="disabled"><span>&laquo;</span></li>
+                    {% if personas.has_next %}
+                      <li><a href="?page={{ personas.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
                 {% endif %}
-                {% for i in personas.paginator.page_range %}
-                  {% if personas.number == i %}
-                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                  {% else %}
-                    <li><a href="?page={{ i }}">{{ i }}</a></li>
-                  {% endif %}
-                {% endfor %}
-                {% if personas.has_next %}
-                  <li><a href="?page={{ personas.next_page_number }}">&raquo;</a></li>
-                {% else %}
-                  <li class="disabled"><span>&raquo;</span></li>
-                {% endif %}
-              </ul>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="alert alert-warning">
-            <h1>No existe ninguna persona cargada aún!</h1>
-        </div>
-    {% endif %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h1>No existe ninguna persona cargada aún!</h1>
+            </div>
+        {% endif %}
+    </div>
 
 <script>
     var options = {
