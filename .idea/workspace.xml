@@ -3,15 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="00afd565-196a-49dd-9969-3ab57c717b9d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/500.html" afterPath="$PROJECT_DIR$/Templates/500.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/base.html" afterPath="$PROJECT_DIR$/Templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/consultaadministrativo.html" afterPath="$PROJECT_DIR$/Templates/consultaadministrativo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/consultadocente.html" afterPath="$PROJECT_DIR$/Templates/consultadocente.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/docentesHorasEdit.html" afterPath="$PROJECT_DIR$/Templates/docentesHorasEdit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/docentesHorasList.html" afterPath="$PROJECT_DIR$/Templates/docentesHorasList.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/docentesHorasNew.html" afterPath="$PROJECT_DIR$/Templates/docentesHorasNew.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/personasEdit.html" afterPath="$PROJECT_DIR$/Templates/personasEdit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/personasList.html" afterPath="$PROJECT_DIR$/Templates/personasList.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/personasNew.html" afterPath="$PROJECT_DIR$/Templates/personasNew.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/horas/models.py" afterPath="$PROJECT_DIR$/horas/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/horas/views.py" afterPath="$PROJECT_DIR$/horas/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/func-can-auto.js" afterPath="$PROJECT_DIR$/static/js/func-can-auto.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/bootstrap/css/bootstrap.css" afterPath="$PROJECT_DIR$/static/bootstrap/css/bootstrap.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/funciones.js" afterPath="$PROJECT_DIR$/static/js/funciones.js" />
     </list>
     <ignored path="horasudc/settings.py" />
@@ -39,46 +41,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/horas/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="83" column="33" lean-forward="true" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+            <state relative-caret-position="300">
+              <caret line="546" column="90" lean-forward="false" selection-start-line="546" selection-start-column="90" selection-end-line="546" selection-end-column="90" />
               <folding>
                 <element signature="e#24#60#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="personasList.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Templates/personasList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="107" lean-forward="true" selection-start-line="27" selection-start-column="107" selection-end-line="27" selection-end-column="107" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="500.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Templates/500.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="19" column="99" lean-forward="true" selection-start-line="19" selection-start-column="99" selection-end-line="19" selection-end-column="99" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/horasudc/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -96,7 +66,11 @@
     <findStrings>
       <find>27249266332</find>
       <find>20341738238</find>
+      <find>bootstrap.css.map</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,9 +86,7 @@
         <option value="$PROJECT_DIR$/Templates/personaNew.html" />
         <option value="$PROJECT_DIR$/Templates/personas.html" />
         <option value="$PROJECT_DIR$/Templates/personasHorasList.html" />
-        <option value="$PROJECT_DIR$/Templates/docentesHorasList.html" />
         <option value="$PROJECT_DIR$/Templates/login.html" />
-        <option value="$PROJECT_DIR$/Templates/consultadocente.html" />
         <option value="$PROJECT_DIR$/db/002 - version_initial" />
         <option value="$PROJECT_DIR$/db/004 - periodo_initial" />
         <option value="$PROJECT_DIR$/db/005 - carrera_initial" />
@@ -133,21 +105,24 @@
         <option value="$PROJECT_DIR$/Templates/inicio.html" />
         <option value="$PROJECT_DIR$/db/011 - persona_initial" />
         <option value="$PROJECT_DIR$/horas/forms.py" />
-        <option value="$PROJECT_DIR$/Templates/docentesHorasEdit.html" />
         <option value="$PROJECT_DIR$/Templates/personasHorasEdit.html" />
         <option value="$PROJECT_DIR$/Templates/personasHorasNew.html" />
-        <option value="$PROJECT_DIR$/horas/models.py" />
-        <option value="$PROJECT_DIR$/Templates/personasEdit.html" />
-        <option value="$PROJECT_DIR$/Templates/personasNew.html" />
         <option value="$PROJECT_DIR$/static/js/func-can-auto.js" />
-        <option value="$PROJECT_DIR$/Templates/docentesHorasNew.html" />
-        <option value="$PROJECT_DIR$/static/js/funciones.js" />
-        <option value="$PROJECT_DIR$/Templates/consultaadministrativo.html" />
         <option value="$PROJECT_DIR$/Templates/base.html" />
-        <option value="$PROJECT_DIR$/horas/views.py" />
-        <option value="$PROJECT_DIR$/Templates/personasList.html" />
         <option value="$PROJECT_DIR$/Templates/500.html" />
         <option value="$PROJECT_DIR$/horasudc/settings.py" />
+        <option value="$PROJECT_DIR$/Templates/docentesHorasNew.html" />
+        <option value="$PROJECT_DIR$/Templates/docentesHorasList.html" />
+        <option value="$PROJECT_DIR$/horas/models.py" />
+        <option value="$PROJECT_DIR$/static/bootstrap/css/bootstrap.css" />
+        <option value="$PROJECT_DIR$/Templates/personasNew.html" />
+        <option value="$PROJECT_DIR$/Templates/personasEdit.html" />
+        <option value="$PROJECT_DIR$/Templates/personasList.html" />
+        <option value="$PROJECT_DIR$/static/js/funciones.js" />
+        <option value="$PROJECT_DIR$/Templates/docentesHorasEdit.html" />
+        <option value="$PROJECT_DIR$/Templates/consultadocente.html" />
+        <option value="$PROJECT_DIR$/Templates/consultaadministrativo.html" />
+        <option value="$PROJECT_DIR$/horas/views.py" />
       </list>
     </option>
   </component>
@@ -201,7 +176,13 @@
             <path>
               <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
               <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
               <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
@@ -298,7 +279,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="-4" width="1303" height="772" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -306,9 +286,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32923076" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22363204" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -318,7 +299,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -381,31 +361,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horasudc/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="81" column="17" lean-forward="true" selection-start-line="81" selection-start-column="17" selection-end-line="81" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="39" column="75" lean-forward="false" selection-start-line="39" selection-start-column="75" selection-end-line="39" selection-end-column="75" />
-          <folding>
-            <element signature="e#666#698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/horas/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -470,13 +425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/bootstrap/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="220" column="7" lean-forward="false" selection-start-line="220" selection-start-column="7" selection-end-line="220" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Templates/personasHorasList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -488,13 +436,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
           <caret line="15" column="91" lean-forward="false" selection-start-line="15" selection-start-column="91" selection-end-line="15" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/consultadocente.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="70" column="66" lean-forward="false" selection-start-line="70" selection-start-column="66" selection-end-line="70" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -590,14 +531,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/inicio.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="12" column="46" lean-forward="true" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/horas/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -612,22 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="462" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="33" column="62" lean-forward="false" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasEdit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="129" column="188" lean-forward="false" selection-start-line="129" selection-start-column="188" selection-end-line="129" selection-end-column="188" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -655,104 +572,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/horas/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="6" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horas/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="126" column="61" lean-forward="false" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/personasEdit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="54" column="212" lean-forward="false" selection-start-line="54" selection-start-column="212" selection-end-line="54" selection-end-column="212" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/func-can-auto.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
           <caret line="72" column="2" lean-forward="true" selection-start-line="72" selection-start-column="2" selection-end-line="72" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/funciones.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="108" column="9" lean-forward="true" selection-start-line="108" selection-start-column="9" selection-end-line="108" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasNew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="66" column="38" lean-forward="true" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/consultaadministrativo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="81" column="8" lean-forward="true" selection-start-line="81" selection-start-column="8" selection-end-line="81" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="37" column="64" lean-forward="false" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
-          <folding>
-            <element signature="e#666#698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/personasNew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="83" column="33" lean-forward="true" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
-          <folding>
-            <element signature="e#24#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/personasList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="107" lean-forward="true" selection-start-line="27" selection-start-column="107" selection-end-line="27" selection-end-column="107" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -770,6 +593,164 @@
         <state relative-caret-position="198">
           <caret line="19" column="99" lean-forward="true" selection-start-line="19" selection-start-column="99" selection-end-line="19" selection-end-column="99" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasNew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="106" column="71" lean-forward="false" selection-start-line="106" selection-start-column="71" selection-end-line="106" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/django/forms/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="473" column="6" lean-forward="false" selection-start-line="473" selection-start-column="6" selection-end-line="473" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/bootstrap/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-28">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/bootstrap/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="6755" column="1" lean-forward="false" selection-start-line="6755" selection-start-column="1" selection-end-line="6755" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/bootstrap/css/bootstrap-theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-28">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horas/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="123" column="55" lean-forward="true" selection-start-line="123" selection-start-column="55" selection-end-line="123" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horas/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/personasEdit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/personasNew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/personasList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="34" column="62" lean-forward="false" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/funciones.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="37" column="64" lean-forward="false" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
+          <folding>
+            <element signature="e#666#698#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/docentesHorasEdit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="20" lean-forward="false" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/inicio.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="46" lean-forward="true" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="30" column="116" lean-forward="true" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="116" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/consultadocente.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="47" column="39" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="47" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/consultaadministrativo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horas/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="546" column="90" lean-forward="false" selection-start-line="546" selection-start-column="90" selection-end-line="546" selection-end-column="90" />
+          <folding>
+            <element signature="e#24#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

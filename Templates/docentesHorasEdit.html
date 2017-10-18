@@ -12,6 +12,7 @@
                 <label for="resolucion_numero" class="col-sm-2 control-label">Resolución Número</label>
                 <div class="col-sm-3">
                     <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required value="{{ dochoras.resolucion_numero }}">
+                    {% if form.resolucion_numero.errors %}<h6 class="alert alert-danger">{{ form.resolucion_numero.errors }}</h6>{% endif %}
                 </div>
               </div>
 
@@ -121,6 +122,7 @@
                 <label for="fecha_inicio" class="col-sm-2 control-label">Asignar desde</label>
                 <div class="col-sm-3">
                     <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required value="{{ dochoras.fecha_inicio | date:"d/m/Y" }}">
+                    {% if form.fecha_inicio.errors %}<h6 class="alert alert-danger">{{ form.fecha_inicio.errors }}</h6>{% endif %}
                 </div>
               </div>
 
@@ -128,6 +130,7 @@
                 <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta</label>
                 <div class="col-sm-3">
                     <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required value="{{ dochoras.fecha_fin | date:"d/m/Y" }}">
+                    {% if form.fecha_fin.errors %}<h6 class="alert alert-danger">{{ form.fecha_fin.errors }}</h6>{% endif %}
                 </div>
               </div>
 

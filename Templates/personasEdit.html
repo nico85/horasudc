@@ -12,24 +12,28 @@
                 <label for="apellidos" class="col-sm-2 control-label">Apellido/s (*)</label>
                 <div class="col-sm-5">
                     <input type="text" id="id_apellidos" maxlength="40" class="col-sm-12" name="apellidos" placeholder="Ingrese su apellido o apellidos" required value="{{ persona.apellidos }}">
+                    {% if form.apellidos.errors %}<h6 class="alert alert-danger">{{ form.apellidos.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
                 <label for="nombres" class="col-sm-2 control-label">Nombre/s (*)</label>
                 <div class="col-sm-5">
                     <input type="text" id="id_nombres" maxlength="40" class="col-sm-12" name="nombres" placeholder="Ingrese su nombre o nombres" required value="{{ persona.nombres }}">
+                    {% if form.nombres.errors %}<h6 class="alert alert-danger">{{ form.nombres.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
                 <label for="cuil" class="col-sm-2 control-label">C.U.I.L. (*)</label>
                 <div class="col-sm-3">
                     <input type="number" id="id_cuil" name="cuil" maxlength="11" minlength="11" class="col-sm-12" placeholder="Ingrese el C.U.I.L." required value="{{ persona.cuil }}">
+                    {% if form.cuil.errors %}<h6 class="alert alert-danger">{{ form.cuil.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
                 <label for="legajo_numero" class="col-sm-2 control-label">Número de Legajo (*)</label>
                 <div class="col-sm-3">
                     <input type="number" id="is_legajo_numero" name="legajo_numero" class="col-sm-12" placeholder="Ingrese el legajo de la Persona" required value="{{ persona.legajo_numero }}">
+                    {% if form.legajo_numero.errors %}<h6 class="alert alert-danger">{{ form.legajo_numero.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -40,12 +44,14 @@
                     {% else %}
                         <input type="tel" id="id_telefono" name="telefono" placeholder="Ingrese el teléfono" name="telefono" value="">
                     {% endif %}
+                    {% if form.telefono.errors %}<h6 class="alert alert-danger">{{ form.telefono.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">E-Mail</label>
                 <div class="col-sm-5">
                     <input type="email" id="id_email" name="email" placeholder="Ingrese el correo electrónico" name="email" value="{{ persona.email }}">
+                    {% if form.email.errors %}<h6 class="alert alert-danger">{{ form.email.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -56,6 +62,7 @@
                     {% else %}
                         <input type="date" id="id_fecha_nacimiento" name="fecha_nacimiento" class="ui-datepickers" placeholder="AAAA-MM-DD" name="fecha_nacimiento" value="">
                     {% endif %}
+                    {% if form.fecha_nacimiento.errors %}<h6 class="alert alert-danger">{{ form.fecha_nacimiento.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -78,6 +85,7 @@
                 <label for="antiguedad" class="col-sm-2 control-label">Antiguedad (*)</label>
                 <div class="col-sm-3">
                     <input type="number" id="id_antiguedad" name="antiguedad" placeholder="Ingrese la antiguedad" name="antiguedad" required value="{{ persona.antiguedad }}">
+                    {% if form.antiguedad.errors %}<h6 class="alert alert-danger">{{ form.antiguedad.errors }}</h6>{% endif %}
                 </div>
               </div>
               <div class="form-group">

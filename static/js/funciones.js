@@ -134,4 +134,10 @@ function filtroPorCarrera(){
             p.options[i].disabled = true;
         }
     }*/
+
+
+}
+
+function validarFechas(){
+
 }

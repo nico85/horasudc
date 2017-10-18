@@ -11,9 +11,13 @@
                 <div id="sede">
                     <label for="sede">Sede: </label>
                     <select class="form-control" id="sede" name="sede">
-                        <option selected value="0">Todas</option>
+                        <option value="0">Todas</option>
                         {% for sede in sedes %}
-                            <option value="{{ sede.id }}">{{ sede.sede_nombre }}</option>
+                            {% if sedeSel == sede.id %}
+                                <option value="{{ sede.id }}" selected>{{ sede.sede_nombre }}</option>
+                            {% else %}
+                                <option value="{{ sede.id }}">{{ sede.sede_nombre }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -21,9 +25,13 @@
                 <div id="carrera">
                     <label for="carrera">Carreras: </label>
                     <select class="form-control" id="carrera" name="carrera">
-                        <option selected value="0">Todas</option>
+                        <option value="0">Todas</option>
                         {% for c in carreras %}
-                            <option value="{{ c.id }}">{{ c.carrera_nombre }}</option>
+                            {% if carreraSel == c.id %}
+                                <option value="{{ c.id }}" selected>{{ c.carrera_nombre }}</option>
+                            {% else %}
+                                <option value="{{ c.id }}">{{ c.carrera_nombre }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -31,23 +39,48 @@
                 <div id="anio">
                     <label for="anio">Año: </label>
                     <select class="form-control" id="anio" name="anio">
-                        <option selected value="0">Todos</option>
+                        <option value="0">Todos</option>
                         {% for a in anios %}
-                            <option value="{{ a }}">{{ a }}</option>
+                            {% if anioSel == a %}
+                                <option value="{{ a }}" selected>{{ a }}</option>
+                            {% else %}
+                                <option value="{{ a }}">{{ a }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
                 <hr>
-                <button type="submit" style="width: 100%" class="btn btn-info">
-                    <img src="../static/img/icono_filtrar-white_24.png">
-                    Filtrar
-                </button>
+                <div id="fecha_desde">
+                    <label for="fecha_desde">Desde: {{ fechaDesdeSel }}</label>
+                    {% if fechaDesdeSel != "" %}
+                        <input type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde" value="{{ fechaDesdeSel }}">
+                    {% else %}
+                        <input type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde">
+                    {% endif %}
+                </div>
+                <hr>
+                <div id="fecha_hasta">
+                    <label for="fecha_hasta">Hasta: {{ fechaHastaSel }}</label>
+                    {% if fechaHastaSel != "" %}
+                        <input type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta" value="{{ fechaHastaSel }}">
+                    {% else %}
+                        <input type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta">
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="btn-group-vertical" style="width: 100%">
+                    <button type="submit"class="btn btn-info" onclick="validarFechas()">
+                        <img src="../static/img/icono_filtrar-white_24.png">
+                        Filtrar
+                    </button>
+                    <a class="btn btn-success" href="/docentes">Nueva consulta</a>
+                </div>
             </form>
         </div>
         <div id="contenido-consulta" clasS="col-sm-10">
             {% if docentes.count > 0 %}
                 <h5>Lista del Personal docente de la Universidad del Chubut</h5>
-                <h6>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} docentes)</h6>
+                <h6>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} asignaciones)</h6>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-condensed">
                         <thead>
@@ -58,6 +91,8 @@
                                 <th>Carrera</th>
                                 <th>Materia</th>
                                 <th>Resolución</th>
+                                <th>Desde</th>
+                                <th>Hasta</th>
                                 <th>Horas</th>
                                 <th>Hs. Total</th>
                                 <th>Hs a liquidar</th>
@@ -74,6 +109,8 @@
                                     <td>{{ d.materia.plan.carrera.carrera_nombre }}</td>
                                     <td>{{ d.materia.materia_nombre }}</td>
                                     <td>{{ d.resolucion_numero }}/{{ d.resolucion_anio }}</td>
+                                    <td>{{ d.fecha_inicio | date:"d/m/Y" }}</td>
+                                    <td>{{ d.fecha_fin | date:"d/m/Y" }}</td>
                                     <td>{{ d.materia.hs_semanales }}</td>
                                     <td>{{ d.materia.hs_total_materia }}</td>
                                     <td>

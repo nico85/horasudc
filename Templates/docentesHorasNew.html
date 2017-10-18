@@ -14,6 +14,9 @@
                     <input type="number" id="id_resolucion_numero" name="resolucion_numero" class="col-sm-12" placeholder="Resolución de la asignación" required>
                 </div>
               </div>
+              {% if form.resolucion_numero.errors %}
+                <div class="alert alert-danger">Error en el Número de Resolución ({{ form.resolucion_numero.errors }})</div>
+              {% endif %}
 
               <div class="form-group">
                 <label for="resolucion_anio" class="col-sm-2 control-label">Año</label>
@@ -104,6 +107,9 @@
                     <input type="date" id="id_fecha_inicio" name="fecha_inicio" class="col-sm-12" placeholder="Fecha de inicio de la asignación" required>
                 </div>
               </div>
+              {% if form.fecha_inicio.errors %}
+                <div class="alert alert-danger">Error en Fecha Desde ({{ form.fecha_inicio.errors }})</div>
+              {% endif %}
 
               <div class="form-group">
                 <label for="fecha_fin" class="col-sm-2 control-label">Asignar hasta</label>
@@ -111,6 +117,9 @@
                     <input type="date" id="id_fecha_fin" name="fecha_fin" class="col-sm-12" placeholder="Fecha de fin de la asignación" required>
                 </div>
               </div>
+              {% if form.fecha_fin.errors %}
+                <div class="alert alert-danger">Error en Fecha Inicio ({{ form.fecha_fin.errors }})</div>
+              {% endif %}
 
               <div class="btn-group">
                 <button type="submit" class="save btn btn-success">Asignar</button>

@@ -9,7 +9,7 @@
 
     <div>
         <div>
-            <h2>Lista del Personal de la UDC</h2>
+            <h3><b>Lista del Personal de la UDC</b></h3>
         </div>
 
         <div class="well well-sm">
@@ -25,9 +25,19 @@
                     <div style="margin-left: 40px">
                         <form id="form" method="post">
                             {% csrf_token %}
-                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
-                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
-                            <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                            {% if estadoSel < 0 %}
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1" checked>Todas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                            {% elif estadoSel == 1 %}
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1" checked>Activas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                            {% else %}
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
+                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0" checked>Inactivas</label>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
