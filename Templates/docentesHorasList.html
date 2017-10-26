@@ -16,7 +16,8 @@
                     <th>Materia</th>
                     <th>Desde</th>
                     <th>Hasta</th>
-                    <th>Periodo</th>
+                    <th>Remuneración</th>
+                    <th>Materia Periodo</th>
                     <th>Horas semanales</th>
                     <th>Horas total materia</th>
                     <th>Docente Tipo</th>
@@ -34,6 +35,7 @@
                         <td>{{ doc.materia.materia_nombre }}</td>
                         <td>{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
                         <td>{{ doc.fecha_fin | date:"d/m/Y" }}</td>
+                        <td>{{ doc.remunerado }}</td>
                         <td>{{ doc.materia.periodo.periodo_nombre }}</td>
                         <td>{{ doc.materia.hs_semanales }}</td>
                         <td>{{ doc.materia.hs_total_materia }}</td>
