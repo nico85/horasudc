@@ -535,7 +535,7 @@ def export_admin_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/csv')
+    response = HttpResponse(content_type='text/csv', charset='utf-8')
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xls"'
 
     writer = csv.writer(response)
