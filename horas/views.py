@@ -535,7 +535,7 @@ def export_admin_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/csv', charset='utf-8')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xls"'
 
     writer = csv.writer(response)
@@ -543,8 +543,8 @@ def export_admin_xls(request):
 
     for adm in administrativos:
         apenom = adm.persona.apellidos + ', ' + adm.persona.nombres
-        depend = str(adm.dependencia.dependencia_nombre)
-        resolu = str(adm.resolucion_numero) + '/' + str(adm.resolucion_anio)
+        depend = adm.dependencia.dependencia_nombre
+        resolu = adm.resolucion_numero + '/' + adm.resolucion_anio
         writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.hs_catedras, depend])
 
     return response
@@ -565,8 +565,8 @@ def export_doc_xls(request):
                      'Hs total materia', 'Hs a liquidar', 'Anio academico', 'Periodo'])
 
     for doc in docentes:
-        apenom = str(doc.persona.apellidos) + ', ' + str(doc.persona.nombres)
-        resolu = str(doc.resolucion_numero) + '/' + str(doc.resolucion_anio)
+        apenom = doc.persona.apellidos + ', ' + doc.persona.nombres
+        resolu = doc.resolucion_numero + '/' + doc.resolucion_anio
         tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
         tot = doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje
         writer.writerow(
