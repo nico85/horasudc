@@ -544,7 +544,7 @@ def export_admin_xls(request):
     for adm in administrativos:
         apenom = adm.persona.apellidos + ', ' + adm.persona.nombres
         depend = adm.dependencia.dependencia_nombre
-        resolu = adm.resolucion_numero + '/' + adm.resolucion_anio
+        resolu = str(adm.resolucion_numero) + '/' + str(adm.resolucion_anio)
         writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.hs_catedras, depend])
 
     return response
@@ -566,7 +566,7 @@ def export_doc_xls(request):
 
     for doc in docentes:
         apenom = doc.persona.apellidos + ', ' + doc.persona.nombres
-        resolu = doc.resolucion_numero + '/' + doc.resolucion_anio
+        resolu = str(doc.resolucion_numero) + '/' + str(doc.resolucion_anio)
         tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
         tot = doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje
         writer.writerow(
