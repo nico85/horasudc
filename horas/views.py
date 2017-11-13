@@ -543,8 +543,9 @@ def export_admin_xls(request):
 
     for adm in administrativos:
         apenom = str(adm.persona.apellidos) + ', ' + str(adm.persona.nombres)
+        depend = str(adm.dependencia.dependencia_nombre)
         resolu = str(adm.resolucion_numero) + '/' + str(adm.resolucion_anio)
-        writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.hs_catedras, adm.dependencia.dependencia_nombre])
+        writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.hs_catedras, depend])
 
     return response
 
