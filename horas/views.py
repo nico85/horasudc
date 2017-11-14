@@ -535,7 +535,7 @@ def export_admin_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/xls', charset='utf-8')
+    response = HttpResponse(content_type='text/csv', charset='utf-8')
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xlsx"'
 
     writer = csv.writer(response)
@@ -557,7 +557,7 @@ def export_doc_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/xls')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xlsx"'
 
     writer = csv.writer(response)
