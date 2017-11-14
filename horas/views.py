@@ -570,9 +570,10 @@ def export_doc_xls(request):
         tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
         tot = doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje
         writer.writerow(
-            [apenom, doc.sede.sede_nombre, doc.materia.plan.carrera.carrera_nombre, doc.materia.materia_nombre,
-             resolu, doc.fecha_inicio, doc.fecha_fin, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot, doc.materia.anio_academico,
-             doc.materia.periodo.periodo_nombre]
+            [apenom, doc.sede.sede_nombre.encode('ascii', 'replace'), doc.materia.plan.carrera.carrera_nombre.encode('ascii', 'replace')
+                , doc.materia.materia_nombre.encode('ascii', 'replace'), resolu, doc.fecha_inicio,
+             doc.fecha_fin, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot,
+             doc.materia.anio_academico, doc.materia.periodo.periodo_nombre.encode('ascii', 'replace')]
         )
 
     return response
