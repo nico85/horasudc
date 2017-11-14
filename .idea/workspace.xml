@@ -32,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/horas/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="545" column="56" lean-forward="false" selection-start-line="545" selection-start-column="56" selection-end-line="545" selection-end-column="56" />
+            <state relative-caret-position="170">
+              <caret line="542" column="0" lean-forward="true" selection-start-line="542" selection-start-column="0" selection-end-line="542" selection-end-column="0" />
               <folding>
                 <element signature="e#24#60#0" expanded="true" />
               </folding>
@@ -157,6 +157,16 @@
             <path>
               <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
               <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+              <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="horasudc" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
@@ -528,14 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/horasudc/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Templates/500.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -715,10 +717,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/horasudc/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/horas/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="545" column="56" lean-forward="false" selection-start-line="545" selection-start-column="56" selection-end-line="545" selection-end-column="56" />
+        <state relative-caret-position="170">
+          <caret line="542" column="0" lean-forward="true" selection-start-line="542" selection-start-column="0" selection-end-line="542" selection-end-column="0" />
           <folding>
             <element signature="e#24#60#0" expanded="true" />
           </folding>
