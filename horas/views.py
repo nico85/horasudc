@@ -535,8 +535,8 @@ def export_admin_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/csv', charset='utf-8')
-    response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xlsx"'
+    response = HttpResponse(content_type='text/xls', charset='utf-8')
+    response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xls"'
 
     writer = csv.writer(response)
     writer.writerow(['Apellido y Nombre', 'CUIL', 'Resolucion', 'Fecha Inicio', 'Fecha Fin', 'Hs_catedras', 'Dependencia'])
@@ -557,8 +557,8 @@ def export_doc_xls(request):
     mes = hoy.month
     anio = hoy.year
     str_fecha = str(anio)+'-'+str(mes)+'-'+str(dia)
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xlsx"'
+    response = HttpResponse(content_type='text/xls')
+    response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xls"'
 
     writer = csv.writer(response)
     writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'Resolucion', 'Fecha Inicio', 'Fecha Fin', 'Horas Materia',
