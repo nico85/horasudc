@@ -32,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/horas/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="545" column="56" lean-forward="false" selection-start-line="545" selection-start-column="56" selection-end-line="545" selection-end-column="56" />
+            <state relative-caret-position="153">
+              <caret line="543" column="31" lean-forward="true" selection-start-line="543" selection-start-column="31" selection-end-line="543" selection-end-column="31" />
               <folding>
                 <element signature="e#24#60#0" expanded="true" />
               </folding>
@@ -346,16 +346,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/horas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3060">
-          <caret line="193" column="32" lean-forward="true" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
-          <folding>
-            <element signature="e#24#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/horasudc/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -725,10 +715,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.2/system/python_stubs/-1247971764/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/horas/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="545" column="56" lean-forward="false" selection-start-line="545" selection-start-column="56" selection-end-line="545" selection-end-column="56" />
+        <state relative-caret-position="153">
+          <caret line="543" column="31" lean-forward="true" selection-start-line="543" selection-start-column="31" selection-end-line="543" selection-end-column="31" />
           <folding>
             <element signature="e#24#60#0" expanded="true" />
           </folding>
