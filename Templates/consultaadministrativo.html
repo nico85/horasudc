@@ -67,8 +67,17 @@
         </div>
         <div id="contenido-consulta" clasS="col-sm-10">
             {% if administrativos.count > 0 %}
-                <h5>Lista del Personal con horas cátedras de la Universidad del Chubut</h5>
-                <h6>(se encontraron {{ administrativos.count }} resultados, de un total de {{ total_adms }} personas)</h6>
+                <div style="display: inline-block">
+                    <div style="float:left">
+                        <h5>Lista del Personal con horas cátedras de la Universidad del Chubut</h5>
+                        <h6>(se encontraron {{ administrativos.count }} resultados, de un total de {{ total_adms }} personas)</h6>
+                    </div>
+                    <div style="float:left;padding-left: 20px">
+                        <a href="/admin/export/xls/" class="btn btn-success">
+                        <img src="../static/img/icon_excel-white_24.png"></a>
+                    </div>
+                </div>
+
                 <table class="table table-hover table-bordered table-condensed">
                     <thead>
                         <tr>
@@ -97,10 +106,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <div align="right">
-                    <a href="/admin/export/xls/" class="btn btn-success">
-                        <img src="../static/img/icon_excel-white_24.png"></a>
-                </div>
             {% else %}
                 <div class="alert alert-warning">
                     <h3>No se encontró ningún resultado según los filtros marcados.</h3>
