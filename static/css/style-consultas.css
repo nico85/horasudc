@@ -41,3 +41,10 @@
     float: right;
     padding: 5px;
 }
+
+.tblconsulta th{
+    color: white;
+    background-color: #1b6d85;
+    text-align: center;
+    vertical-align: baseline;
+}

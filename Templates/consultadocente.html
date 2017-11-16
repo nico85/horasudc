@@ -84,13 +84,13 @@
                         <h5>Lista del Personal docente de la Universidad del Chubut</h5>
                         <h6>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} asignaciones)</h6>
                     </div>
-                    <div style="float:left;padding-left: 20px">
+                    <div style="float:left;padding: 10px">
                         <a href="/doc/export/xls/" class="btn btn-success">
                         <img src="../static/img/icon_excel-white_24.png"></a>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered table-condensed">
+                <div id="datosDocentes">
+                    <table class="table table-hover table-bordered table-condensed tblconsulta">
                         <thead>
                             <tr>
                                 <th>Legajo</th>
@@ -98,7 +98,7 @@
                                 <th>Sede</th>
                                 <th>Carrera</th>
                                 <th>Materia</th>
-                                <th>Resolución</th>
+                                <th class="sort" data-sort="nroresolucion" style="width: 125px">Resolución <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
                                 <th>Desde</th>
                                 <th>Hasta</th>
                                 <th>Horas</th>
@@ -108,7 +108,7 @@
                                 <th>Periodo</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="list">
                             {% for d in docentes %}
                                 <tr>
                                     <td>{{ d.persona.legajo_numero }}</td>
@@ -116,7 +116,7 @@
                                     <td>{{ d.sede }}</td>
                                     <td>{{ d.materia.plan.carrera.carrera_nombre }}</td>
                                     <td>{{ d.materia.materia_nombre }}</td>
-                                    <td>{{ d.resolucion_numero }}/{{ d.resolucion_anio }}</td>
+                                    <td class="nroresolucion">{{ d.resolucion_numero }}/{{ d.resolucion_anio }}</td>
                                     <td>{{ d.fecha_inicio | date:"d/m/Y" }}</td>
                                     <td>{{ d.fecha_fin | date:"d/m/Y" }}</td>
                                     <td>{{ d.materia.hs_semanales }}</td>
@@ -141,6 +141,12 @@
                 </div>
             {% endif %}
         </div>
-
     </div>
+
+<script>
+    var options = {
+        valueNames: ["nroresolucion"]
+    };
+    var administradoresList = new List("datosDocentes", options)
+</script>
 {% endblock %}

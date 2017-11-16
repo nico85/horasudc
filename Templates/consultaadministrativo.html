@@ -72,40 +72,42 @@
                         <h5>Lista del Personal con horas cátedras de la Universidad del Chubut</h5>
                         <h6>(se encontraron {{ administrativos.count }} resultados, de un total de {{ total_adms }} personas)</h6>
                     </div>
-                    <div style="float:left;padding-left: 20px">
+                    <div style="float:left;padding: 10px">
                         <a href="/admin/export/xls/" class="btn btn-success">
                         <img src="../static/img/icon_excel-white_24.png"></a>
                     </div>
                 </div>
-
-                <table class="table table-hover table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Legajo</th>
-                            <th>Nombre y Apellido</th>
-                            <th>CUIL</th>
-                            <th>Resolución</th>
-                            <th>Inicio</th>
-                            <th>Fin</th>
-                            <th>Horas Cátedras</th>
-                            <th>Dependencia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for p in administrativos %}
+                <div id="datosAdministrativos">
+                    <!--<input class="search col-sm-4" style="margin-bottom: 10px; width: 100%" placeholder="Buscar por número de resolución" id="inputBuscarAdmin">-->
+                    <table class="table table-hover table-bordered table-condensed tblconsulta">
+                        <thead>
                             <tr>
-                                <td>{{ p.persona.legajo_numero }}</td>
-                                <td>{{ p.persona.apellidos }}, {{ p.persona.nombres }}</td>
-                                <td>{{ p.persona.cuil }}</td>
-                                <td>{{ p.resolucion_numero }}/{{ p.resolucion_anio }}-UDC</td>
-                                <td>{{ p.fecha_inicio | date:"d/m/Y" }}</td>
-                                <td>{{ p.fecha_fin | date:"d/m/Y" }}</td>
-                                <td>{{ p.hs_catedras }}</td>
-                                <td>{{ p.dependencia.dependencia_nombre }}</td>
+                                <th>Legajo</th>
+                                <th>Nombre y Apellido</th>
+                                <th>CUIL</th>
+                                <th class="sort" data-sort="nroresolucion" style="width: 125px">Resolución <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Horas Cátedras</th>
+                                <th>Dependencia</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in administrativos %}
+                                <tr>
+                                    <td>{{ p.persona.legajo_numero }}</td>
+                                    <td>{{ p.persona.apellidos }}, {{ p.persona.nombres }}</td>
+                                    <td>{{ p.persona.cuil }}</td>
+                                    <td class="nroresolucion">{{ p.resolucion_numero }}/{{ p.resolucion_anio }}-UDC</td>
+                                    <td>{{ p.fecha_inicio | date:"d/m/Y" }}</td>
+                                    <td>{{ p.fecha_fin | date:"d/m/Y" }}</td>
+                                    <td>{{ p.hs_catedras }}</td>
+                                    <td>{{ p.dependencia.dependencia_nombre }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
                 <div class="alert alert-warning">
                     <h3>No se encontró ningún resultado según los filtros marcados.</h3>
@@ -114,4 +116,11 @@
         </div>
     </div>
   </div>
+
+<script>
+    var options = {
+        valueNames: ["nroresolucion"]
+    };
+    var administradoresList = new List("datosAdministrativos", options)
+</script>
 {% endblock %}
