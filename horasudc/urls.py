@@ -34,9 +34,11 @@ urlpatterns = [
     url(r'^horascatedras/(?P<pid>[0-9]+)/lista/$', views.personasHorasList),
     url(r'^horascatedras/(?P<pid>[0-9]+)/asignar/$', views.personasHorasNew),
     url(r'^horascatedras/(?P<phid>[0-9]+)/editar/$', views.personasHorasEdit),
+    url(r'^horascatedras/(?P<asid>[0-9]+)/borrarbaja/$', views.personasHorasBorrarBaja),
     url(r'^horasdocentes/(?P<pid>[0-9]+)/lista/$', views.docenteHorasList),
     url(r'^horasdocentes/(?P<pid>[0-9]+)/asignar/$', views.docenteHorasNew),
     url(r'^horasdocentes/(?P<dhid>[0-9]+)/editar/$', views.docenteHorasEdit),
+    url(r'^horasdocentes/(?P<asid>[0-9]+)/borrarbaja/$', views.docenteHorasBorrarBaja),
     url(r'^admin/export/xls/$', views.export_admin_xls, name='export_admin_xls'),
     url(r'^doc/export/xls/$', views.export_doc_xls, name='export_doc_xls'),
 ]

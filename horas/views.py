@@ -280,12 +280,73 @@ def consdoc(request):
 
 @login_required()
 def personasHorasList(request, pid):
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    # Fin obtener el arreglo de años
+    form = PersonaHoras()
     perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
     persona = Persona.objects.get(id=pid)
+    motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
+    if request.method == 'POST':
+        id_asignacion = request.POST['id']
+        asignacion = PersonaHoras.objects.get(id=id_asignacion)
+        fechaBaja = request.POST['fecha_baja']
+        if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
+            asignacion.baja = True
+            asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
+            asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
+            asignacion.motivo_baja = request.POST['motivos']
+            asignacion.fecha_baja = request.POST['fecha_baja']
+            asignacion.observaciones_baja = request.POST['observaciones_baja']
+            asignacion.save()
+            return render(request, 'personasHorasList.html', {
+                'perhscat': perhscat,
+                'persona': persona,
+                'motivos': motivosBajaResolucion,
+                'form': form,
+                'anios': lista_anios,
+            })
+        else:
+            errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
+            return render(request, 'personasHorasList.html', {
+                'perhscat': perhscat,
+                'persona': persona,
+                'motivos': motivosBajaResolucion,
+                'form': form,
+                'anios': lista_anios,
+                'error': errors,
+            })
+
     return render(request, 'personasHorasList.html', {
         'perhscat': perhscat,
         'persona': persona,
+        'motivos': motivosBajaResolucion,
+        'form': form,
+        'anios': lista_anios,
     })
+
+@login_required()
+def personasHorasBorrarBaja(request, asid):
+    asignacion = PersonaHoras.objects.get(id=asid)
+    persona = Persona.objects.get(id=asignacion.persona_id)
+
+    asignacion.baja = False
+    asignacion.resolucion_numero_baja = 0
+    asignacion.resolucion_anio_baja = 0
+    asignacion.motivo_baja = ""
+    asignacion.fecha_baja = '2000-01-01'
+    asignacion.observaciones_baja = ""
+    asignacion.save()
+
+    url = '/horascatedras/' + str(persona.id) + '/lista/'
+    return redirect(url)
 
 @login_required()
 def personasHorasNew(request, pid):
@@ -384,9 +445,20 @@ def personasHorasDelete(request, phid):
 
 @login_required()
 def docenteHorasList(request, pid):
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = anio_actual - i
+        i += 1
+    # Fin obtener el arreglo de años
+    form = DocenteHoras()
+    motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
     dochoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
     persona = Persona.objects.get(id=pid)
-
     nro_fil = len(dochoras)
     lista_hs = [None] * nro_fil
     for n in range(nro_fil):
@@ -398,12 +470,56 @@ def docenteHorasList(request, pid):
         lista_hs[i]['id_doc'] = dh.id
         lista_hs[i]['tot_hs'] = int(tot)
         i += 1
+    if request.method == 'POST':
+        id_asignacion = request.POST['id']
+        asignacion = DocenteHoras.objects.get(id=id_asignacion)
+        fechaBaja = request.POST['fecha_baja']
+        if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
+            asignacion.baja = True
+            asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
+            asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
+            asignacion.motivo_baja = request.POST['motivos']
+            asignacion.fecha_baja = request.POST['fecha_baja']
+            asignacion.observaciones_baja = request.POST['observaciones_baja']
+            asignacion.save()
+            url = '/horasdocentes/' + str(persona.id) + '/lista/'
+            return redirect(url)
+        else:
+            errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
+            return render(request, 'docentesHorasList.html', {
+                'dochoras': dochoras,
+                'persona': persona,
+                'motivos': motivosBajaResolucion,
+                'form': form,
+                'anios': lista_anios,
+                'lista_hs': lista_hs,
+                'error': errors,
+            })
 
     return render(request, 'docentesHorasList.html', {
         'dochoras': dochoras,
         'persona': persona,
+        'motivos': motivosBajaResolucion,
+        'form': form,
+        'anios': lista_anios,
         'lista_hs': lista_hs,
     })
+
+@login_required()
+def docenteHorasBorrarBaja(request, asid):
+    asignacion = DocenteHoras.objects.get(id=asid)
+    persona = Persona.objects.get(id=asignacion.persona_id)
+
+    asignacion.baja = False
+    asignacion.resolucion_numero_baja = 0
+    asignacion.resolucion_anio_baja = 0
+    asignacion.motivo_baja = ""
+    asignacion.fecha_baja = '2000-01-01'
+    asignacion.observaciones_baja = ""
+    asignacion.save()
+
+    url = '/horasdocentes/' + str(persona.id) + '/lista/'
+    return redirect(url)
 
 @login_required()
 def docenteHorasNew(request, pid):

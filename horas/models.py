@@ -153,11 +153,17 @@ class Dependencia(models.Model):
 class PersonaHoras (models.Model):
     persona = models.ForeignKey(Persona)
     resolucion_numero = models.IntegerField('Resolución número')
-    resolucion_anio = models.CharField('Resolución año', max_length=10)
+    resolucion_anio = models.CharField('Resolución año', max_length=4)
     hs_catedras = models.IntegerField('Horas cátedras')
     fecha_inicio = models.DateField('Fecha de Inicio')
     fecha_fin = models.DateField('Fecha de Fin')
     dependencia = models.ForeignKey(Dependencia)
+    baja = models.BooleanField(default=False)
+    resolucion_numero_baja = models.IntegerField(blank=True, null=True)
+    resolucion_anio_baja = models.CharField(max_length=4, blank=True, null=True)
+    motivo_baja = models.CharField(max_length=200, blank=True, null=True)
+    fecha_baja = models.DateField(blank=True, null=True)
+    observaciones_baja = models.TextField(max_length=400, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Persona-Horas'
@@ -174,6 +180,12 @@ class DocenteHoras (models.Model):
     remunerado = models.CharField(max_length=30)
     porcentaje_aplicado = models.IntegerField(blank=True, null=True)
     hs_institucionales = models.IntegerField(blank=True, null=True)
+    baja = models.BooleanField(default=False)
+    resolucion_numero_baja = models.IntegerField(blank=True, null=True)
+    resolucion_anio_baja = models.CharField(max_length=4, blank=True, null=True)
+    motivo_baja = models.CharField(max_length=200, blank=True, null=True)
+    fecha_baja = models.DateField(blank=True, null=True)
+    observaciones_baja = models.TextField(max_length=400, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docente-Horas'
