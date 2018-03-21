@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00afd565-196a-49dd-9969-3ab57c717b9d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/docentesHorasList.html" afterPath="$PROJECT_DIR$/Templates/docentesHorasList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/personasHorasList.html" afterPath="$PROJECT_DIR$/Templates/personasHorasList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Templates/personasList.html" afterPath="$PROJECT_DIR$/Templates/personasList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/horas/models.py" afterPath="$PROJECT_DIR$/horas/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/horas/views.py" afterPath="$PROJECT_DIR$/horas/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/horasudc/urls.py" afterPath="$PROJECT_DIR$/horasudc/urls.py" />
-    </list>
+    <list default="true" id="00afd565-196a-49dd-9969-3ab57c717b9d" name="Default" comment="" />
     <ignored path="horasudc/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -85,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/Templates/personasHorasList.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="313">
-              <caret line="218" column="0" lean-forward="true" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+              <caret line="218" column="0" lean-forward="false" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#tr#0;n#thead#0;n#table#0;n#div#2;n#!!top" expanded="true" />
               </folding>
@@ -185,7 +177,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="width" value="1598" />
     <option name="height" value="864" />
   </component>
@@ -318,7 +310,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1309" height="772" extended-state="7" />
+    <frame x="0" y="0" width="1309" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22888714" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -796,7 +788,7 @@
     <entry file="file://$PROJECT_DIR$/Templates/personasHorasList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
-          <caret line="218" column="0" lean-forward="true" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+          <caret line="218" column="0" lean-forward="false" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#tr#0;n#thead#0;n#table#0;n#div#2;n#!!top" expanded="true" />
           </folding>
