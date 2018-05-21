@@ -783,13 +783,13 @@ def export_cert_prest_serv(request, pid):
     #document.add_heading("Certificado de Prestación de Servicios", level=1)
     p2 = document.add_paragraph(u'CERTIFICO que el/la Sr./Sra. ')
     p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
-    p2.add_run('prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
+    p2.add_run(u'prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
 
     table = document.add_table(rows=1, cols=4)
     #table.style = 'Table Grid'
     hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Cargo o Función'
-    hdr_cells[1].text = 'Resolución'
+    hdr_cells[0].text = u'Cargo o Función'
+    hdr_cells[1].text = u'Resolución'
     hdr_cells[2].text = 'Desde'
     hdr_cells[3].text = 'Hasta'
     if (docHoras.count() > 0):
@@ -820,7 +820,7 @@ def export_cert_prest_serv(request, pid):
     p4 = document.add_paragraph('Aportes en el Instituto de Seguridad Social y Seguros - Chubut.')
 
     p5 = document.add_paragraph('A pedido de el/la interesado/a y a solo efectos de acreditar haber prestado'
-                                + ' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
+                                + u' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
                                 + ' a los' + fecha_en_letras)
     document.save(response)
 
