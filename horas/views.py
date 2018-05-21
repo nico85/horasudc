@@ -798,7 +798,7 @@ def export_cert_prest_serv(request, pid):
             row_cells[0].text = item.docente_tipo.tipo_docente + " de la Asignatura " + \
                                 '"' + item.materia.materia_nombre + '"' \
                                 + '(' + item.materia.plan.carrera.carrera_nombre + ')'
-            row_cells[1].text = 'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+            row_cells[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
             #row_cells[2].text = str(item.fecha_inicio).format("d/m/Y")
             #row_cells[3].text = str(item.fecha_fin).format("d/m/Y")
             row_cells[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
@@ -808,7 +808,7 @@ def export_cert_prest_serv(request, pid):
         for item in persHoras:
             row_cells2 = table.add_row().cells
             row_cells2[0].text = item.dependencia.dependencia_nombre
-            row_cells2[1].text = 'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+            row_cells2[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
             #row_cells2[2].text = str(item.fecha_inicio).format('d/m/Y')
             #row_cells2[3].text = str(item.fecha_fin).format('d/m/Y')
             row_cells2[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
