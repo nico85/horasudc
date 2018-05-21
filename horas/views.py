@@ -737,8 +737,8 @@ def export_cert_prest_serv(request, pid):
     lista_dias = {'1': 'primero', '2': 'dos', '3': 'tres', '4': 'cuatro', '5': 'cinco', '6': 'seis', '7': 'siete',
                   '8': 'ocho', '9': 'nueve', '10': 'diez', '11': 'once', '12': 'doce', '13': 'trece',
                   '14': 'catorce', '15': 'quince', '16': 'dieciseis', '17': 'diecisiete', '18': 'dieciocho',
-                  '19': 'diecinueve', '20': 'veinte', '21': 'veintiún', '22': 'veintidós', '23': 'veintitrés',
-                  '24': 'veinticuatro', '25': 'veinticinco', '26': 'veintiséis', '27': 'veintisiete',
+                  '19': 'diecinueve', '20': 'veinte', '21': 'veintiun', '22': 'veintidos', '23': 'veintitres',
+                  '24': 'veinticuatro', '25': 'veinticinco', '26': 'veintiseis', '27': 'veintisiete',
                   '28': 'veintiocho', '29': 'veintinueve', '30': 'treinta', '31': 'treinta y uno'}
     lista_mes = {'1': 'enero', '2': 'febrero', '3': 'marzo', '4': 'abril', '5': 'mayo', '6': 'junio',
                  '7': 'julio', '8': 'agosto', '9': 'septiembre', '10': 'octubre', '11': 'noviembre',
@@ -755,10 +755,10 @@ def export_cert_prest_serv(request, pid):
     mes = hoy.month
     anio = hoy.year
     if (dia == 1):
-        fecha_en_letras = ' al ' + lista_dias[str(dia)] + ' de ' + lista_mes[str(mes)] + ' del año ' + lista_anios[
+        fecha_en_letras = ' al ' + lista_dias[str(dia)] + ' de ' + lista_mes[str(mes)] + u' del año ' + lista_anios[
             str(anio)]
     else:
-        fecha_en_letras = ' a los ' + lista_dias[str(dia)] + ' días del mes de ' + lista_mes[str(mes)] + ' del año ' + \
+        fecha_en_letras = ' a los ' + lista_dias[str(dia)] + u' días del mes de ' + lista_mes[str(mes)] + u' del año ' + \
                           lista_anios[str(anio)]
 
     docName = "Certificado_Prestacion_de_Servicio_" + persona.apellidos + "-" + persona.nombres + ".docx"
