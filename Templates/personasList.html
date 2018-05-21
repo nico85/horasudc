@@ -51,6 +51,7 @@
                             <th>Horas cátedras</th>
                             <th>Horas docente</th>
                             <th>Editar</th>
+                            <th>Certificado</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -100,6 +101,15 @@
                             <td>
                                 <a href="/personas/{{ p.id }}/editar/" class="btn btn-danger btn-sm" title="Editar Datos de la Persona">
                                     <i class="glyphicon glyphicon-pencil"></i> Datos</a>
+                            </td>
+                            <td>
+                                {% if p.docentehoras_set.count > 0 or p.personahoras_set.count > 0 %}
+                                    <a href="/personas/{{ p.id }}/certifprestserv/" class="btn btn-default btn-sm" title="Generar el Certificado de Prestación de Servicios">
+                                        <i class="glyphicon glyphicon-print"></i> Prestación de Servicios
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-default">Sin horas</button>
+                                {% endif %}
                             </td>
                             </tr>
                         {% endfor %}

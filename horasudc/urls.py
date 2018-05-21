@@ -27,6 +27,7 @@ urlpatterns = [
     url(regex=r'^inicio/login/$', view=login, kwargs={'template_name': 'login.html'}, name='login'),
     url(regex=r'^inicio/logout/$', view=logout, kwargs={'next_page': '/inicio'}, name='logout'),
     url(r'^personas/$', views.personasList),
+    url(r'^personas/(?P<pid>[0-9]+)/certifprestserv/$', views.personasCertPrestServ),
     url(r'^docentes/$', views.consdoc),
     url(r'^administrativos/$', views.consadm),
     url(r'^personas/nueva/$', views.personasNew),
@@ -41,4 +42,5 @@ urlpatterns = [
     url(r'^horasdocentes/(?P<asid>[0-9]+)/borrarbaja/$', views.docenteHorasBorrarBaja),
     url(r'^admin/export/xls/$', views.export_admin_xls, name='export_admin_xls'),
     url(r'^doc/export/xls/$', views.export_doc_xls, name='export_doc_xls'),
+    url(r'^doc/export/(?P<pid>[0-9]+)/certprestserv/$', views.export_cert_prest_serv, name='export_cert_prest_serv'),
 ]

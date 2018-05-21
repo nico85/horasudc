@@ -9,12 +9,12 @@
                 <p>Version actual: {{ version }}</p>
                 <ul>
                     Cambios de la versión
-                    {% if cambios.count > 1 %}
+                    {% if cambios.count > 0 %}
                         {% for c in cambios %}
                             <li>{{ c }}</li>
                         {% endfor %}
                     {% else %}
-                        <li>{{ cambios }}</li>
+                        <p class="alert alert-warning">No se registran cambios en esta versión del sistema de horas cátedras</p>
                     {% endif %}
                 </ul>
             </div>

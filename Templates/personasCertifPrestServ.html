@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block titulo %}Certificado de Prestación de Servicios{% endblock %}
+
+{% block contenido %}
+    <a style="margin-bottom: 10px" href="/doc/export/{{ persona.id }}/certprestserv/" class="btn btn-info btn-lg">
+        Generar Certificado de Prestación de Servicios de <b>{{ persona.apellidos }}, {{ persona.nombres }}</b>
+        <img src="../../../static/img/icon_word-color_32.png">
+    </a>
+    {% if docHoras.count > 0 %}
+        <div class="well well-sm">
+            <h3>Listado de horas docentes asignadas</h3>
+            <table class="table table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th>Cargo o Función</th>
+                        <th>Resolución</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for dh in docHoras %}
+                    <tr>
+                        <td>Docente {{ dh.docente_tipo.tipo_docente }} de la asignatura "{{ dh.materia }}" de la carrera {{ dh.materia.plan.carrera.carrera_nombre }}</td>
+                        <td>Res. N° {{ dh.resolucion_numero }}/{{ dh.resolucion_anio }}-UDC</td>
+                        <td>{{ dh.fecha_inicio | date:"d/m/Y" }}</td>
+                        <td>{{ dh.fecha_fin | date:"d/m/Y" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if persHoras.count > 0 %}
+        <div class="well well-sm">
+            <h3>Listado de horas administrativas asignadas</h3>
+            <table class="table table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th>Cargo o Función</th>
+                        <th>Resolución</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for ph in persHoras %}
+                    <tr>
+                        <td>{{ ph.dependencia }}</td>
+                        <td>Res. N° {{ ph.resolucion_numero }}/{{ ph.resolucion_anio }}-UDC</td>
+                        <td>{{ ph.fecha_inicio | date:"d/m/Y" }}</td>
+                        <td>{{ ph.fecha_fin | date:"d/m/Y" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    <hr>
+{% endblock %}

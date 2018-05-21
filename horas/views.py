@@ -3,11 +3,17 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles import finders
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from horas.forms import PersonaForm, PersonaHorasForm, DocenteHorasForm
 
 from horas.models import *
+
+from docx import *
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import RGBColor
+from docx.shared import Cm
 
 import csv
 import math
@@ -137,8 +143,28 @@ def personasEdit(request, pid):
         })
 
 @login_required()
+def personasCertPrestServ(request, pid):
+    persona = get_object_or_404(Persona, id=pid)
+    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+
+    return render(request, 'personasCertifPrestServ.html', {
+        'persona': persona,
+        'persHoras': persHoras,
+        'docHoras': docHoras,
+    })
+
+@login_required()
 def consadm(request):
-    ANIOS = ('2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009',)
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = str(anio_actual - i)
+        i += 1
     adms = PersonaHoras.objects.all().order_by('-fecha_fin')
     total_adms = adms.count()
     dependencias = Dependencia.objects.all()
@@ -154,7 +180,7 @@ def consadm(request):
         return render(request, 'consultaadministrativo.html', {
             'administrativos': adms,
             'dependencias': dependencias,
-            'anios': ANIOS,
+            'anios': lista_anios,
             'total_adms': total_adms,
         })
     else:
@@ -186,7 +212,7 @@ def consadm(request):
         return render(request, 'consultaadministrativo.html', {
             'administrativos': adms,
             'dependencias': dependencias,
-            'anios': ANIOS,
+            'anios': lista_anios,
             'dependencia': dependencia,
             'anio': anio,
             'total_adms': total_adms,
@@ -199,7 +225,15 @@ def consadm(request):
 
 @login_required()
 def consdoc(request):
-    ANIOS = ('2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009',)
+    # obtener el Arreglo de años (actual al 2009)
+    hoy = date.today()
+    anio_actual = hoy.year
+    nro_fil = (anio_actual - 2008)
+    lista_anios = [None] * nro_fil
+    i = 0
+    for n in range(nro_fil):
+        lista_anios[n] = str(anio_actual - i)
+        i += 1
     sedes = Sede.objects.all()
     carreras = Carrera.objects.all()
     docs = DocenteHoras.objects.all()
@@ -230,7 +264,7 @@ def consdoc(request):
             'docentes': docs,
             'sedes': sedes,
             'carreras': carreras,
-            'anios': ANIOS,
+            'anios': lista_anios,
             'total_docs': total_docs,
             'lista_hs': lista_hs,
         })
@@ -268,7 +302,7 @@ def consdoc(request):
             'docentes': docs,
             'sedes': sedes,
             'carreras': carreras,
-            'anios': ANIOS,
+            'anios': lista_anios,
             'total_docs': total_docs,
             'lista_hs': lista_hs,
             'sedeSel': sedeSel,
@@ -691,5 +725,102 @@ def export_doc_xls(request):
              doc.fecha_fin, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot,
              doc.materia.anio_academico, doc.materia.periodo.periodo_nombre.encode('ascii', 'replace')]
         )
+
+    return response
+
+@login_required()
+def export_cert_prest_serv(request, pid):
+    persona = get_object_or_404(Persona, id=pid)
+    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+
+    lista_dias = {'1': 'primero', '2': 'dos', '3': 'tres', '4': 'cuatro', '5': 'cinco', '6': 'seis', '7': 'siete',
+                  '8': 'ocho', '9': 'nueve', '10': 'diez', '11': 'once', '12': 'doce', '13': 'trece',
+                  '14': 'catorce', '15': 'quince', '16': 'dieciseis', '17': 'diecisiete', '18': 'dieciocho',
+                  '19': 'diecinueve', '20': 'veinte', '21': 'veintiún', '22': 'veintidós', '23': 'veintitrés',
+                  '24': 'veinticuatro', '25': 'veinticinco', '26': 'veintiséis', '27': 'veintisiete',
+                  '28': 'veintiocho', '29': 'veintinueve', '30': 'treinta', '31': 'treinta y uno'}
+    lista_mes = {'1': 'enero', '2': 'febrero', '3': 'marzo', '4': 'abril', '5': 'mayo', '6': 'junio',
+                 '7': 'julio', '8': 'agosto', '9': 'septiembre', '10': 'octubre', '11': 'noviembre',
+                 '12': 'diciembre'}
+    lista_anios = {'2008': 'dos mil ocho', '2009': 'dos mil nueve', '2010': 'dos mil diez', '2011': 'dos mil once',
+                   '2012': 'dos mil doce', '2013': 'dos mil trece', '2014': 'dos mil catorce', '2015': 'dos mil quince',
+                   '2016': 'dos mil dieciseis', '2017': 'dos mil diecisiete', '2018': 'dos mil dieciocho',
+                   '2019': 'dos mil diecinueve', '2020': 'dos mil veinte', '2021': 'dos mil vientiuno',
+                   '2022': 'dos mil veintidos', '2023': 'dos mil veintitres', '2024': 'dos mil veinticuatro',
+                   '2025': 'dos mil veinticinco', '2026': 'dos mil veintiseis', '2027': 'dos mil veintisiete',
+                   '2028': 'dos mil veintiocho', '2029': 'dos mil veintinueve', '2030': 'dos mil treinta'}
+    hoy = date.today()
+    dia = hoy.day
+    mes = hoy.month
+    anio = hoy.year
+    if (dia == 1):
+        fecha_en_letras = ' al ' + lista_dias[str(dia)] + ' de ' + lista_mes[str(mes)] + ' del año ' + lista_anios[
+            str(anio)]
+    else:
+        fecha_en_letras = ' a los ' + lista_dias[str(dia)] + ' días del mes de ' + lista_mes[str(mes)] + ' del año ' + \
+                          lista_anios[str(anio)]
+
+    docName = "Certificado_Prestacion_de_Servicio_" + persona.apellidos + "-" + persona.nombres + ".docx"
+
+    response = HttpResponse(content_type='text/docx')
+    response['Content-Disposition'] = 'attachment; filename="' + docName
+
+    docModelo = finders.find('../static/docs/CertPrestServ_Modelo.docx')
+    #file = open(docModelo, 'rb')
+    document = Document(docModelo)
+
+    #imagen = finders.find('img/logo_udc.png')
+    #document.add_picture(imagen, width=Cm(5), height=Cm(2))
+    #renglon = document.paragraphs[-1]
+    #renglon.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+
+    #p1 = document.add_paragraph('Rawson, ' + str_fecha)
+    #p1.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+
+    p1 = document.add_paragraph("Certificado de Prestación de Servicios")
+    #document.add_heading("Certificado de Prestación de Servicios", level=1)
+    p2 = document.add_paragraph('CERTIFICO que el/la Sr./Sra. ')
+    p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
+    p2.add_run('prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
+
+    table = document.add_table(rows=1, cols=4)
+    #table.style = 'Table Grid'
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Cargo o Función'
+    hdr_cells[1].text = 'Resolución'
+    hdr_cells[2].text = 'Desde'
+    hdr_cells[3].text = 'Hasta'
+    if (docHoras.count() > 0):
+        for item in docHoras:
+            row_cells = table.add_row().cells
+            row_cells[0].text = item.docente_tipo.tipo_docente + " de la Asignatura " + \
+                                '"' + item.materia.materia_nombre + '"' \
+                                + '(' + item.materia.plan.carrera.carrera_nombre + ')'
+            row_cells[1].text = 'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+            #row_cells[2].text = str(item.fecha_inicio).format("d/m/Y")
+            #row_cells[3].text = str(item.fecha_fin).format("d/m/Y")
+            row_cells[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
+            row_cells[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
+
+    if (persHoras.count() > 0):
+        for item in persHoras:
+            row_cells2 = table.add_row().cells
+            row_cells2[0].text = item.dependencia.dependencia_nombre
+            row_cells2[1].text = 'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+            #row_cells2[2].text = str(item.fecha_inicio).format('d/m/Y')
+            #row_cells2[3].text = str(item.fecha_fin).format('d/m/Y')
+            row_cells2[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
+            row_cells2[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
+    p20 = document.add_paragraph('')
+    p3 = document.add_paragraph('Licencia SIN GOCE DE HABERES: ')
+    p3.add_run('NO REGISTRA.').font.color.rgb = RGBColor(248, 000, 000)
+
+    p4 = document.add_paragraph('Aportes en el Instituto de Seguridad Social y Seguros - Chubut.')
+
+    p5 = document.add_paragraph('A pedido de el/la interesado/a y a solo efectos de acreditar haber prestado'
+                                + ' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
+                                + ' a los' + fecha_en_letras)
+    document.save(response)
 
     return response
