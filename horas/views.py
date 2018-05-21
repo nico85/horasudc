@@ -778,9 +778,10 @@ def export_cert_prest_serv(request, pid):
     #p1 = document.add_paragraph('Rawson, ' + str_fecha)
     #p1.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
-    p1 = document.add_paragraph("Certificado de Prestación de Servicios")
+    p1 = document.add_paragraph(u"Certificado de Prestación de Servicios")
+
     #document.add_heading("Certificado de Prestación de Servicios", level=1)
-    p2 = document.add_paragraph('CERTIFICO que el/la Sr./Sra. ')
+    p2 = document.add_paragraph(u'CERTIFICO que el/la Sr./Sra. ')
     p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
     p2.add_run('prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
 
