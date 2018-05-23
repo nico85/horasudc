@@ -145,8 +145,8 @@ def personasEdit(request, pid):
 @login_required()
 def personasCertPrestServ(request, pid):
     persona = get_object_or_404(Persona, id=pid)
-    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
-    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
 
     return render(request, 'personasCertifPrestServ.html', {
         'persona': persona,
@@ -731,8 +731,8 @@ def export_doc_xls(request):
 @login_required()
 def export_cert_prest_serv(request, pid):
     persona = get_object_or_404(Persona, id=pid)
-    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
-    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
 
     lista_dias = {'1': 'primero', '2': 'dos', '3': 'tres', '4': 'cuatro', '5': 'cinco', '6': 'seis', '7': 'siete',
                   '8': 'ocho', '9': 'nueve', '10': 'diez', '11': 'once', '12': 'doce', '13': 'trece',
