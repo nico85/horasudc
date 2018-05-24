@@ -107,10 +107,18 @@ function filtroPorCarrera(){
                 sede.options[i].hidden = true;
             }
         }
-    } else if (carr.options[carr.selectedIndex].value == 'TUP'){
+    } else if (carr.options[carr.selectedIndex].value == 'TUP') {
         patron = "(TUP)";
         for (i = 0; i < sede.options.length; i++) {
             if (sede.options[i].text != 'Trelew') {
+                sede.options[i].disabled = true;
+                sede.options[i].hidden = true;
+            }
+        }
+    } else if (carr.options[carr.selectedIndex].value == 'TUER'){
+        patron = "(TUER)";
+        for (i = 0; i < sede.options.length; i++) {
+            if (sede.options[i].text != 'Rawson') {
                 sede.options[i].disabled = true;
                 sede.options[i].hidden = true;
             }
