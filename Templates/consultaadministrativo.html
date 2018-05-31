@@ -24,6 +24,15 @@
                     </select>
                 </div>
                 <hr>
+                <div id="resnro">
+                    <label for="resnro">Resolución N°</label>
+                    {% if resnro != 0 %}
+                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro" value="{{ resnro }}">
+                    {% else %}
+                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro">
+                    {% endif %}
+                </div>
+                <hr>
                 <div id="dependencia">
                     <label for="dependencia">Dependencia:</label>
                     <select class="form-control" id="dependencia" name="dependencia">
@@ -80,13 +89,14 @@
                 </div>
                 <div id="datosAdministrativos">
                     <!--<input class="search col-sm-4" style="margin-bottom: 10px; width: 100%" placeholder="Buscar por número de resolución" id="inputBuscarAdmin">-->
-                    <table class="table table-hover table-bordered table-condensed tblconsulta">
+                    <table class="table tblconsulta table-hover table-bordered table-condensed">
                         <thead>
                             <tr>
                                 <th>Legajo</th>
                                 <th>Nombre y Apellido</th>
                                 <th>CUIL</th>
-                                <th class="sort" data-sort="nroresolucion" style="width: 125px">Resolución <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th class="sort" data-sort="resolunro" style="width: 125px">Res. Nro <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th class="sort" data-sort="resoluanio" style="width: 125px">Res. Anio <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
                                 <th>Inicio</th>
                                 <th>Fin</th>
                                 <th>Horas Cátedras</th>
@@ -99,7 +109,8 @@
                                     <td>{{ p.persona.legajo_numero }}</td>
                                     <td>{{ p.persona.apellidos }}, {{ p.persona.nombres }}</td>
                                     <td>{{ p.persona.cuil }}</td>
-                                    <td class="nroresolucion">{{ p.resolucion_numero }}/{{ p.resolucion_anio }}-UDC</td>
+                                    <td class="resolunro">{{ p.resolucion_numero }}</td>
+                                    <td class="resoluanio">{{ p.resolucion_anio }}</td>
                                     <td>{{ p.fecha_inicio | date:"d/m/Y" }}</td>
                                     <td>{{ p.fecha_fin | date:"d/m/Y" }}</td>
                                     <td>{{ p.hs_catedras }}</td>
@@ -120,7 +131,7 @@
 
 <script>
     var options = {
-        valueNames: ["nroresolucion"]
+        valueNames: ["resolunro","resoluanio"]
     };
     var administradoresList = new List("datosAdministrativos", options)
 </script>

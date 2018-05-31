@@ -172,16 +172,18 @@ def consadm(request):
     dependenciaSel = '0'
     fechaDesdeSel = ''
     fechaHastaSel = ''
+    resnro = 0
 
     global gbl_cons_adm
     gbl_cons_adm = adms
 
-    if request.method == 'GET':
+    if request.method == 'GET':		
         return render(request, 'consultaadministrativo.html', {
             'administrativos': adms,
             'dependencias': dependencias,
             'anios': lista_anios,
             'total_adms': total_adms,
+            'resnro': resnro
         })
     else:
         adms = PersonaHoras.objects.all()
@@ -190,6 +192,9 @@ def consadm(request):
         if 'anio' in request.POST and int(request.POST['anio']) > 0:
             adms = adms.filter(resolucion_anio=request.POST['anio'])
             anioSel = request.POST['anio']
+        if 'res_nro' in request.POST and request.POST['res_nro'] != "":
+            adms = adms.filter(resolucion_numero=request.POST['res_nro'])
+            resnro = request.POST['res_nro']
         if 'dependencia' in request.POST and int(request.POST['dependencia']) > 0:
             adms = adms.filter(dependencia_id=request.POST['dependencia'])
             dependenciaSel = int(request.POST['dependencia'])
@@ -215,6 +220,7 @@ def consadm(request):
             'anios': lista_anios,
             'dependencia': dependencia,
             'anio': anio,
+            'resnro': resnro,
             'total_adms': total_adms,
             'anioSel': anioSel,
             'dependenciaSel': dependenciaSel,
@@ -243,6 +249,7 @@ def consdoc(request):
     anioSel = '0'
     fechaDesdeSel = ''
     fechaHastaSel = ''
+    resnro = 0
 
     nro_fil = len(docs)
     lista_hs = [None] * nro_fil
@@ -265,6 +272,7 @@ def consdoc(request):
             'sedes': sedes,
             'carreras': carreras,
             'anios': lista_anios,
+            'resnro': resnro,
             'total_docs': total_docs,
             'lista_hs': lista_hs,
         })
@@ -282,6 +290,9 @@ def consdoc(request):
         if 'anio' in request.POST and int(request.POST['anio']) > 0:
             docs = docs.filter(resolucion_anio=request.POST['anio'])
             anioSel = request.POST['anio']
+        if 'res_nro' in request.POST and request.POST['res_nro'] != "":
+            docs = docs.filter(resolucion_numero=request.POST['res_nro'])
+            resnro = request.POST['res_nro']
         if 'fecha_desde' in request.POST and request.POST['fecha_desde'] != "":
             fechaDesdeSel = request.POST['fecha_desde']
             if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
@@ -303,6 +314,7 @@ def consdoc(request):
             'sedes': sedes,
             'carreras': carreras,
             'anios': lista_anios,
+            'resnro': resnro,
             'total_docs': total_docs,
             'lista_hs': lista_hs,
             'sedeSel': sedeSel,
@@ -711,17 +723,18 @@ def export_doc_xls(request):
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xls"'
 
     writer = csv.writer(response)
-    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'Resolucion', 'Fecha Inicio', 'Fecha Fin', 'Horas Materia',
+    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'ResolNro', 'ResoluAnio', 'Fecha Inicio', 'Fecha Fin', 'Horas Materia',
                      'Hs total materia', 'Hs a liquidar', 'Anio academico', 'Periodo'])
 
     for doc in docentes:
-        apenom = (doc.persona.apellidos + ', ' + doc.persona.nombres).encode('ascii', 'replace')
-        resolu = str(doc.resolucion_numero) + '/' + str(doc.resolucion_anio)
+        apenom = (doc.persona.apellidos + '; ' + doc.persona.nombres).encode('ascii', 'replace')
+        resoluNro = str(doc.resolucion_numero)
+        resoluAnio = str(doc.resolucion_anio)
         tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
         tot = doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje
         writer.writerow(
             [apenom, doc.sede.sede_nombre.encode('ascii', 'replace'), doc.materia.plan.carrera.carrera_nombre.encode('ascii', 'replace')
-                , doc.materia.materia_nombre.encode('ascii', 'replace'), resolu, doc.fecha_inicio,
+                , doc.materia.materia_nombre.encode('ascii', 'replace'), resoluNro, resoluAnio, doc.fecha_inicio,
              doc.fecha_fin, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot,
              doc.materia.anio_academico, doc.materia.periodo.periodo_nombre.encode('ascii', 'replace')]
         )

@@ -50,6 +50,15 @@
                     </select>
                 </div>
                 <hr>
+                <div id="resnro">
+                    <label for="resnro">Resolución N°</label>
+                    {% if resnro != 0 %}
+                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro" value="{{ resnro }}">
+                    {% else %}
+                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro">
+                    {% endif %}
+                </div>
+                <hr>
                 <div id="fecha_desde">
                     <label for="fecha_desde">Desde:</label>
                     {% if fechaDesdeSel != "" %}
@@ -99,7 +108,8 @@
                                 <th>Sede</th>
                                 <th>Carrera</th>
                                 <th>Materia</th>
-                                <th class="sort" data-sort="nroresolucion" style="width: 125px">Resolución <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th class="sort" data-sort="resolunro" style="width: 125px">Res. Nro. <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th class="sort" data-sort="resoluanio" style="width: 125px">Res. Año <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
                                 <th>Desde</th>
                                 <th>Hasta</th>
                                 <th>Horas</th>
@@ -117,7 +127,8 @@
                                     <td>{{ d.sede }}</td>
                                     <td>{{ d.materia.plan.carrera.carrera_nombre }}</td>
                                     <td>{{ d.materia.materia_nombre }}</td>
-                                    <td class="nroresolucion">{{ d.resolucion_numero }}/{{ d.resolucion_anio }}</td>
+                                    <td class="resolunro">{{ d.resolucion_numero }}</td>
+                                    <td class="resoluanio">{{ d.resolucion_anio }}</td>
                                     <td>{{ d.fecha_inicio | date:"d/m/Y" }}</td>
                                     <td>{{ d.fecha_fin | date:"d/m/Y" }}</td>
                                     <td>{{ d.materia.hs_semanales }}</td>
@@ -146,7 +157,7 @@
 
 <script>
     var options = {
-        valueNames: ["nroresolucion"]
+        valueNames: ["resolunro","resoluanio"]
     };
     var administradoresList = new List("datosDocentes", options)
 </script>
