@@ -4,7 +4,7 @@
 {% block contenido %}
     <div class="col-sm-12">
         <div id="form-izquierda" class="col-sm-2 well well-sm">
-            <h5>Filtrar por:</h5>
+            <h5 style="background-color: #1b6d85; padding: 10px; color: white;text-align: center"><b>Filtrar por</b></h5>
             <form action="/docentes/" method="post" id="form-cons-doc">
             {% csrf_token %}
                 <hr>
@@ -53,27 +53,45 @@
                 <div id="resnro">
                     <label for="resnro">Resolución N°</label>
                     {% if resnro != 0 %}
-                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro" value="{{ resnro }}">
+                        <input style="width:100%"  type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro" value="{{ resnro }}">
                     {% else %}
-                        <input type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro">
+                        <input style="width:100%"  type="number" placeholder="Nro. de resolución" min="1" id="res_nro" name="res_nro">
                     {% endif %}
                 </div>
-                <hr>
+                <!--<hr>
                 <div id="fecha_desde">
                     <label for="fecha_desde">Desde:</label>
                     {% if fechaDesdeSel != "" %}
-                        <input type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde" value="{{ fechaDesdeSel }}">
+                        <input style="width:100%"  type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde" value="{{ fechaDesdeSel }}">
                     {% else %}
-                        <input type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde">
+                        <input style="width:100%"  type="date" placeholder="Fecha desde" id="fecha_desde" name="fecha_desde">
                     {% endif %}
                 </div>
                 <hr>
                 <div id="fecha_hasta">
                     <label for="fecha_hasta">Hasta:</label>
                     {% if fechaHastaSel != "" %}
-                        <input type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta" value="{{ fechaHastaSel }}">
+                        <input style="width:100%"  type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta" value="{{ fechaHastaSel }}">
                     {% else %}
-                        <input type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta">
+                        <input style="width:100%"  type="date" placeholder="Fecha hasta" id="fecha_hasta" name="fecha_hasta">
+                    {% endif %}
+                </div>-->
+                <hr>
+                <div id="fecha_desde_v">
+                    <label for="fecha_desde_v">Desde (Vigencia):</label>
+                    {% if fechaDesdeVigSel != "" %}
+                        <input style="width:100%" type="date" placeholder="Fecha desde" id="fecha_desde_v" name="fecha_desde_v" value="{{ fechaDesdeVigSel }}">
+                    {% else %}
+                        <input style="width:100%" type="date" placeholder="Fecha desde" id="fecha_desde_v" name="fecha_desde_v">
+                    {% endif %}
+                </div>
+                <hr>
+                <div id="fecha_hasta_v">
+                    <label for="fecha_hasta_v">Hasta (Vigencia):</label>
+                    {% if fechaHastaVigSel != "" %}
+                        <input style="width:100%" type="date" placeholder="Fecha hasta" id="fecha_hasta_v" name="fecha_hasta_v" value="{{ fechaHastaVigSel }}">
+                    {% else %}
+                        <input style="width:100%" type="date" placeholder="Fecha hasta" id="fecha_hasta_v" name="fecha_hasta_v">
                     {% endif %}
                 </div>
                 <hr>
@@ -90,14 +108,17 @@
             {% if docentes.count > 0 %}
                 <div style="display: inline-block">
                     <div style="float:left">
-                        <h5>Lista del Personal docente de la Universidad del Chubut</h5>
-                        <h6>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} asignaciones)</h6>
+                        <h4>Lista del Personal docente de la Universidad del Chubut</h4>
+                        <h5>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} asignaciones)</h5>
+                        <h5 style="color: red">({{ total_docs_baja }} son asignaciones dadas de baja)</h5>
                     </div>
+                    {% if isGet == False %}
                     <div style="float:left;padding: 10px">
                         <a href="/doc/export/xls/" class="btn btn-success">
                         <!--<img src="../static/img/icon_excel-white_24.png"></a>-->
                         <img src="../static/img/icon_excel-color_32.png"></a>
                     </div>
+                    {% endif %}
                 </div>
                 <div id="datosDocentes">
                     <table class="table table-hover table-bordered table-condensed tblconsulta">
@@ -112,6 +133,7 @@
                                 <th class="sort" data-sort="resoluanio" style="width: 125px">Res. Año <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
                                 <th>Desde</th>
                                 <th>Hasta</th>
+                                <th>Fecha Baja</th>
                                 <th>Horas</th>
                                 <th>Hs. Total</th>
                                 <th>Hs a liquidar</th>
@@ -119,9 +141,14 @@
                                 <th>Periodo</th>
                             </tr>
                         </thead>
+                        {% if isGet == False %}
                         <tbody class="list">
                             {% for d in docentes %}
+                                {% if d.baja %}
+                                <tr style="color: red">
+                                {% else %}
                                 <tr>
+                                {% endif %}
                                     <td>{{ d.persona.legajo_numero }}</td>
                                     <td>{{ d.persona.apellidos }}, {{ d.persona.nombres }}</td>
                                     <td>{{ d.sede }}</td>
@@ -131,6 +158,7 @@
                                     <td class="resoluanio">{{ d.resolucion_anio }}</td>
                                     <td>{{ d.fecha_inicio | date:"d/m/Y" }}</td>
                                     <td>{{ d.fecha_fin | date:"d/m/Y" }}</td>
+                                    <td>{{ d.fecha_baja | date:"d/m/Y" }}</td>
                                     <td>{{ d.materia.hs_semanales }}</td>
                                     <td>{{ d.materia.hs_total_materia }}</td>
                                     <td>
@@ -145,8 +173,14 @@
                                 </tr>
                             {% endfor %}
                         </tbody>
+                        {% endif %}
                     </table>
                 </div>
+                {% if isGet %}
+                    <div class="alert alert-success">
+                        <h4>Para obtener todas las asignaciones haga clic en "Filtrar" sin ninguna opción seleccionada.</h4>
+                    </div>
+                {% endif %}
             {% else %}
                 <div class="alert alert-warning">
                     <h3>No se encontró ningún resultado según los filtros marcados.</h3>

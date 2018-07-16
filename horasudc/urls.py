@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^administrativos/$', views.consadm),
     url(r'^personas/nueva/$', views.personasNew),
     url(r'^personas/(?P<pid>[0-9]+)/editar/$', views.personasEdit),
+    url(r'^personas/(?P<pid>[0-9]+)/ver/$', views.personasVer),
     url(r'^horascatedras/(?P<pid>[0-9]+)/lista/$', views.personasHorasList),
     url(r'^horascatedras/(?P<pid>[0-9]+)/asignar/$', views.personasHorasNew),
     url(r'^horascatedras/(?P<phid>[0-9]+)/editar/$', views.personasHorasEdit),

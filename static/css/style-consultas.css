@@ -48,3 +48,8 @@
     text-align: center;
     vertical-align: baseline;
 }
+
+.btnGrande{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

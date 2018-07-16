@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block titulo %}Lista de Opciones para <b>{{ persona.apellidos }}, {{ persona.nombres }}</b>{% endblock %}
+
+{% block contenido %}
+
+    <h3>Lista de opciones para <b>{{ persona.apellidos }}, {{ persona.nombres }}</b></h3>
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %}
+    <hr>
+    <div class="row">
+        <div class="row" style="padding-left: 20px;padding-right: 20px;padding-bottom: 20px;">
+            <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                {% if persona.personahoras_set.count > 0 %}
+                    <a href="/horascatedras/{{ persona.id }}/lista" class="btn btn-success btnGrande" title="Ver el listado de Horas cátedras Administrativas asignadas al agente"
+                    role="button"><i class="glyphicon glyphicon-list-alt"></i><br> Ver Horas Cátedras Administrativas</a>
+                {% else %}
+                    {% if persona.activo == '1' %}
+                        <a href="/horascatedras/{{ persona.id }}/asignar" class="btn btn-success btnGrande" title="Asignar Horas cátedras Administrativas al agente"
+                        role="button"><i class="glyphicon glyphicon-list-alt"></i><br> Asignar Horas Cátedras Administrativas</a>
+                    {% else %}
+                        <a href="/horascatedras/{{ persona.id }}/asignar" class="btn btn-success btnGrande" title="Asignar Horas cátedras Administrativas al agente"
+                        role="button" disabled="disabled"><i class="glyphicon glyphicon-list-alt"></i><br> Asignar Horas Cátedras Administrativas</a>
+                    {% endif %}
+                {% endif %}
+
+                {% if persona.docentehoras_set.count > 0 %}
+                    <a href="/horasdocentes/{{ persona.id }}/lista" class="btn btn-warning btnGrande" title="Ver el listado de materias asignadas al agente"
+                    role="button"><i class="glyphicon glyphicon-book"></i><br> Ver materias asignadas</a>
+                {% else %}
+                    {% if persona.activo == '1' %}
+                        <a href="/horasdocentes/{{ persona.id }}/asignar" class="btn btn-warning btnGrande" title="Asignar una materia al agente"
+                        role="button"><i class="glyphicon glyphicon-book"></i><br> Asignar materia</a>
+                    {% else %}
+                        <a href="/horasdocentes/{{ persona.id }}/asignar" class="btn btn-warning btnGrande" title="Asignar una materia al agente"
+                        role="button" disabled="disabled"><i class="glyphicon glyphicon-book"></i><br> Asignar materia</a>
+                    {% endif %}
+                {% endif %}
+
+                {% if persona.docentehoras_set.count > 0 or persona.personahoras_set.count > 0 %}
+                    <a href="/personas/{{ persona.id }}/certifprestserv/" class="btn btn-primary btnGrande" role="button" title="Generar el Certificado de Prestación de Servicios">
+                        <i class="glyphicon glyphicon-file"></i><br>Certificado de Prestación de Servicios
+                    </a>
+                {% else %}
+                    <a href="/personas/{{ persona.id }}/certifprestserv/" class="btn btn-primary btnGrande" role="button" title="Generar el Certificado de Prestación de Servicios" disabled="disable">
+                        <i class="glyphicon glyphicon-file"></i><br> No tiene horas asignadas
+                    </a>
+                {% endif %}
+
+                <a href="/personas/{{ persona.id }}/editar/" class="btn btn-danger btnGrande" title="Editar Datos de la Persona">
+                <i class="glyphicon glyphicon-pencil"></i><br> Editar Datos de la Persona</a>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="well well-sm">
+            <a href="/personas" class="btn btn-default"><i class="glyphicon glyphicon-circle-arrow-left"></i> Todas la Personas</a>
+        </div>
+    </div>
+
+{% endblock %}

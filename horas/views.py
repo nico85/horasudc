@@ -31,7 +31,7 @@ def inicio(request):
     cambios = Cambio.objects.filter(version_id=version.id)
     return render(request, 'inicio.html', {
         'version': version,
-        'cambios': cambios,
+        'cambios': cambios
     })
 
 @login_required()
@@ -40,11 +40,11 @@ def personasList(request):
     #grupo = request.user.groups.get()
     grupo = 'superusuario'
     todas_las_personas = Persona.objects.all().order_by('apellidos')
-    docentes = DocenteHoras.objects.all()
-    administrativos = PersonaHoras.objects.all()
+    #docentes = DocenteHoras.objects.all()
+    #administrativos = PersonaHoras.objects.all()
 
     personas = todas_las_personas
-    cantPersonas = len(todas_las_personas)
+    #cantPersonas = todas_las_personas.count()
 
     if request.method == 'GET':
 
@@ -68,34 +68,34 @@ def personasList(request):
                 #'paginator': paginator,
                 'personas': personas,
                 'grupo': grupo,
-                'docentes': docentes,
-                'administrativos': administrativos,
-                'cantPersonas': cantPersonas,
+                #'docentes': docentes,
+                #'administrativos': administrativos,
+                #'cantPersonas': cantPersonas,
                 'estadoSel': -1
             })
         else:
             return render(request, 'personasList.html', {
                 'personas': personas,
                 'grupo': grupo,
-                'docentes': docentes,
-                'administrativos': administrativos,
-                'cantPersonas': cantPersonas,
+                #'docentes': docentes,
+                #'administrativos': administrativos,
+                #'cantPersonas': cantPersonas,
             })
     else:
         estadoSel = -1
         if 'estado' in request.POST and int(request.POST['estado']) > -1:
             personas = personas.filter(activo=request.POST['estado'])
             estadoSel = int(request.POST['estado'])
-        cantPersonas = len(personas)
+            cantPersonas = len(personas)
         return render(request, 'personasList.html', {
             # 'page': page,
             # 'paginator': paginator,
             'personas': personas,
             'grupo': grupo,
-            'docentes': docentes,
-            'administrativos': administrativos,
-            'cantPersonas': cantPersonas,
-            'estadoSel': estadoSel
+            #'docentes': docentes,
+            #'administrativos': administrativos,
+            #'cantPersonas': cantPersonas,
+            'estadoSel': estadoSel,
         })
 
 @login_required()
@@ -143,6 +143,13 @@ def personasEdit(request, pid):
         })
 
 @login_required()
+def personasVer(request, pid):
+    persona = get_object_or_404(Persona, id=pid)
+    return render(request, 'personasVer.html', {
+        'persona': persona
+    })
+
+@login_required()
 def personasCertPrestServ(request, pid):
     persona = get_object_or_404(Persona, id=pid)
     docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
@@ -165,67 +172,115 @@ def consadm(request):
     for n in range(nro_fil):
         lista_anios[n] = str(anio_actual - i)
         i += 1
+    #obtengo el total de las asignaciones de horas de administrativos
     adms = PersonaHoras.objects.all().order_by('-fecha_fin')
     total_adms = adms.count()
+    total_adms_baja = adms.filter(baja=True).count()
+    #obtengo todas las dependencias
     dependencias = Dependencia.objects.all()
     anioSel = '0'
     dependenciaSel = '0'
     fechaDesdeSel = ''
     fechaHastaSel = ''
+    fechaDesdeVigSel = ''
+    fechaHastaVigSel = ''
     resnro = 0
+    isGet = False
 
-    global gbl_cons_adm
-    gbl_cons_adm = adms
-
-    if request.method == 'GET':		
+    if request.method == 'GET':
+        isGet = True
         return render(request, 'consultaadministrativo.html', {
             'administrativos': adms,
             'dependencias': dependencias,
             'anios': lista_anios,
             'total_adms': total_adms,
-            'resnro': resnro
-        })
+            'total_adms_baja': total_adms_baja,
+            'resnro': resnro,
+            'isGet': isGet
+        })        
     else:
         adms = PersonaHoras.objects.all()
+        admsBaja = adms.filter(baja=True)
+        adms = adms.filter(baja=False)
         anio = 0
         dependencia = 0
+        #si viene filtro por año
         if 'anio' in request.POST and int(request.POST['anio']) > 0:
             adms = adms.filter(resolucion_anio=request.POST['anio'])
+            admsBaja = admsBaja.filter(resolucion_anio=request.POST['anio'])
             anioSel = request.POST['anio']
+        #si viene filtro por numero de resolucion
         if 'res_nro' in request.POST and request.POST['res_nro'] != "":
             adms = adms.filter(resolucion_numero=request.POST['res_nro'])
+            admsBaja = admsBaja.filter(resolucion_numero=request.POST['res_nro'])
             resnro = request.POST['res_nro']
+        # si viene filtro por dependencia
         if 'dependencia' in request.POST and int(request.POST['dependencia']) > 0:
             adms = adms.filter(dependencia_id=request.POST['dependencia'])
+            admsBaja = admsBaja.filter(dependencia_id=request.POST['dependencia'])
             dependenciaSel = int(request.POST['dependencia'])
-        if 'fecha_desde' in request.POST and request.POST['fecha_desde'] != "":
-            fechaDesdeSel = request.POST['fecha_desde']
-            if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
-                # ejemplo: Order.objects.filter(drop_off__gte=start_date, pick_up__lte=end_date)
-                adms = adms.filter(fecha_inicio__gte=request.POST['fecha_desde'], fecha_fin__lte=request.POST['fecha_hasta'])
-                fechaHastaSel = request.POST['fecha_hasta']
+        # si viene filtro por fecha desde
+        #if 'fecha_desde' in request.POST and request.POST['fecha_desde'] != "":
+        #    fechaDesdeSel = request.POST['fecha_desde']
+        #    if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
+        #        # ejemplo: Order.objects.filter(drop_off__gte=start_date, pick_up__lte=end_date)
+        #        #__gte: greater-than | __lte: lees-than
+        #        adms = adms.filter(fecha_inicio__gte=request.POST['fecha_desde'], fecha_fin__lte=request.POST['fecha_hasta'])
+        #        admsBaja = admsBaja.filter(fecha_inicio__gte=request.POST['fecha_desde'],
+        #                           fecha_baja__lte=request.POST['fecha_hasta'])
+        #        fechaHastaSel = request.POST['fecha_hasta']
+        #    else:
+        #        adms = adms.filter(fecha_inicio__gte=request.POST['fecha_desde'])
+        #        admsBaja = admsBaja.filter(fecha_inicio__gte=request.POST['fecha_desde'])
+        #else:
+        #    if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
+        #        adms = adms.filter(fecha_fin__lte=request.POST['fecha_hasta'])
+        #        admsBaja = admsBaja.filter(fecha_fin__lte=request.POST['fecha_hasta'])
+        #        fechaHastaSel = request.POST['fecha_hasta']
+        
+        #si viene fecha_desde_vigente?
+        if 'fecha_desde_v' in request.POST and request.POST['fecha_desde_v'] != "":
+			#guardo la variable para mostrar en la vista luego
+            fechaDesdeVigSel = request.POST['fecha_desde_v']
+            #me fijo si viene fecha_hasta_vigente
+            if 'fecha_hasta_v' in request.POST and request.POST['fecha_hasta_v'] != "":
+                adms = adms.filter(fecha_inicio__lte=request.POST['fecha_desde_v'],
+                                   fecha_fin__gte=request.POST['fecha_hasta_v'])
+                admsBaja = admsBaja.filter(fecha_inicio__lte=request.POST['fecha_desde_v'],
+                                   fecha_baja__gte=request.POST['fecha_hasta_v'])
+                fechaHastaVigSel = request.POST['fecha_hasta_v']
             else:
-                adms = adms.filter(fecha_inicio__gte=request.POST['fecha_desde'])
+                adms = adms.filter(fecha_inicio__lte=request.POST['fecha_desde_v'])
+                admsBaja = admsBaja.filter(fecha_inicio__lte=request.POST['fecha_desde_v'])
         else:
-            if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
-                adms = adms.filter(fecha_fin__lte=request.POST['fecha_hasta'])
-                fechaHastaSel = request.POST['fecha_hasta']
+            if 'fecha_hasta_v' in request.POST and request.POST['fecha_hasta_v'] != "":
+                adms = adms.filter(fecha_fin__gte=request.POST['fecha_hasta_v'])
+                admsBaja = admsBaja.filter(fecha_fin__gte=request.POST['fecha_hasta_v'])
+                fechaHastaVigSel = request.POST['fecha_hasta_v']
 
-        #global gbl_cons_adm
-        gbl_cons_adm = adms
+        total_adms_baja = admsBaja.count()
+        administrativos = adms | admsBaja
+        administrativos = administrativos.distinct().order_by('-fecha_fin')
+
+        global gbl_cons_adm
+        gbl_cons_adm = administrativos
 
         return render(request, 'consultaadministrativo.html', {
-            'administrativos': adms,
+            'administrativos': administrativos,
             'dependencias': dependencias,
             'anios': lista_anios,
             'dependencia': dependencia,
             'anio': anio,
             'resnro': resnro,
             'total_adms': total_adms,
+            'total_adms_baja': total_adms_baja,
             'anioSel': anioSel,
+            'isGet': isGet,
             'dependenciaSel': dependenciaSel,
             'fechaDesdeSel': fechaDesdeSel,
-            'fechaHastaSel': fechaHastaSel
+            'fechaHastaSel': fechaHastaSel,
+            'fechaDesdeVigSel': fechaDesdeVigSel,
+            'fechaHastaVigSel': fechaHastaVigSel
         })
 
 
@@ -240,16 +295,24 @@ def consdoc(request):
     for n in range(nro_fil):
         lista_anios[n] = str(anio_actual - i)
         i += 1
+    #obtengo todas las sedes
     sedes = Sede.objects.all()
+    #obtengo todas las carerras
     carreras = Carrera.objects.all()
-    docs = DocenteHoras.objects.all()
+    # obtengo el total de las asignaciones de horas de Docentes
+    docs = DocenteHoras.objects.all().order_by('-fecha_fin')
+    #obtengo los totales
     total_docs = docs.count()
+    total_docs_baja = docs.filter(baja=True).count()
     sedeSel = 0
     carreraSel = 0
     anioSel = '0'
     fechaDesdeSel = ''
     fechaHastaSel = ''
+    fechaDesdeVigSel = ''
+    fechaHastaVigSel = ''
     resnro = 0
+    isGet = False
 
     nro_fil = len(docs)
     lista_hs = [None] * nro_fil
@@ -263,10 +326,8 @@ def consdoc(request):
         lista_hs[i]['tot_hs'] = int(tot)
         i += 1
 
-    global gbl_cons_doc
-    gbl_cons_doc = docs
-
     if request.method == 'GET':
+        isGet = True
         return render(request, 'consultadocente.html', {
             'docentes': docs,
             'sedes': sedes,
@@ -274,54 +335,93 @@ def consdoc(request):
             'anios': lista_anios,
             'resnro': resnro,
             'total_docs': total_docs,
+            'total_docs_baja': total_docs_baja,
+            'isGet': isGet,
             'lista_hs': lista_hs,
         })
     else:
         docs = DocenteHoras.objects.all()
+        docs_baja = docs.filter(baja=True)
+        docs = docs.filter(baja=False)
         anio = 0
         sede = 0
         carrera = 0
+        #si viene para dfiltrar por sede
         if 'sede' in request.POST and int(request.POST['sede']) > 0:
             docs = docs.filter(sede=request.POST['sede'])
+            docs_baja = docs_baja.filter(sede=request.POST['sede'])
             sedeSel = int(request.POST['sede'])
+        # si viene para dfiltrar por carrera
         if 'carrera' in request.POST and int(request.POST['carrera']) > 0:
             docs = docs.filter(materia__plan__carrera_id=request.POST['carrera'])
+            docs_baja = docs_baja.filter(materia__plan__carrera_id=request.POST['carrera'])
             carreraSel = int(request.POST['carrera'])
+        # si viene para dfiltrar por año
         if 'anio' in request.POST and int(request.POST['anio']) > 0:
             docs = docs.filter(resolucion_anio=request.POST['anio'])
+            docs_baja = docs_baja.filter(resolucion_anio=request.POST['anio'])
             anioSel = request.POST['anio']
+        # si viene para dfiltrar por numero de resolucion
         if 'res_nro' in request.POST and request.POST['res_nro'] != "":
             docs = docs.filter(resolucion_numero=request.POST['res_nro'])
+            docs_baja = docs_baja.filter(resolucion_numero=request.POST['res_nro'])
             resnro = request.POST['res_nro']
-        if 'fecha_desde' in request.POST and request.POST['fecha_desde'] != "":
-            fechaDesdeSel = request.POST['fecha_desde']
-            if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
-                # ejemplo: Order.objects.filter(drop_off__gte=start_date, pick_up__lte=end_date)
-                docs = docs.filter(fecha_inicio__gte=request.POST['fecha_desde'], fecha_fin__lte=request.POST['fecha_hasta'])
-                fechaHastaSel = request.POST['fecha_hasta']
-            else:
-                docs = docs.filter(fecha_inicio__gte=request.POST['fecha_desde'])
-        else:
-            if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
-                docs = docs.filter(fecha_fin__lte=request.POST['fecha_hasta'])
-                fechaHastaSel = request.POST['fecha_hasta']
+        # si viene para dfiltrar por numero Fechas (desde y Hasta
+        #if 'fecha_desde' in request.POST and request.POST['fecha_desde'] != "":
+        #    fechaDesdeSel = request.POST['fecha_desde']
+        #    if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
+        #        # ejemplo: Order.objects.filter(drop_off__gte=start_date, pick_up__lte=end_date)
+        #        docs = docs.filter(fecha_inicio__gte=request.POST['fecha_desde'], fecha_fin__lte=request.POST['fecha_hasta'])
+        #        fechaHastaSel = request.POST['fecha_hasta']
+        #    else:
+        #        docs = docs.filter(fecha_inicio__gte=request.POST['fecha_desde'])
+        #else:
+        #    if 'fecha_hasta' in request.POST and request.POST['fecha_hasta'] != "":
+        #        docs = docs.filter(fecha_fin__lte=request.POST['fecha_hasta'])
+        #        fechaHastaSel = request.POST['fecha_hasta']
 
-        #global gbl_cons_doc
-        gbl_cons_doc = docs
+        # si viene fecha_desde_vigente?
+        if 'fecha_desde_v' in request.POST and request.POST['fecha_desde_v'] != "":
+            # guardo la variable para mostrar en la vista luego
+            fechaDesdeVigSel = request.POST['fecha_desde_v']
+            # me fijo si viene fecha_hasta_vigente
+            if 'fecha_hasta_v' in request.POST and request.POST['fecha_hasta_v'] != "":
+                docs = docs.filter(fecha_inicio__lte=request.POST['fecha_desde_v'],
+                                   fecha_fin__gte=request.POST['fecha_hasta_v'])
+                docs_baja = docs_baja.filter(fecha_inicio__lte=request.POST['fecha_desde_v'],
+                                           fecha_baja__gte=request.POST['fecha_hasta_v'])
+                fechaHastaVigSel = request.POST['fecha_hasta_v']
+            else:
+                docs = docs.filter(fecha_inicio__lte=request.POST['fecha_desde_v'])
+                docs_baja = docs_baja.filter(fecha_inicio__lte=request.POST['fecha_desde_v'])
+        else:
+            if 'fecha_hasta_v' in request.POST and request.POST['fecha_hasta_v'] != "":
+                docs = docs.filter(fecha_fin__gte=request.POST['fecha_hasta_v'])
+                docs_baja = docs_baja.filter(fecha_fin__gte=request.POST['fecha_hasta_v'])
+                fechaHastaVigSel = request.POST['fecha_hasta_v']
+
+        total_docs_baja = docs_baja.count()
+        docentes = docs | docs_baja
+        docentes = docentes.distinct()
+
+        global gbl_cons_doc
+        gbl_cons_doc = docentes
 
         return render(request, 'consultadocente.html', {
-            'docentes': docs,
+            'docentes': docentes,
             'sedes': sedes,
             'carreras': carreras,
             'anios': lista_anios,
             'resnro': resnro,
             'total_docs': total_docs,
+            'total_docs_baja': total_docs_baja,
             'lista_hs': lista_hs,
             'sedeSel': sedeSel,
             'carreraSel': carreraSel,
             'anioSel': anioSel,
-            'fechaDesdeSel': fechaDesdeSel,
-            'fechaHastaSel': fechaHastaSel,
+            'fechaDesdeVigSel': fechaDesdeVigSel,
+            'fechaHastaVigSel': fechaHastaVigSel,
+            'isGet': isGet,
         })
 
 @login_required()
@@ -701,13 +801,13 @@ def export_admin_xls(request):
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_catedras.xls"'
 
     writer = csv.writer(response)
-    writer.writerow(['Apellido y Nombre', 'CUIL', 'Resolucion', 'Fecha Inicio', 'Fecha Fin', 'Hs_catedras', 'Dependencia'])
+    writer.writerow(['Apellido y Nombre', 'CUIL', 'Resolucion', 'Fecha Inicio', 'Fecha Fin', 'Fecha Baja', 'Hs_catedras', 'Dependencia'])
 
     for adm in administrativos:
         apenom = (adm.persona.apellidos + ', ' + adm.persona.nombres).encode('ascii', 'replace')
         depend = (adm.dependencia.dependencia_nombre).encode('ascii', 'replace')
         resolu = str(adm.resolucion_numero) + '/' + str(adm.resolucion_anio)
-        writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.hs_catedras, depend])
+        writer.writerow([apenom, adm.persona.cuil, resolu, adm.fecha_inicio, adm.fecha_fin, adm.fecha_baja, adm.hs_catedras, depend])
 
     return response
 
@@ -723,11 +823,11 @@ def export_doc_xls(request):
     response['Content-Disposition'] = 'attachment; filename="' + str_fecha +'_consulta_horas_docentes.xls"'
 
     writer = csv.writer(response)
-    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'ResolNro', 'ResoluAnio', 'Fecha Inicio', 'Fecha Fin', 'Horas Materia',
-                     'Hs total materia', 'Hs a liquidar', 'Anio academico', 'Periodo'])
+    writer.writerow(['Apellido y Nombre', 'Sede', 'Carrera', 'Materia', 'ResolNro', 'ResoluAnio', 'Fecha Inicio', 'Fecha Fin',
+                     'Fecha Baja', 'Horas Materia', 'Hs total materia', 'Hs a liquidar', 'Anio academico', 'Periodo'])
 
     for doc in docentes:
-        apenom = (doc.persona.apellidos + '; ' + doc.persona.nombres).encode('ascii', 'replace')
+        apenom = (doc.persona.apellidos + ', ' + doc.persona.nombres).encode('ascii', 'replace')
         resoluNro = str(doc.resolucion_numero)
         resoluAnio = str(doc.resolucion_anio)
         tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
@@ -735,7 +835,7 @@ def export_doc_xls(request):
         writer.writerow(
             [apenom, doc.sede.sede_nombre.encode('ascii', 'replace'), doc.materia.plan.carrera.carrera_nombre.encode('ascii', 'replace')
                 , doc.materia.materia_nombre.encode('ascii', 'replace'), resoluNro, resoluAnio, doc.fecha_inicio,
-             doc.fecha_fin, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot,
+             doc.fecha_fin, doc.fecha_baja, doc.materia.hs_semanales, doc.materia.hs_total_materia, tot,
              doc.materia.anio_academico, doc.materia.periodo.periodo_nombre.encode('ascii', 'replace')]
         )
 

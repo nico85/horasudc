@@ -2,8 +2,6 @@
 from django.contrib.admin.utils import model_format_dict
 from django.db import models
 
-# Create your models here.
-
 class Version(models.Model):
     version_sistema = models.CharField(max_length=8)
 

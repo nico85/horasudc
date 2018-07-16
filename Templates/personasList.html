@@ -17,7 +17,8 @@
         </div>
 
         {% if personas %}
-            <p>Actualmente hay {{ cantPersonas }} registros.</p>
+        <div class="row col-md-10 col-md-offset-1">
+            <p>Actualmente hay {{ personas.count }} registros.</p>
             <div id="datospersonas">
                 <div>
                     <input class="search col-sm-4" style="margin-bottom: 10px" placeholder="Buscar por apellido/nombre" id="inputBuscarPersona">
@@ -48,10 +49,6 @@
                             <th class="sort" data-sort="apenom">Apellido/s y Nombre/s <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
                             <th>Legajo</th>
                             <th>C.U.I.L.</th>
-                            <th>Horas cátedras</th>
-                            <th>Horas docente</th>
-                            <th>Editar</th>
-                            <th>Certificado</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -59,84 +56,19 @@
                             {% if p.activo == '1' %}
                             <tr style="color: black">
                             {% else %}
-                            <tr style="color: red" title="Inactivo en el Sistema">
+                            <tr style="background-color: #ffffb3" title="Inactivo en el Sistema">
                             {% endif %}
-                            <td class="apenom">{{ p.apellidos }}, {{ p.nombres }}</td>
-                            <td>{{ p.legajo_numero }}</td>
-                            <td>{{ p.cuil }}</td>
-                            <td>
-                                {% if p.personahoras_set.count > 0 %}
-                                    <a href="/horascatedras/{{ p.id }}/lista" class="btn btn-info btn-sm" title="Ver las horas cátedras">
-                                        <i class="glyphicon glyphicon-pencil"></i> Ver
-                                    </a>
-                                {% else %}
-                                    {% if p.activo == '1' %}
-                                        <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras">
-                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                        </a>
-                                    {% else %}
-                                        <a href="/horascatedras/{{ p.id }}/asignar/" class="btn btn-primary btn-sm" title="Asignar horas cátedras" disabled="disabled">
-                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if p.docentehoras_set.count > 0 %}
-                                    <a href="/horasdocentes/{{ p.id }}/lista" class="btn btn-warning  btn-sm" title="Ver las materias asignadas">
-                                        <i class="glyphicon glyphicon-pencil"></i> Ver
-                                    </a>
-                                {% else %}
-                                    {% if p.activo == '1' %}
-                                        <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia">
-                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                        </a>
-                                    {% else %}
-                                        <a href="/horasdocentes/{{ p.id }}/asignar" class="btn btn-success btn-sm" title="Asignar materia" disabled="disabled">
-                                            <i class="glyphicon glyphicon-plus-sign"></i> Asignar
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="/personas/{{ p.id }}/editar/" class="btn btn-danger btn-sm" title="Editar Datos de la Persona">
-                                    <i class="glyphicon glyphicon-pencil"></i> Datos</a>
-                            </td>
-                            <td>
-                                {% if p.docentehoras_set.count > 0 or p.personahoras_set.count > 0 %}
-                                    <a href="/personas/{{ p.id }}/certifprestserv/" class="btn btn-default btn-sm" title="Generar el Certificado de Prestación de Servicios">
-                                        <i class="glyphicon glyphicon-print"></i> Prestación de Servicios
-                                    </a>
-                                {% else %}
-                                    <button class="btn btn-default">Sin horas</button>
-                                {% endif %}
-                            </td>
+                                <td class="apenom">
+                                    <a href="/personas/{{ p.id }}/ver" title="ver todas la opciones">{{ p.apellidos }}, {{ p.nombres }}</a>
+                                </td>
+                                <td>{{ p.legajo_numero }}</td>
+                                <td>{{ p.cuil }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                {% if personas.has_other_pages %}
-                  <ul class="pagination">
-                    {% if personas.has_previous %}
-                      <li><a href="?page={{ personas.previous_page_number }}">&laquo;</a></li>
-                    {% else %}
-                      <li class="disabled"><span>&laquo;</span></li>
-                    {% endif %}
-                    {% for i in personas.paginator.page_range %}
-                      {% if personas.number == i %}
-                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                      {% else %}
-                        <li><a href="?page={{ i }}">{{ i }}</a></li>
-                      {% endif %}
-                    {% endfor %}
-                    {% if personas.has_next %}
-                      <li><a href="?page={{ personas.next_page_number }}">&raquo;</a></li>
-                    {% else %}
-                      <li class="disabled"><span>&raquo;</span></li>
-                    {% endif %}
-                  </ul>
-                {% endif %}
             </div>
+        </div>
         {% else %}
             <div class="alert alert-warning">
                 <h1>No existe ninguna persona cargada aún!</h1>
