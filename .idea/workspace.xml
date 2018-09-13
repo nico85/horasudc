@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00afd565-196a-49dd-9969-3ab57c717b9d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/horasudc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/horasudc.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/consultaadministrativo.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/consultaadministrativo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/consultadocente.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/consultadocente.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/personasEdit.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/personasEdit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/personasList.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/personasList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/horas/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/horas/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/horas/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/horas/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/horasudc/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/horasudc/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style-consultas.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style-consultas.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/funciones.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/funciones.js" afterDir="false" />
     </list>
     <ignored path="horasudc/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +22,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="450">
               <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
               <folding>
                 <element signature="e#666#698#0" expanded="true" />
@@ -39,23 +31,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="personasVer.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Templates/personasVer.html">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/horas/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="30" column="74" selection-start-line="30" selection-start-column="74" selection-end-line="30" selection-end-column="74" />
+            <state relative-caret-position="4635">
+              <caret line="328" selection-start-line="328" selection-end-line="328" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#24#60#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style-consultas.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/style-consultas.css">
+      <file leaf-file-name="consultadocente.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Templates/consultadocente.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+            <state relative-caret-position="105">
+              <caret line="159" column="72" selection-start-line="159" selection-start-column="72" selection-end-line="159" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="funciones.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/js/funciones.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="139" column="13" lean-forward="true" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -130,15 +131,15 @@
         <option value="$PROJECT_DIR$/Templates/base.html" />
         <option value="$PROJECT_DIR$/Templates/personasCertifPrestServ.html" />
         <option value="$PROJECT_DIR$/Templates/inicio.html" />
-        <option value="$PROJECT_DIR$/static/js/funciones.js" />
-        <option value="$PROJECT_DIR$/Templates/consultadocente.html" />
         <option value="$PROJECT_DIR$/Templates/consultaadministrativo.html" />
         <option value="$PROJECT_DIR$/Templates/personasList.html" />
         <option value="$PROJECT_DIR$/horasudc/urls.py" />
-        <option value="$PROJECT_DIR$/horas/views.py" />
         <option value="$PROJECT_DIR$/Templates/personasEdit.html" />
         <option value="$PROJECT_DIR$/static/css/style-consultas.css" />
         <option value="$PROJECT_DIR$/Templates/personasVer.html" />
+        <option value="$PROJECT_DIR$/horas/views.py" />
+        <option value="$PROJECT_DIR$/Templates/consultadocente.html" />
+        <option value="$PROJECT_DIR$/static/js/funciones.js" />
       </list>
     </option>
   </component>
@@ -170,6 +171,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -186,18 +188,12 @@
               <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
               <item name="horasudc" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="horasudc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="horasudc" type="462c0819:PsiDirectoryNode" />
-              <item name="Templates" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -292,8 +288,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3276923" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.3276923" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32923076" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.26204818" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22982322" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.26204818" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22982322" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -305,10 +301,10 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" id="Data View" order="3" weight="0.32991317" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Messages" order="7" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,13 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/funciones.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/List.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -630,13 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/consultadocente.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="112" column="27" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Templates/consultaadministrativo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -670,29 +652,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/horas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="145" column="4" selection-start-line="145" selection-start-column="4" selection-end-line="145" selection-end-column="4" />
-          <folding>
-            <element signature="e#24#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
-          <folding>
-            <element signature="e#666#698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/style-consultas.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="795">
           <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
         </state>
       </provider>
@@ -701,9 +663,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="30" column="74" selection-start-line="30" selection-start-column="74" selection-end-line="30" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horasudc/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#666#698#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/horas/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4635">
+          <caret line="328" selection-start-line="328" selection-end-line="328" />
+          <folding>
+            <element signature="e#24#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/consultadocente.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="159" column="72" selection-start-line="159" selection-start-column="72" selection-end-line="159" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/funciones.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="139" column="13" lean-forward="true" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
         </state>
       </provider>
     </entry>

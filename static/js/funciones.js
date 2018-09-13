@@ -102,7 +102,7 @@ function filtroPorCarrera(){
     } else if (carr.options[carr.selectedIndex].value == 'TGI'){
         patron = "(TGI)";
         for (i = 0; i < sede.options.length; i++) {
-            if (sede.options[i].text != 'Rawson') {
+            if ((sede.options[i].text != 'Rawson')&&(sede.options[i].text != 'Esquel')) {
                 sede.options[i].disabled = true;
                 sede.options[i].hidden = true;
             }
@@ -123,10 +123,18 @@ function filtroPorCarrera(){
                 sede.options[i].hidden = true;
             }
         }
-    } else if (carr.options[carr.selectedIndex].value == 'PNU'){
-        patron = "(PNU)";        
+    } else if (carr.options[carr.selectedIndex].value == 'PNU') {
+        patron = "(PNU)";
         for (i = 0; i < sede.options.length; i++) {
-            if ((sede.options[i].text != 'Rawson')&&(sede.options[i].text != 'Esquel')&&(sede.options[i].text != 'Puerto Madryn')&&(sede.options[i].text != 'Gaiman')) {
+            if ((sede.options[i].text != 'Rawson') && (sede.options[i].text != 'Esquel') && (sede.options[i].text != 'Puerto Madryn') && (sede.options[i].text != 'Gaiman')) {
+                sede.options[i].disabled = true;
+                sede.options[i].hidden = true;
+            }
+        }
+    } else if (carr.options[carr.selectedIndex].value == 'TAT') {
+        patron = "(TAT)";
+        for (i = 0; i < sede.options.length; i++) {
+            if (sede.options[i].text != 'Rawson') {
                 sede.options[i].disabled = true;
                 sede.options[i].hidden = true;
             }
