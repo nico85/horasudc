@@ -615,11 +615,22 @@ def docenteHorasList(request, pid):
     for n in range(nro_fil):
         lista_hs[n] = {'id_doc': 0, 'tot_hs': 0}
     i = 0
+    #for dh in dochoras:
+    #    tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales)/100
+    #    tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
+    #    lista_hs[i]['id_doc'] = dh.id
+    #    lista_hs[i]['tot_hs'] = int(tot)
+    #    i += 1
+
     for dh in dochoras:
-        tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales)/100
-        tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
+        if dh.remunerado == "Remunerado":
+            tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales) / 100
+            tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
+            lista_hs[i]['tot_hs'] = int(tot)
+        else:
+            lista_hs[i]['tot_hs'] = 0
+
         lista_hs[i]['id_doc'] = dh.id
-        lista_hs[i]['tot_hs'] = int(tot)
         i += 1
     if request.method == 'POST':
         id_asignacion = request.POST['id']
