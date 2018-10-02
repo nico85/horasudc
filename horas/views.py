@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from horas.forms import PersonaForm, PersonaHorasForm, DocenteHorasForm
 
@@ -20,6 +22,9 @@ import math
 
 from datetime import date
 
+# import Group models
+from django.contrib.auth.models import Group
+
 # Create your views here.
 
 gbl_cons_adm = [None]
@@ -27,142 +32,227 @@ gbl_cons_doc = [None]
 
 @login_required()
 def inicio(request):
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
     version = Version.objects.last()
     cambios = Cambio.objects.filter(version_id=version.id)
     return render(request, 'inicio.html', {
         'version': version,
-        'cambios': cambios
+        'cambios': cambios,
+        'user': user
     })
 
 @login_required()
 def personasList(request):
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    #grupo = request.user.groups.get()
-    grupo = 'superusuario'
-    todas_las_personas = Persona.objects.all().order_by('apellidos')
-    #docentes = DocenteHoras.objects.all()
-    #administrativos = PersonaHoras.objects.all()
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
 
-    personas = todas_las_personas
-    #cantPersonas = todas_las_personas.count()
+    if user != "Consulta":
+        todas_las_personas = Persona.objects.all().order_by('apellidos')
+        #docentes = DocenteHoras.objects.all()
+        #administrativos = PersonaHoras.objects.all()
 
-    if request.method == 'GET':
+        personas = todas_las_personas
+        #cantPersonas = todas_las_personas.count()
 
-        if len(todas_las_personas) > 0:
+        if request.method == 'GET':
 
-            '''paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
-    
-            page = request.GET.get('page', 1)
-    
-            try:
-                personas = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                personas = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                personas = paginator.page(paginator.num_pages)
-            '''
-            return render(request, 'personasList.html', {
-                #'page': page,
-                #'paginator': paginator,
-                'personas': personas,
-                'grupo': grupo,
-                #'docentes': docentes,
-                #'administrativos': administrativos,
-                #'cantPersonas': cantPersonas,
-                'estadoSel': -1
-            })
+            if len(todas_las_personas) > 0:
+
+                '''paginator = Paginator(todas_las_personas, 20)  # Show 20 contacts per page
+        
+                page = request.GET.get('page', 1)
+        
+                try:
+                    personas = paginator.page(page)
+                except PageNotAnInteger:
+                    # If page is not an integer, deliver first page.
+                    personas = paginator.page(1)
+                except EmptyPage:
+                    # If page is out of range (e.g. 9999), deliver last page of results.
+                    personas = paginator.page(paginator.num_pages)
+                '''
+                return render(request, 'personasList.html', {
+                    'user': user,
+                    #'page': page,
+                    #'paginator': paginator,
+                    'personas': personas,
+                    #'docentes': docentes,
+                    #'administrativos': administrativos,
+                    #'cantPersonas': cantPersonas,
+                    'estadoSel': -1
+                })
+            else:
+                return render(request, 'personasList.html', {
+                    'personas': personas,
+                    'user': user,
+                    #'docentes': docentes,
+                    #'administrativos': administrativos,
+                    #'cantPersonas': cantPersonas,
+                })
         else:
+            estadoSel = -1
+            if 'estado' in request.POST and int(request.POST['estado']) > -1:
+                personas = personas.filter(activo=request.POST['estado'])
+                estadoSel = int(request.POST['estado'])
+                cantPersonas = len(personas)
             return render(request, 'personasList.html', {
+                # 'page': page,
+                # 'paginator': paginator,
                 'personas': personas,
-                'grupo': grupo,
+                'user': user,
                 #'docentes': docentes,
                 #'administrativos': administrativos,
                 #'cantPersonas': cantPersonas,
+                'estadoSel': estadoSel,
             })
     else:
-        estadoSel = -1
-        if 'estado' in request.POST and int(request.POST['estado']) > -1:
-            personas = personas.filter(activo=request.POST['estado'])
-            estadoSel = int(request.POST['estado'])
-            cantPersonas = len(personas)
-        return render(request, 'personasList.html', {
-            # 'page': page,
-            # 'paginator': paginator,
-            'personas': personas,
-            'grupo': grupo,
-            #'docentes': docentes,
-            #'administrativos': administrativos,
-            #'cantPersonas': cantPersonas,
-            'estadoSel': estadoSel,
-        })
+        return redirect('/inicio/')
 
 @login_required()
 def personasNew(request):
-    lista_sexo = ['Femenino', 'Masculino']
-    if request.method == 'POST':
-        form = PersonaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/personas/')
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        lista_sexo = ['Femenino', 'Masculino']
+        if request.method == 'POST':
+            form = PersonaForm(request.POST)
+            if form.is_valid():
+                form.save()
+                persona = Persona.objects.latest('id')
+                idPersona = persona.id
+                url = '/personas/'+str(idPersona)+'/ver/'
+                return redirect(url)
+            else:
+                return render(request, 'personasNew.html', {
+                    'form': form,
+                    'sexos': lista_sexo,
+                    'user': user
+                })
         else:
+            form = PersonaForm()
             return render(request, 'personasNew.html', {
                 'form': form,
                 'sexos': lista_sexo,
+                'user': user
             })
     else:
-        form = PersonaForm()
-        return render(request, 'personasNew.html', {
-            'form': form,
-            'sexos': lista_sexo,
-        })
-
+        return redirect('/inicio/')
 
 @login_required()
 def personasEdit(request, pid):
-    persona = get_object_or_404(Persona, id=pid)
-    lista_sexo = ['Femenino', 'Masculino']
-    if request.method == 'POST':
-        form = PersonaForm(request.POST, instance=persona)
-        if form.is_valid():
-            form.save()
-            return redirect('/personas/')
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        persona = get_object_or_404(Persona, id=pid)
+        lista_sexo = ['Femenino', 'Masculino']
+        if request.method == 'POST':
+            form = PersonaForm(request.POST, instance=persona)
+            if form.is_valid():
+                form.save()
+                url = '/personas/' + str(persona.id) + '/ver/'
+                return redirect(url)
+                return redirect('/personas/')
+            else:
+                return render(request, 'personasEdit.html', {
+                    'persona': persona,
+                    'form': form,
+                    'sexos': lista_sexo,
+                    'user': user
+                })
         else:
+            form = PersonaForm(instance=persona)
             return render(request, 'personasEdit.html', {
                 'persona': persona,
                 'form': form,
                 'sexos': lista_sexo,
+                'user': user
             })
     else:
-        form = PersonaForm(instance=persona)
-        return render(request, 'personasEdit.html', {
-            'persona': persona,
-            'form': form,
-            'sexos': lista_sexo,
-        })
+        return redirect('/inicio/')
 
 @login_required()
 def personasVer(request, pid):
-    persona = get_object_or_404(Persona, id=pid)
-    return render(request, 'personasVer.html', {
-        'persona': persona
-    })
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        persona = get_object_or_404(Persona, id=pid)
+        return render(request, 'personasVer.html', {
+            'persona': persona,
+            'user': user
+        })
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def personasCertPrestServ(request, pid):
-    persona = get_object_or_404(Persona, id=pid)
-    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
-    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    return render(request, 'personasCertifPrestServ.html', {
-        'persona': persona,
-        'persHoras': persHoras,
-        'docHoras': docHoras,
-    })
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        persona = get_object_or_404(Persona, id=pid)
+        docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+        persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+
+        return render(request, 'personasCertifPrestServ.html', {
+            'persona': persona,
+            'persHoras': persHoras,
+            'docHoras': docHoras,
+        })
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def consadm(request):
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
     # obtener el Arreglo de años (actual al 2009)
     hoy = date.today()
     anio_actual = hoy.year
@@ -191,13 +281,14 @@ def consadm(request):
         isGet = True
         return render(request, 'consultaadministrativo.html', {
             'administrativos': adms,
+            'user': user,
             'dependencias': dependencias,
             'anios': lista_anios,
             'total_adms': total_adms,
             'total_adms_baja': total_adms_baja,
             'resnro': resnro,
             'isGet': isGet
-        })        
+        })
     else:
         adms = PersonaHoras.objects.all()
         admsBaja = adms.filter(baja=True)
@@ -237,10 +328,10 @@ def consadm(request):
         #        adms = adms.filter(fecha_fin__lte=request.POST['fecha_hasta'])
         #        admsBaja = admsBaja.filter(fecha_fin__lte=request.POST['fecha_hasta'])
         #        fechaHastaSel = request.POST['fecha_hasta']
-        
+
         #si viene fecha_desde_vigente?
         if 'fecha_desde_v' in request.POST and request.POST['fecha_desde_v'] != "":
-			#guardo la variable para mostrar en la vista luego
+            #guardo la variable para mostrar en la vista luego
             fechaDesdeVigSel = request.POST['fecha_desde_v']
             #me fijo si viene fecha_hasta_vigente
             if 'fecha_hasta_v' in request.POST and request.POST['fecha_hasta_v'] != "":
@@ -267,6 +358,7 @@ def consadm(request):
 
         return render(request, 'consultaadministrativo.html', {
             'administrativos': administrativos,
+            'user': user,
             'dependencias': dependencias,
             'anios': lista_anios,
             'dependencia': dependencia,
@@ -286,6 +378,15 @@ def consadm(request):
 
 @login_required()
 def consdoc(request):
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
     # obtener el Arreglo de años (actual al 2009)
     hoy = date.today()
     anio_actual = hoy.year
@@ -335,6 +436,7 @@ def consdoc(request):
         isGet = True
         return render(request, 'consultadocente.html', {
             'docentes': docs,
+            'user': user,
             'sedes': sedes,
             'carreras': carreras,
             'anios': lista_anios,
@@ -414,6 +516,7 @@ def consdoc(request):
 
         return render(request, 'consultadocente.html', {
             'docentes': docentes,
+            'user': user,
             'sedes': sedes,
             'carreras': carreras,
             'anios': lista_anios,
@@ -431,143 +534,194 @@ def consdoc(request):
 
 @login_required()
 def personasHorasList(request, pid):
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    # Fin obtener el arreglo de años
-    form = PersonaHoras()
-    perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
-    persona = Persona.objects.get(id=pid)
-    motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
-    if request.method == 'POST':
-        id_asignacion = request.POST['id']
-        asignacion = PersonaHoras.objects.get(id=id_asignacion)
-        fechaBaja = request.POST['fecha_baja']
-        if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
-            asignacion.baja = True
-            asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
-            asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
-            asignacion.motivo_baja = request.POST['motivos']
-            asignacion.fecha_baja = request.POST['fecha_baja']
-            asignacion.observaciones_baja = request.POST['observaciones_baja']
-            asignacion.save()
-            return render(request, 'personasHorasList.html', {
-                'perhscat': perhscat,
-                'persona': persona,
-                'motivos': motivosBajaResolucion,
-                'form': form,
-                'anios': lista_anios,
-            })
-        else:
-            errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
-            return render(request, 'personasHorasList.html', {
-                'perhscat': perhscat,
-                'persona': persona,
-                'motivos': motivosBajaResolucion,
-                'form': form,
-                'anios': lista_anios,
-                'error': errors,
-            })
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    return render(request, 'personasHorasList.html', {
-        'perhscat': perhscat,
-        'persona': persona,
-        'motivos': motivosBajaResolucion,
-        'form': form,
-        'anios': lista_anios,
-    })
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = anio_actual - i
+            i += 1
+        # Fin obtener el arreglo de años
+        form = PersonaHoras()
+        perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
+        persona = Persona.objects.get(id=pid)
+        motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
+        if request.method == 'POST':
+            id_asignacion = request.POST['id']
+            asignacion = PersonaHoras.objects.get(id=id_asignacion)
+            fechaBaja = request.POST['fecha_baja']
+            if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
+                asignacion.baja = True
+                asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
+                asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
+                asignacion.motivo_baja = request.POST['motivos']
+                asignacion.fecha_baja = request.POST['fecha_baja']
+                asignacion.observaciones_baja = request.POST['observaciones_baja']
+                asignacion.save()
+                url = "/horascatedras/"+str(persona.id)+"/lista"
+                return redirect(url)
+            else:
+                errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
+                return render(request, 'personasHorasList.html', {
+                    'perhscat': perhscat,
+                    'persona': persona,
+                    'user': user,
+                    'motivos': motivosBajaResolucion,
+                    'form': form,
+                    'anios': lista_anios,
+                    'error': errors,
+                })
+
+        return render(request, 'personasHorasList.html', {
+            'perhscat': perhscat,
+            'persona': persona,
+            'user': user,
+            'motivos': motivosBajaResolucion,
+            'form': form,
+            'anios': lista_anios,
+        })
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def personasHorasBorrarBaja(request, asid):
-    asignacion = PersonaHoras.objects.get(id=asid)
-    persona = Persona.objects.get(id=asignacion.persona_id)
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    asignacion.baja = False
-    asignacion.resolucion_numero_baja = 0
-    asignacion.resolucion_anio_baja = 0
-    asignacion.motivo_baja = ""
-    asignacion.fecha_baja = '2000-01-01'
-    asignacion.observaciones_baja = ""
-    asignacion.save()
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
 
-    url = '/horascatedras/' + str(persona.id) + '/lista/'
-    return redirect(url)
+    if user != "Consulta":
+        asignacion = PersonaHoras.objects.get(id=asid)
+        persona = Persona.objects.get(id=asignacion.persona_id)
+
+        asignacion.baja = False
+        asignacion.resolucion_numero_baja = 0
+        asignacion.resolucion_anio_baja = 0
+        asignacion.motivo_baja = ""
+        asignacion.fecha_baja = '2000-01-01'
+        asignacion.observaciones_baja = ""
+        asignacion.save()
+
+        url = '/horascatedras/' + str(persona.id) + '/lista/'
+        return redirect(url)
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def personasHorasNew(request, pid):
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    # Fin obtener el arreglo de años
-    form = PersonaHorasForm()
-    persona = Persona.objects.get(id=pid)
-    dependencias = Dependencia.objects.all()
-    if request.method == 'POST':
-        form = PersonaHorasForm(request.POST)
-        if form.is_valid():
-            perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
-            persona = Persona.objects.get(id=pid)
-            new_perhs = form.save(commit=False)
-            new_perhs.persona_id = persona.id
-            new_perhs.save()
-            return render(request, 'personasHorasList.html', {
-                'perhscat': perhscat,
-                'persona': persona,
-            })
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = anio_actual - i
+            i += 1
+        # Fin obtener el arreglo de años
+        form = PersonaHorasForm()
+        persona = Persona.objects.get(id=pid)
+        dependencias = Dependencia.objects.all()
+        if request.method == 'POST':
+            form = PersonaHorasForm(request.POST)
+            if form.is_valid():
+                perhscat = PersonaHoras.objects.filter(persona_id=pid).order_by("-fecha_inicio")
+                persona = Persona.objects.get(id=pid)
+                new_perhs = form.save(commit=False)
+                new_perhs.persona_id = persona.id
+                new_perhs.save()
+                url = "/horascatedras/" + str(persona.id) + "/lista"
+                return redirect(url)
+            else:
+                form = PersonaHorasForm()
+                persona = Persona.objects.get(id=pid)
+                return render(request, 'personasHorasNew.html', {
+                    'persona': persona,
+                    'form': form,
+                    'anios': lista_anios,
+                    'dependencias': dependencias,
+                    'user': user
+                })
         else:
-            form = PersonaHorasForm()
-            persona = Persona.objects.get(id=pid)
             return render(request, 'personasHorasNew.html', {
                 'persona': persona,
                 'form': form,
                 'anios': lista_anios,
                 'dependencias': dependencias,
+                'user': user
             })
     else:
-        return render(request, 'personasHorasNew.html', {
-            'persona': persona,
-            'form': form,
-            'anios': lista_anios,
-            'dependencias': dependencias,
-        })
+        return redirect('/inicio/')
 
 @login_required()
 def personasHorasEdit(request, phid):
-    pershoras = PersonaHoras.objects.get(id=phid)
-    form = PersonaHorasForm(instance=pershoras)
-    persona = Persona.objects.get(id=pershoras.persona_id)
-    pid = persona.id
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    # Fin obtener el arreglo de años
-    dependencias = Dependencia.objects.all()
-    if request.method == 'POST':
-        form = PersonaHorasForm(request.POST, instance=pershoras)
-        if form.is_valid():
-            new_perhs = form.save(commit=False)
-            new_perhs.persona_id = persona.id
-            new_perhs.save()
-            url = '/horascatedras/'+ str(persona.id) + '/lista/'
-            return redirect(url)
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        pershoras = PersonaHoras.objects.get(id=phid)
+        form = PersonaHorasForm(instance=pershoras)
+        persona = Persona.objects.get(id=pershoras.persona_id)
+        pid = persona.id
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = anio_actual - i
+            i += 1
+        # Fin obtener el arreglo de años
+        dependencias = Dependencia.objects.all()
+        if request.method == 'POST':
+            form = PersonaHorasForm(request.POST, instance=pershoras)
+            if form.is_valid():
+                new_perhs = form.save(commit=False)
+                new_perhs.persona_id = persona.id
+                new_perhs.save()
+                url = '/horascatedras/'+ str(persona.id) + '/lista/'
+                return redirect(url)
+            else:
+                return render(request, 'personasHorasEdit.html', {
+                    'perhscat': pershoras,
+                    'persona': persona,
+                    'form': form,
+                    'anios': lista_anios,
+                    'dependencias': dependencias,
+                })
         else:
             return render(request, 'personasHorasEdit.html', {
                 'perhscat': pershoras,
@@ -577,151 +731,202 @@ def personasHorasEdit(request, phid):
                 'dependencias': dependencias,
             })
     else:
-        return render(request, 'personasHorasEdit.html', {
-            'perhscat': pershoras,
-            'persona': persona,
-            'form': form,
-            'anios': lista_anios,
-            'dependencias': dependencias,
-        })
+        return redirect('/inicio/')
 
 @login_required()
 def personasHorasDelete(request, phid):
-    pershoras = get_object_or_404(PersonaHoras, id=phid)
-    url = '/horascatedras/' + int(phid) + '/lista/'
-    if request.method == 'POST':
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        pershoras = get_object_or_404(PersonaHoras, id=phid)
+        perId = pershoras.persona_id
+        url = '/horascatedras/' + str(perId) + '/lista/'
+        #if request.method == 'POST':
+
         pershoras.delete()
         return redirect(url)
-    return render(request, url)
+        #return render(request, url)
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def docenteHorasList(request, pid):
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    # Fin obtener el arreglo de años
-    form = DocenteHoras()
-    motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
-    dochoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
-    persona = Persona.objects.get(id=pid)
-    nro_fil = len(dochoras)
-    lista_hs = [None] * nro_fil
-    for n in range(nro_fil):
-        lista_hs[n] = {'id_doc': 0, 'tot_hs': 0}
-    i = 0
-    #for dh in dochoras:
-    #    tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales)/100
-    #    tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
-    #    lista_hs[i]['id_doc'] = dh.id
-    #    lista_hs[i]['tot_hs'] = int(tot)
-    #    i += 1
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    for dh in dochoras:
-        if dh.remunerado == "Remunerado":
-            tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales) / 100
-            tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
-            lista_hs[i]['tot_hs'] = int(tot)
-        else:
-            lista_hs[i]['tot_hs'] = 0
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
 
-        lista_hs[i]['id_doc'] = dh.id
-        i += 1
-    if request.method == 'POST':
-        id_asignacion = request.POST['id']
-        asignacion = DocenteHoras.objects.get(id=id_asignacion)
-        fechaBaja = request.POST['fecha_baja']
-        if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
-            asignacion.baja = True
-            asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
-            asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
-            asignacion.motivo_baja = request.POST['motivos']
-            asignacion.fecha_baja = request.POST['fecha_baja']
-            asignacion.observaciones_baja = request.POST['observaciones_baja']
-            asignacion.save()
-            url = '/horasdocentes/' + str(persona.id) + '/lista/'
-            return redirect(url)
-        else:
-            errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
-            return render(request, 'docentesHorasList.html', {
-                'dochoras': dochoras,
-                'persona': persona,
-                'motivos': motivosBajaResolucion,
-                'form': form,
-                'anios': lista_anios,
-                'lista_hs': lista_hs,
-                'error': errors,
-            })
+    if user != "Consulta":
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = anio_actual - i
+            i += 1
+        # Fin obtener el arreglo de años
+        form = DocenteHoras()
+        motivosBajaResolucion = ["Fallecimiento", "Renuncia", "Suspensión"]
+        dochoras = DocenteHoras.objects.filter(persona_id=pid).order_by('-fecha_inicio')
+        persona = Persona.objects.get(id=pid)
+        nro_fil = len(dochoras)
+        lista_hs = [None] * nro_fil
+        for n in range(nro_fil):
+            lista_hs[n] = {'id_doc': 0, 'tot_hs': 0}
+        i = 0
+        #for dh in dochoras:
+        #    tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales)/100
+        #    tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
+        #    lista_hs[i]['id_doc'] = dh.id
+        #    lista_hs[i]['tot_hs'] = int(tot)
+        #    i += 1
 
-    return render(request, 'docentesHorasList.html', {
-        'dochoras': dochoras,
-        'persona': persona,
-        'motivos': motivosBajaResolucion,
-        'form': form,
-        'anios': lista_anios,
-        'lista_hs': lista_hs,
-    })
+        for dh in dochoras:
+            if dh.remunerado == "Remunerado":
+                tot_pocentaje = (dh.porcentaje_aplicado * dh.materia.hs_semanales) / 100
+                tot = math.ceil(dh.materia.hs_semanales + dh.hs_institucionales + tot_pocentaje)
+                lista_hs[i]['tot_hs'] = int(tot)
+            else:
+                lista_hs[i]['tot_hs'] = 0
+
+            lista_hs[i]['id_doc'] = dh.id
+            i += 1
+        if request.method == 'POST':
+            id_asignacion = request.POST['id']
+            asignacion = DocenteHoras.objects.get(id=id_asignacion)
+            fechaBaja = request.POST['fecha_baja']
+            if ((str(fechaBaja) >= str(asignacion.fecha_inicio))&(str(fechaBaja)<=str(asignacion.fecha_fin))):
+                asignacion.baja = True
+                asignacion.resolucion_numero_baja = request.POST['resolucion_numero_baja']
+                asignacion.resolucion_anio_baja = request.POST['resolucion_anio_baja']
+                asignacion.motivo_baja = request.POST['motivos']
+                asignacion.fecha_baja = request.POST['fecha_baja']
+                asignacion.observaciones_baja = request.POST['observaciones_baja']
+                asignacion.save()
+                url = '/horasdocentes/' + str(persona.id) + '/lista/'
+                return redirect(url)
+            else:
+                errors = "La fecha de baja de la asignación con resolución "+str(asignacion.resolucion_numero)+"/"+str(asignacion.resolucion_anio)+"-UDC debe estar entre "+str(asignacion.fecha_inicio)+" y "+str(asignacion.fecha_fin)
+                return render(request, 'docentesHorasList.html', {
+                    'dochoras': dochoras,
+                    'persona': persona,
+                    'motivos': motivosBajaResolucion,
+                    'form': form,
+                    'anios': lista_anios,
+                    'lista_hs': lista_hs,
+                    'error': errors,
+                    'user': user
+                })
+
+        return render(request, 'docentesHorasList.html', {
+            'dochoras': dochoras,
+            'persona': persona,
+            'motivos': motivosBajaResolucion,
+            'form': form,
+            'anios': lista_anios,
+            'lista_hs': lista_hs,
+            'user': user
+        })
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def docenteHorasBorrarBaja(request, asid):
-    asignacion = DocenteHoras.objects.get(id=asid)
-    persona = Persona.objects.get(id=asignacion.persona_id)
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    asignacion.baja = False
-    asignacion.resolucion_numero_baja = 0
-    asignacion.resolucion_anio_baja = 0
-    asignacion.motivo_baja = ""
-    asignacion.fecha_baja = '2000-01-01'
-    asignacion.observaciones_baja = ""
-    asignacion.save()
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
 
-    url = '/horasdocentes/' + str(persona.id) + '/lista/'
-    return redirect(url)
+    if user != "Consulta":
+        asignacion = DocenteHoras.objects.get(id=asid)
+        persona = Persona.objects.get(id=asignacion.persona_id)
+
+        asignacion.baja = False
+        asignacion.resolucion_numero_baja = 0
+        asignacion.resolucion_anio_baja = 0
+        asignacion.motivo_baja = ""
+        asignacion.fecha_baja = '2000-01-01'
+        asignacion.observaciones_baja = ""
+        asignacion.save()
+
+        url = '/horasdocentes/' + str(persona.id) + '/lista/'
+        return redirect(url)
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def docenteHorasNew(request, pid):
-    lista_remunerado = ['Remunerado', 'Ad Honorem']
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = anio_actual - i
-        i += 1
-    # Fin obtener el arreglo de años
-    sedes = Sede.objects.all()
-    carreras = Carrera.objects.all()
-    materias = Materia.objects.all().order_by('plan__carrera_id','anio_academico','periodo_id')
-    docenteTipos = TipoDocente.objects.all()
-    form = DocenteHorasForm()
-    persona = Persona.objects.get(id=pid)
-    if request.method == 'POST':
-        form = DocenteHorasForm(request.POST)
-        if form.is_valid():
-            mat = Materia.objects.get(id=request.POST['materia'])
-            doc_tipo = TipoDocente.objects.get(id=request.POST['docente_tipo'])
-            new_dochs = form.save(commit=False)
-            new_dochs.persona_id = persona.id
-            # new_dochs.fecha_inicio = mat.periodo.fecha_inicio
-            # new_dochs.fecha_fin = mat.periodo.fecha_fin
-            new_dochs.fecha_inicio = request.POST['fecha_inicio']
-            new_dochs.fecha_fin = request.POST['fecha_fin']
-            new_dochs.porcentaje_aplicado = doc_tipo.porcentaje_aplicado
-            new_dochs.hs_institucionales = doc_tipo.hs_institucionales
-            new_dochs.save()
-            dochoras = DocenteHoras.objects.filter(persona_id=pid)
-            return render(request, 'docentesHorasList.html', {
-                'dochoras': dochoras,
-                'persona': persona,
-                'pid': pid,
-            })
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        lista_remunerado = ['Remunerado', 'Ad Honorem']
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = anio_actual - i
+            i += 1
+        # Fin obtener el arreglo de años
+        sedes = Sede.objects.all()
+        carreras = Carrera.objects.all()
+        materias = Materia.objects.all().order_by('plan__carrera_id','anio_academico','periodo_id')
+        docenteTipos = TipoDocente.objects.all()
+        form = DocenteHorasForm()
+        persona = Persona.objects.get(id=pid)
+        if request.method == 'POST':
+            form = DocenteHorasForm(request.POST)
+            if form.is_valid():
+                mat = Materia.objects.get(id=request.POST['materia'])
+                doc_tipo = TipoDocente.objects.get(id=request.POST['docente_tipo'])
+                new_dochs = form.save(commit=False)
+                new_dochs.persona_id = persona.id
+                # new_dochs.fecha_inicio = mat.periodo.fecha_inicio
+                # new_dochs.fecha_fin = mat.periodo.fecha_fin
+                new_dochs.fecha_inicio = request.POST['fecha_inicio']
+                new_dochs.fecha_fin = request.POST['fecha_fin']
+                new_dochs.porcentaje_aplicado = doc_tipo.porcentaje_aplicado
+                new_dochs.hs_institucionales = doc_tipo.hs_institucionales
+                new_dochs.save()
+                url = "/horasdocentes/"+str(persona.id)+"/lista"
+                return redirect(url)
+            else:
+                return render(request, 'docentesHorasNew.html', {
+                    'persona': persona,
+                    'form': form,
+                    'carreras': carreras,
+                    'sedes': sedes,
+                    'materias': materias,
+                    'remunerados': lista_remunerado,
+                    'docenteTipos': docenteTipos,
+                    'anios': lista_anios,
+                })
         else:
             return render(request, 'docentesHorasNew.html', {
                 'persona': persona,
@@ -734,54 +939,66 @@ def docenteHorasNew(request, pid):
                 'anios': lista_anios,
             })
     else:
-        return render(request, 'docentesHorasNew.html', {
-            'persona': persona,
-            'form': form,
-            'carreras': carreras,
-            'sedes': sedes,
-            'materias': materias,
-            'remunerados': lista_remunerado,
-            'docenteTipos': docenteTipos,
-            'anios': lista_anios,
-        })
+        return redirect('/inicio/')
 
 @login_required()
 def docenteHorasEdit(request, dhid):
-    lista_remunerado = ['Remunerado', 'Ad Honorem']
-    # obtener el Arreglo de años (actual al 2009)
-    hoy = date.today()
-    anio_actual = hoy.year
-    nro_fil = (anio_actual - 2008)
-    lista_anios = [None] * nro_fil
-    i = 0
-    for n in range(nro_fil):
-        lista_anios[n] = str(anio_actual - i)
-        i += 1
-    # Fin obtener el arreglo de años
-    sedes = Sede.objects.all()
-    carreras = Carrera.objects.all()
-    materias = Materia.objects.all()
-    docenteTipos = TipoDocente.objects.all()
-    dochoras = DocenteHoras.objects.get(id=dhid)
-    form = DocenteHorasForm(instance=dochoras)
-    persona = Persona.objects.get(id=dochoras.persona.id)
-    if request.method == 'POST':
-        form = DocenteHorasForm(request.POST, instance=dochoras)
-        if form.is_valid():
-            mat = Materia.objects.get(id=request.POST['materia'])
-            doc_tipo = TipoDocente.objects.get(id=request.POST['docente_tipo'])
-            new_dochs = form.save(commit=False)
-            new_dochs.persona_id = persona.id
-            #new_dochs.fecha_inicio = mat.periodo.fecha_inicio
-            #new_dochs.fecha_fin = mat.periodo.fecha_fin
-            new_dochs.fecha_inicio = request.POST['fecha_inicio']
-            new_dochs.fecha_fin = request.POST['fecha_fin']
-            new_dochs.porcentaje_aplicado = doc_tipo.porcentaje_aplicado
-            new_dochs.hs_institucionales = doc_tipo.hs_institucionales
-            new_dochs.save()
-            dochoras = DocenteHoras.objects.filter(persona_id=persona.id)
-            url = '/horasdocentes/'+str(persona.id)+'/lista/'
-            return redirect(url)
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        lista_remunerado = ['Remunerado', 'Ad Honorem']
+        # obtener el Arreglo de años (actual al 2009)
+        hoy = date.today()
+        anio_actual = hoy.year
+        nro_fil = (anio_actual - 2008)
+        lista_anios = [None] * nro_fil
+        i = 0
+        for n in range(nro_fil):
+            lista_anios[n] = str(anio_actual - i)
+            i += 1
+        # Fin obtener el arreglo de años
+        sedes = Sede.objects.all()
+        carreras = Carrera.objects.all()
+        materias = Materia.objects.all()
+        docenteTipos = TipoDocente.objects.all()
+        dochoras = DocenteHoras.objects.get(id=dhid)
+        form = DocenteHorasForm(instance=dochoras)
+        persona = Persona.objects.get(id=dochoras.persona.id)
+        if request.method == 'POST':
+            form = DocenteHorasForm(request.POST, instance=dochoras)
+            if form.is_valid():
+                mat = Materia.objects.get(id=request.POST['materia'])
+                doc_tipo = TipoDocente.objects.get(id=request.POST['docente_tipo'])
+                new_dochs = form.save(commit=False)
+                new_dochs.persona_id = persona.id
+                #new_dochs.fecha_inicio = mat.periodo.fecha_inicio
+                #new_dochs.fecha_fin = mat.periodo.fecha_fin
+                new_dochs.fecha_inicio = request.POST['fecha_inicio']
+                new_dochs.fecha_fin = request.POST['fecha_fin']
+                new_dochs.porcentaje_aplicado = doc_tipo.porcentaje_aplicado
+                new_dochs.hs_institucionales = doc_tipo.hs_institucionales
+                new_dochs.save()
+                dochoras = DocenteHoras.objects.filter(persona_id=persona.id)
+                url = '/horasdocentes/'+str(persona.id)+'/lista/'
+                return redirect(url)
+            else:
+                return render(request, 'docentesHorasEdit.html', {
+                    'dochoras': dochoras,
+                    'form': form,
+                    'sedes': sedes,
+                    'carreras': carreras,
+                    'docenteTipos': docenteTipos,
+                    'materias': materias,
+                    'remunerados': lista_remunerado,
+                    'anios': lista_anios,
+                })
         else:
             return render(request, 'docentesHorasEdit.html', {
                 'dochoras': dochoras,
@@ -794,16 +1011,28 @@ def docenteHorasEdit(request, dhid):
                 'anios': lista_anios,
             })
     else:
-        return render(request, 'docentesHorasEdit.html', {
-            'dochoras': dochoras,
-            'form': form,
-            'sedes': sedes,
-            'carreras': carreras,
-            'docenteTipos': docenteTipos,
-            'materias': materias,
-            'remunerados': lista_remunerado,
-            'anios': lista_anios,
-        })
+        return redirect('/inicio/')
+
+@login_required()
+def docentesHorasDelete(request, dhid):
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
+
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        docentehoras = get_object_or_404(DocenteHoras, id=dhid)
+        docId = docentehoras.persona_id
+        url = '/horasdocentes/' + str(docId) + '/lista/'
+
+        docentehoras.delete()
+        return redirect(url)
+    else:
+        return redirect('/inicio/')
 
 @login_required()
 def export_admin_xls(request):
@@ -846,8 +1075,11 @@ def export_doc_xls(request):
         apenom = (doc.persona.apellidos + ', ' + doc.persona.nombres).encode('ascii', 'replace')
         resoluNro = str(doc.resolucion_numero)
         resoluAnio = str(doc.resolucion_anio)
-        tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
-        tot = doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje
+        tot = 0
+        if doc.remunerado == "Remunerado":
+            tot_pocentaje = (doc.porcentaje_aplicado * doc.materia.hs_semanales) / 100
+            tot = math.ceil(doc.materia.hs_semanales + doc.hs_institucionales + tot_pocentaje)
+
         writer.writerow(
             [apenom, doc.sede.sede_nombre.encode('ascii', 'replace'), doc.materia.plan.carrera.carrera_nombre.encode('ascii', 'replace')
                 , doc.materia.materia_nombre.encode('ascii', 'replace'), resoluNro, resoluAnio, doc.fecha_inicio,
@@ -859,98 +1091,110 @@ def export_doc_xls(request):
 
 @login_required()
 def export_cert_prest_serv(request, pid):
-    persona = get_object_or_404(Persona, id=pid)
-    docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
-    persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+    # filter the Group model for current logged in user instance
+    query_set = Group.objects.filter(user=request.user)
 
-    lista_dias = {'1': 'primero', '2': 'dos', '3': 'tres', '4': 'cuatro', '5': 'cinco', '6': 'seis', '7': 'siete',
-                  '8': 'ocho', '9': 'nueve', '10': 'diez', '11': 'once', '12': 'doce', '13': 'trece',
-                  '14': 'catorce', '15': 'quince', '16': 'dieciseis', '17': 'diecisiete', '18': 'dieciocho',
-                  '19': 'diecinueve', '20': 'veinte', '21': 'veintiun', '22': 'veintidos', '23': 'veintitres',
-                  '24': 'veinticuatro', '25': 'veinticinco', '26': 'veintiseis', '27': 'veintisiete',
-                  '28': 'veintiocho', '29': 'veintinueve', '30': 'treinta', '31': 'treinta y uno'}
-    lista_mes = {'1': 'enero', '2': 'febrero', '3': 'marzo', '4': 'abril', '5': 'mayo', '6': 'junio',
-                 '7': 'julio', '8': 'agosto', '9': 'septiembre', '10': 'octubre', '11': 'noviembre',
-                 '12': 'diciembre'}
-    lista_anios = {'2008': 'dos mil ocho', '2009': 'dos mil nueve', '2010': 'dos mil diez', '2011': 'dos mil once',
-                   '2012': 'dos mil doce', '2013': 'dos mil trece', '2014': 'dos mil catorce', '2015': 'dos mil quince',
-                   '2016': 'dos mil dieciseis', '2017': 'dos mil diecisiete', '2018': 'dos mil dieciocho',
-                   '2019': 'dos mil diecinueve', '2020': 'dos mil veinte', '2021': 'dos mil vientiuno',
-                   '2022': 'dos mil veintidos', '2023': 'dos mil veintitres', '2024': 'dos mil veinticuatro',
-                   '2025': 'dos mil veinticinco', '2026': 'dos mil veintiseis', '2027': 'dos mil veintisiete',
-                   '2028': 'dos mil veintiocho', '2029': 'dos mil veintinueve', '2030': 'dos mil treinta'}
-    hoy = date.today()
-    dia = hoy.day
-    mes = hoy.month
-    anio = hoy.year
-    if (dia == 1):
-        fecha_en_letras = ' al ' + lista_dias[str(dia)] + ' de ' + lista_mes[str(mes)] + u' del año ' + lista_anios[
-            str(anio)]
+    user = "Sin Especificar"
+    cantGrupos = len(query_set)
+    if (cantGrupos == 1):
+        for group in query_set:
+            user = group.name
+
+    if user != "Consulta":
+        persona = get_object_or_404(Persona, id=pid)
+        docHoras = DocenteHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+        persHoras = PersonaHoras.objects.filter(persona_id=pid).order_by('fecha_inicio')
+
+        lista_dias = {'1': 'primero', '2': 'dos', '3': 'tres', '4': 'cuatro', '5': 'cinco', '6': 'seis', '7': 'siete',
+                      '8': 'ocho', '9': 'nueve', '10': 'diez', '11': 'once', '12': 'doce', '13': 'trece',
+                      '14': 'catorce', '15': 'quince', '16': 'dieciseis', '17': 'diecisiete', '18': 'dieciocho',
+                      '19': 'diecinueve', '20': 'veinte', '21': 'veintiun', '22': 'veintidos', '23': 'veintitres',
+                      '24': 'veinticuatro', '25': 'veinticinco', '26': 'veintiseis', '27': 'veintisiete',
+                      '28': 'veintiocho', '29': 'veintinueve', '30': 'treinta', '31': 'treinta y uno'}
+        lista_mes = {'1': 'enero', '2': 'febrero', '3': 'marzo', '4': 'abril', '5': 'mayo', '6': 'junio',
+                     '7': 'julio', '8': 'agosto', '9': 'septiembre', '10': 'octubre', '11': 'noviembre',
+                     '12': 'diciembre'}
+        lista_anios = {'2008': 'dos mil ocho', '2009': 'dos mil nueve', '2010': 'dos mil diez', '2011': 'dos mil once',
+                       '2012': 'dos mil doce', '2013': 'dos mil trece', '2014': 'dos mil catorce', '2015': 'dos mil quince',
+                       '2016': 'dos mil dieciseis', '2017': 'dos mil diecisiete', '2018': 'dos mil dieciocho',
+                       '2019': 'dos mil diecinueve', '2020': 'dos mil veinte', '2021': 'dos mil vientiuno',
+                       '2022': 'dos mil veintidos', '2023': 'dos mil veintitres', '2024': 'dos mil veinticuatro',
+                       '2025': 'dos mil veinticinco', '2026': 'dos mil veintiseis', '2027': 'dos mil veintisiete',
+                       '2028': 'dos mil veintiocho', '2029': 'dos mil veintinueve', '2030': 'dos mil treinta'}
+        hoy = date.today()
+        dia = hoy.day
+        mes = hoy.month
+        anio = hoy.year
+        if (dia == 1):
+            fecha_en_letras = ' al ' + lista_dias[str(dia)] + ' de ' + lista_mes[str(mes)] + u' del año ' + lista_anios[
+                str(anio)]
+        else:
+            fecha_en_letras = ' a los ' + lista_dias[str(dia)] + u' días del mes de ' + lista_mes[str(mes)] + u' del año ' + \
+                              lista_anios[str(anio)]
+
+        docName = "Certificado_Prestacion_de_Servicio_" + persona.apellidos + "-" + persona.nombres + ".docx"
+
+        response = HttpResponse(content_type='text/docx')
+        response['Content-Disposition'] = 'attachment; filename="' + docName
+
+        docModelo = finders.find('../static/docs/CertPrestServ_Modelo.docx')
+        #file = open(docModelo, 'rb')
+        document = Document(docModelo)
+
+        #imagen = finders.find('img/logo_udc.png')
+        #document.add_picture(imagen, width=Cm(5), height=Cm(2))
+        #renglon = document.paragraphs[-1]
+        #renglon.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+
+        #p1 = document.add_paragraph('Rawson, ' + str_fecha)
+        #p1.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+
+        p1 = document.add_paragraph(u"Certificado de Prestación de Servicios")
+
+        #document.add_heading("Certificado de Prestación de Servicios", level=1)
+        p2 = document.add_paragraph(u'CERTIFICO que el/la Sr./Sra. ')
+        p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
+        p2.add_run(u'prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
+
+        table = document.add_table(rows=1, cols=4)
+        #table.style = 'Table Grid'
+        hdr_cells = table.rows[0].cells
+        hdr_cells[0].text = u'Cargo o Función'
+        hdr_cells[1].text = u'Resolución'
+        hdr_cells[2].text = 'Desde'
+        hdr_cells[3].text = 'Hasta'
+        if (docHoras.count() > 0):
+            for item in docHoras:
+                row_cells = table.add_row().cells
+                row_cells[0].text = item.docente_tipo.tipo_docente + " de la Asignatura " + \
+                                    '"' + item.materia.materia_nombre + '"' \
+                                    + '(' + item.materia.plan.carrera.carrera_nombre + ')'
+                row_cells[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                #row_cells[2].text = str(item.fecha_inicio).format("d/m/Y")
+                #row_cells[3].text = str(item.fecha_fin).format("d/m/Y")
+                row_cells[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
+                row_cells[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
+
+        if (persHoras.count() > 0):
+            for item in persHoras:
+                row_cells2 = table.add_row().cells
+                row_cells2[0].text = item.dependencia.dependencia_nombre
+                row_cells2[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                #row_cells2[2].text = str(item.fecha_inicio).format('d/m/Y')
+                #row_cells2[3].text = str(item.fecha_fin).format('d/m/Y')
+                row_cells2[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
+                row_cells2[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
+        p20 = document.add_paragraph('')
+        p3 = document.add_paragraph('Licencia SIN GOCE DE HABERES: ')
+        p3.add_run('NO REGISTRA.').font.color.rgb = RGBColor(248, 000, 000)
+
+        p4 = document.add_paragraph('Aportes en el Instituto de Seguridad Social y Seguros - Chubut.')
+
+        p5 = document.add_paragraph('A pedido de el/la interesado/a y a solo efectos de acreditar haber prestado'
+                                    + u' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
+                                    + ' a los' + fecha_en_letras)
+        document.save(response)
+
+        return response
     else:
-        fecha_en_letras = ' a los ' + lista_dias[str(dia)] + u' días del mes de ' + lista_mes[str(mes)] + u' del año ' + \
-                          lista_anios[str(anio)]
-
-    docName = "Certificado_Prestacion_de_Servicio_" + persona.apellidos + "-" + persona.nombres + ".docx"
-
-    response = HttpResponse(content_type='text/docx')
-    response['Content-Disposition'] = 'attachment; filename="' + docName
-
-    docModelo = finders.find('../static/docs/CertPrestServ_Modelo.docx')
-    #file = open(docModelo, 'rb')
-    document = Document(docModelo)
-
-    #imagen = finders.find('img/logo_udc.png')
-    #document.add_picture(imagen, width=Cm(5), height=Cm(2))
-    #renglon = document.paragraphs[-1]
-    #renglon.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-
-    #p1 = document.add_paragraph('Rawson, ' + str_fecha)
-    #p1.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-
-    p1 = document.add_paragraph(u"Certificado de Prestación de Servicios")
-
-    #document.add_heading("Certificado de Prestación de Servicios", level=1)
-    p2 = document.add_paragraph(u'CERTIFICO que el/la Sr./Sra. ')
-    p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
-    p2.add_run(u'prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
-
-    table = document.add_table(rows=1, cols=4)
-    #table.style = 'Table Grid'
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = u'Cargo o Función'
-    hdr_cells[1].text = u'Resolución'
-    hdr_cells[2].text = 'Desde'
-    hdr_cells[3].text = 'Hasta'
-    if (docHoras.count() > 0):
-        for item in docHoras:
-            row_cells = table.add_row().cells
-            row_cells[0].text = item.docente_tipo.tipo_docente + " de la Asignatura " + \
-                                '"' + item.materia.materia_nombre + '"' \
-                                + '(' + item.materia.plan.carrera.carrera_nombre + ')'
-            row_cells[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
-            #row_cells[2].text = str(item.fecha_inicio).format("d/m/Y")
-            #row_cells[3].text = str(item.fecha_fin).format("d/m/Y")
-            row_cells[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
-            row_cells[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
-
-    if (persHoras.count() > 0):
-        for item in persHoras:
-            row_cells2 = table.add_row().cells
-            row_cells2[0].text = item.dependencia.dependencia_nombre
-            row_cells2[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
-            #row_cells2[2].text = str(item.fecha_inicio).format('d/m/Y')
-            #row_cells2[3].text = str(item.fecha_fin).format('d/m/Y')
-            row_cells2[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
-            row_cells2[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
-    p20 = document.add_paragraph('')
-    p3 = document.add_paragraph('Licencia SIN GOCE DE HABERES: ')
-    p3.add_run('NO REGISTRA.').font.color.rgb = RGBColor(248, 000, 000)
-
-    p4 = document.add_paragraph('Aportes en el Instituto de Seguridad Social y Seguros - Chubut.')
-
-    p5 = document.add_paragraph('A pedido de el/la interesado/a y a solo efectos de acreditar haber prestado'
-                                + u' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
-                                + ' a los' + fecha_en_letras)
-    document.save(response)
-
-    return response
+        redirect('/inicio/')

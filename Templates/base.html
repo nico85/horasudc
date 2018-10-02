@@ -6,12 +6,13 @@
         {% load static %}
         <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
         <link href="{% static "css/style-consultas.css" %}" rel="stylesheet">
+        <link rel="shortcut icon" href="{%  static 'img/favicon.ico' %}">
         <script src="{% static "jquery/jquery-3.2.1.js" %}"></script>
         <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
         <script src="{% static "js/List.js" %}"></script>
         <script src="{% static "js/funciones.js" %}"></script>
         <script src="{% static "js/prefixfree.min.js" %}"></script>
-        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+        <!--<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>-->
 
         {% block cabecera %}{% endblock %}
     </head>
@@ -24,7 +25,9 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li id="nav_auto"><a href="/personas"><i class="glyphicon glyphicon-user"></i> Personal</a></li>
+                    {% if user != "Consulta" %}
+                        <li id="nav_auto"><a href="/personas"><i class="glyphicon glyphicon-user"></i> Personal</a></li>
+                    {% endif %}
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-question-sign"></i> Consultas<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -35,20 +38,22 @@
                     <!--<li id="nav_cons"><a href="../">Blabla</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../inicio/logout"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                    <li><a href="/inicio/logout"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                 </ul>
             </div>
         </nav>
         <div class="container-fluid" style="padding-top: 70px">
             {% block contenido %}{% endblock %}
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid"  style="padding-bottom: 50px">
             {% block pie_de_pag %}{% endblock %}
         </div>
         <!--<div class="container-fluid panel-footer navbar-fixed-bottom"> -->
-        <div class="container-fluid panel-footer">
-            <p>Universidad del Chubut</p>
-            <p>Área Sistemas - 2017</p>
+        <div class="panel-footer navbar-fixed-bottom">
+            <p>
+                <img src="{% static "img/logo_udc_solo.png" %}" alt="Universidad del Chubut">
+                Universidad del Chubut | Área Sistemas - 2017
+            </p>
         </div>
     </body>
 </html>

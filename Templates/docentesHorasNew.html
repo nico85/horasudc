@@ -122,9 +122,12 @@
               {% endif %}
 
               <div class="btn-group">
-                <button type="submit" class="save btn btn-success">Asignar</button>
-                <a href="/personas" class="btn btn-warning"> volver a la lista</a>
+                <button type="submit" class="save btn btn-success">
+                <i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                <a href="/personas/{{ persona.id }}/ver" class="btn btn-warning" title="Volver a ver las opciones del agente de la UDC.">
+                <i class="glyphicon glyphicon-dashboard"></i> Opciones del Agente</a>
               </div>
+
         </form>
     </div>
 {% endblock %}

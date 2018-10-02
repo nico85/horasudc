@@ -8,67 +8,72 @@
 {% block contenido %}
 
     <div>
-        <div>
-            <h3><b>Lista del Personal de la UDC</b></h3>
+        <div class="alert alert-info" align="center">
+            <h3><b>Lista del Personal con horas cátedras</b></h3>
         </div>
 
-        <div class="well well-sm">
-            <a href="/personas/nueva/" class="btn btn-info"> Agregar Persona</a>
-        </div>
 
         {% if personas %}
-        <div class="row col-md-10 col-md-offset-1">
-            <p>Actualmente hay {{ personas.count }} registros.</p>
-            <div id="datospersonas">
-                <div>
-                    <input class="search col-sm-4" style="margin-bottom: 10px" placeholder="Buscar por apellido/nombre" id="inputBuscarPersona">
-                    <!--<button class="sort" data-sort="apenom">Apellido</button>-->
-                    <div style="margin-left: 40px">
-                        <form id="form" method="post">
-                            {% csrf_token %}
-                            {% if estadoSel < 0 %}
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1" checked>Todas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
-                            {% elif estadoSel == 1 %}
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1" checked>Activas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
-                            {% else %}
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
-                                <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0" checked>Inactivas</label>
-                            {% endif %}
-                        </form>
+            <div class="row col-md-10 col-md-offset-1">
+                <div id="datospersonas">
+                    <div class="well" align="center">
+                        <div class="row" style="margin-bottom: 10px">
+                            <a href="/personas/nueva/" class="btn btn-info">
+                            <i class="glyphicon glyphicon-plus-sign"></i> Agregar Persona</a>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px">
+                            <form id="form" method="post">
+                                {% csrf_token %}
+                                {% if estadoSel < 0 %}
+                                    <p>Actualmente hay {{ personas.count }} registros cargados.</p>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1" checked>Todas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                                {% elif estadoSel == 1 %}
+                                    <p>Actualmente hay {{ personas.count }} registros activos.</p>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1" checked>Activas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0">Inactivas</label>
+                                {% else %}
+                                    <p>Actualmente hay {{ personas.count }} registros inactivos.</p>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="-1">Todas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="1">Activas</label>
+                                    <label class="radio-inline"><input type="radio" onchange="$('#form').submit();" name="estado" value="0" checked>Inactivas</label>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <label class="sr-only" for="inputBuscarPersona">Busqueda</label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">Filtrar registros por</div>
+                            <input type="text" class="form-control search col-sm-4" placeholder=" Apellido | Nombre | Nro. Legajo" id="inputBuscarPersona">
+                        </div>
                     </div>
-                </div>
-                <br>
-                <table class="table table-hover table-bordered table-condensed">
-                    <thead>
-                        <tr style="background-color: #5bc0de;">
-                            <th class="sort" data-sort="apenom">Apellido/s y Nombre/s <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
-                            <th>Legajo</th>
-                            <th>C.U.I.L.</th>
-                        </tr>
-                    </thead>
-                    <tbody class="list">
-                        {% for p in personas %}
-                            {% if p.activo == '1' %}
-                            <tr style="color: black">
-                            {% else %}
-                            <tr style="background-color: #ffffb3" title="Inactivo en el Sistema">
-                            {% endif %}
-                                <td class="apenom">
-                                    <a href="/personas/{{ p.id }}/ver" title="ver todas la opciones">{{ p.apellidos }}, {{ p.nombres }}</a>
-                                </td>
-                                <td>{{ p.legajo_numero }}</td>
-                                <td>{{ p.cuil }}</td>
+                    <table class="table table-hover table-bordered table-condensed">
+                        <thead>
+                            <tr style="background-color: #5bc0de;">
+                                <th class="sort" data-sort="apenom">Apellido/s y Nombre/s <i class="glyphicon glyphicon-chevron-up"></i><i class="glyphicon glyphicon-chevron-down"></i></th>
+                                <th class="sort" data-sort="nrolegajo">Legajo</th>
+                                <th>C.U.I.L.</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in personas %}
+                                {% if p.activo == '1' %}
+                                <tr style="color: black">
+                                {% else %}
+                                <tr style="background-color: #ffffb3" title="Inactivo en el Sistema">
+                                {% endif %}
+                                    <td class="apenom">
+                                        <a href="/personas/{{ p.id }}/ver" title="ver todas la opciones">{{ p.apellidos }}, {{ p.nombres }}</a>
+                                    </td>
+                                    <td class="nrolegajo">{{ p.legajo_numero }}</td>
+                                    <td>{{ p.cuil }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         {% else %}
             <div class="alert alert-warning">
                 <h1>No existe ninguna persona cargada aún!</h1>
@@ -78,7 +83,7 @@
 
 <script>
     var options = {
-        valueNames: ["apenom"]
+        valueNames: ["apenom","nrolegajo"]
     };
     var personasList = new List("datospersonas", options)
 </script>

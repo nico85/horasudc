@@ -2,244 +2,258 @@
 {% block titulo %}Listado de Horas del docente{% endblock %}
 
 {% block contenido %}
-
-    <h1>Listado de horas de docencia asignadas a {{ persona.apellidos }}, {{ persona.nombres }}</h1>
-    <div class="well well-sm">
-        <a href="/horasdocentes/{{ persona.id }}/asignar/" class="btn btn-info"> Asignar otra materia</a>
-    </div>
-    {% if error %}
-        <div class="alert alert-danger">
-            {{ error }}
-        </div>
-    {% endif %}
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered table-condensed">
-            <thead>
-                <tr style="background-color: #5bc0de;">
-                    <th>Resolución</th>
-                    <th>Sede</th>
-                    <th>Materia</th>
-                    <th>Desde</th>
-                    <th>Hasta</th>
-                    <th>Remuneración</th>
-                    <th>Materia Periodo</th>
-                    <th>Horas semanales</th>
-                    <th>Horas total materia</th>
-                    <th>Docente Tipo</th>
-                    <th>Porcentaje</th>
-                    <th>Hs. Inst.</th>
-                    <th>Total a Liquidar</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for doc in dochoras %}
-                    <tr>
-                    {% if doc.baja == True %}
-                        <td style="color: red">{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</td>
-                        <td style="color: red">{{ doc.sede.sede_nombre }}</td>
-                        <td style="color: red">{{ doc.materia.materia_nombre }}</td>
-                        <td style="color: red">{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
-                        <td style="color: red">{{ doc.fecha_fin | date:"d/m/Y" }}</td>
-                        <td style="color: red">{{ doc.remunerado }}</td>
-                        <td style="color: red">{{ doc.materia.periodo.periodo_nombre }}</td>
-                        <td style="color: red">{{ doc.materia.hs_semanales }}</td>
-                        <td style="color: red">{{ doc.materia.hs_total_materia }}</td>
-                        <td style="color: red">{{ doc.docente_tipo.tipo_docente }}</td>
-                        <td style="color: red">{{ doc.porcentaje_aplicado }} %</td>
-                        <td style="color: red">{{ doc.hs_institucionales }}</td>
-                    {% else %}
-                        <td>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</td>
-                        <td>{{ doc.sede.sede_nombre }}</td>
-                        <td>{{ doc.materia.materia_nombre }}</td>
-                        <td>{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
-                        <td>{{ doc.fecha_fin | date:"d/m/Y" }}</td>
-                        <td>{{ doc.remunerado }}</td>
-                        <td>{{ doc.materia.periodo.periodo_nombre }}</td>
-                        <td>{{ doc.materia.hs_semanales }}</td>
-                        <td>{{ doc.materia.hs_total_materia }}</td>
-                        <td>{{ doc.docente_tipo.tipo_docente }}</td>
-                        <td>{{ doc.porcentaje_aplicado }} %</td>
-                        <td>{{ doc.hs_institucionales }}</td>
-                    {% endif %}
-                        <td>
-                            {% for l in lista_hs %}
-                                {% if doc.id == l.id_doc %}
-                                    {{ l.tot_hs }}
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <!--<a href="/horasdocentes/{{ doc.id }}/editar/" class="btn btn-info">
-                            <i class="glyphicon glyphicon-pencil"></i> Editar</a>-->
-                            {% if doc.baja == False %}
-                                <a href="/horasdocentes/{{ doc.id }}/editar/" class="btn btn-info">
-                                <i class="glyphicon glyphicon-pencil"></i> Editar</a>
-                                <!-- Button trigger modal -->
-                                <button class="btn btn-danger" data-toggle="modal" data-target="#bajaResolModal{{ doc.id }}">
-                                    Baja de Asignación
-                                </button>
+    {% if dochoras.count > 0 %}
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <h4>Listado de horas de docencia asignadas a <b>{{ persona.apellidos }}, {{ persona.nombres }}</b></h4>
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endif %}
+          </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-condensed">
+                    <thead>
+                        <tr style="background-color: #5bc0de;">
+                            <th>Resolución</th>
+                            <th>Sede</th>
+                            <th>Materia</th>
+                            <th>Desde</th>
+                            <th>Hasta</th>
+                            <th>Remuneración</th>
+                            <th>Materia Periodo</th>
+                            <th>Horas semanales</th>
+                            <th>Horas total materia</th>
+                            <th>Docente Tipo</th>
+                            <th>Porcentaje</th>
+                            <th>Hs. Inst.</th>
+                            <th>Total a Liquidar</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doc in dochoras %}
+                            <tr>
+                            {% if doc.baja == True %}
+                                <td style="color: red">{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</td>
+                                <td style="color: red">{{ doc.sede.sede_nombre }}</td>
+                                <td style="color: red">{{ doc.materia.materia_nombre }}</td>
+                                <td style="color: red">{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
+                                <td style="color: red">{{ doc.fecha_fin | date:"d/m/Y" }}</td>
+                                <td style="color: red">{{ doc.remunerado }}</td>
+                                <td style="color: red">{{ doc.materia.periodo.periodo_nombre }}</td>
+                                <td style="color: red">{{ doc.materia.hs_semanales }}</td>
+                                <td style="color: red">{{ doc.materia.hs_total_materia }}</td>
+                                <td style="color: red">{{ doc.docente_tipo.tipo_docente }}</td>
+                                <td style="color: red">{{ doc.porcentaje_aplicado }} %</td>
+                                <td style="color: red">{{ doc.hs_institucionales }}</td>
                             {% else %}
-                                <!-- Button trigger modal -->
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#verBajaResolModal{{ doc.id }}">
-                                    Ver Baja
-                                </button>
-                                <a href="/horasdocentes/{{ doc.id }}/borrarbaja/" class="btn btn-success">
-                                <i class="glyphicon glyphicon-chevron-left"></i> Deshacer Baja</a>
+                                <td>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</td>
+                                <td>{{ doc.sede.sede_nombre }}</td>
+                                <td>{{ doc.materia.materia_nombre }}</td>
+                                <td>{{ doc.fecha_inicio | date:"d/m/Y" }}</td>
+                                <td>{{ doc.fecha_fin | date:"d/m/Y" }}</td>
+                                <td>{{ doc.remunerado }}</td>
+                                <td>{{ doc.materia.periodo.periodo_nombre }}</td>
+                                <td>{{ doc.materia.hs_semanales }}</td>
+                                <td>{{ doc.materia.hs_total_materia }}</td>
+                                <td>{{ doc.docente_tipo.tipo_docente }}</td>
+                                <td>{{ doc.porcentaje_aplicado }} %</td>
+                                <td>{{ doc.hs_institucionales }}</td>
                             {% endif %}
-                            <!-- Modal Dar de Baja una Resolución -->
-                            <div class="modal fade" id="bajaResolModal{{ doc.id }}" tabindex="-1" role="dialog"
-                                 aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <button type="button" class="close"
-                                               data-dismiss="modal">
-                                                   <span aria-hidden="true">&times;</span>
-                                                   <span class="sr-only">Cerrar</span>
-                                            </button>
-                                            <h4 class="modal-title" id="bajaResolModal{{ doc.id }}">
-                                                Dar de Baja la Resolución <b>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</b>
-                                            </h4>
-                                        </div>
-
-                                        <!-- Modal Body -->
-                                        <div class="modal-body">
-
-                                            <form class="form-horizontal" role="form" method="POST">
-                                              {% csrf_token %}
-
-                                              <input type="checkbox" hidden="hidden" name="baja" id="baja" value="true">
-
-                                              <input type="number" hidden="hidden" name="id" id="id" value="{{ doc.id }}">
-
-                                              <div class="form-group">
-                                                <label for="resolucion_numero_baja" class="col-sm-4 control-label">Resol. Número baja (*)</label>
-                                                <div class="col-sm-8">
-                                                    <input type="number" id="id_resolucion_numero_baja" name="resolucion_numero_baja" class="col-sm-12" placeholder="Resolución de la baja de la asignación" required>
+                                <td>
+                                    {% for l in lista_hs %}
+                                        {% if doc.id == l.id_doc %}
+                                            {{ l.tot_hs }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% if doc.baja == False %}
+                                        <a href="/horasdocentes/{{ doc.id }}/editar/" class="btn btn-info">
+                                        <i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                                        <!-- Button trigger modal -->
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#bajaResolModal{{ doc.id }}">
+                                            Baja de Asignación
+                                        </button>
+                                    {% else %}
+                                        <!-- Button trigger modal -->
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#verBajaResolModal{{ doc.id }}">
+                                            Ver Baja
+                                        </button>
+                                        <a href="/horasdocentes/{{ doc.id }}/borrarbaja/" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-chevron-left"></i> Deshacer Baja</a>
+                                    {% endif %}
+                                    {% if user == "Administrador" %}
+                                        <a href="/horasdocentes/{{ doc.id }}/eliminar/" class="btn btn-primary" onclick="return confirm('Esta seguro que desea eliminar por completo esta asignación?')" title="Eliminar por completo de la base de datos la asignación de horas.">
+                                        <i class="glyphicon glyphicon-erase"></i> Eliminar Registro</a>
+                                    {% endif %}
+                                    <!-- Modal Dar de Baja una Resolución -->
+                                    <div class="modal fade" id="bajaResolModal{{ doc.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"
+                                                       data-dismiss="modal">
+                                                           <span aria-hidden="true">&times;</span>
+                                                           <span class="sr-only">Cerrar</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="bajaResolModal{{ doc.id }}">
+                                                        Dar de Baja la Resolución <b>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</b>
+                                                    </h4>
                                                 </div>
-                                              </div>
 
-                                              <div class="form-group">
-                                                <label for="resolucion_anio_baja" class="col-sm-4 control-label">Resol. Año</label>
-                                                <div class="col-sm-8">
-                                                    <select class="form-control" id="resolucion_anio_baja" name="resolucion_anio_baja" required>
-                                                        {% for anio in anios %}
-                                                            <option value="{{ anio }}">{{ anio }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                <!-- Modal Body -->
+                                                <div class="modal-body">
+
+                                                    <form class="form-horizontal" role="form" method="POST">
+                                                      {% csrf_token %}
+
+                                                      <input type="checkbox" hidden="hidden" name="baja" id="baja" value="true">
+
+                                                      <input type="number" hidden="hidden" name="id" id="id" value="{{ doc.id }}">
+
+                                                      <div class="form-group">
+                                                        <label for="resolucion_numero_baja" class="col-sm-4 control-label">Resol. Número baja (*)</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number" id="id_resolucion_numero_baja" name="resolucion_numero_baja" class="col-sm-12" placeholder="Resolución de la baja de la asignación" required>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <label for="resolucion_anio_baja" class="col-sm-4 control-label">Resol. Año</label>
+                                                        <div class="col-sm-8">
+                                                            <select class="form-control" id="resolucion_anio_baja" name="resolucion_anio_baja" required>
+                                                                {% for anio in anios %}
+                                                                    <option value="{{ anio }}">{{ anio }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <label class="col-sm-4 control-label" for="motivos" name="motivos">Motivos (*)</label>
+                                                        <div class="col-sm-8">
+                                                            <select class="form-control" id="motivos" name="motivos" required>
+                                                                <option value="-1">...</option>
+                                                                {% for mot in motivos %}
+                                                                    <option value="{{ mot }}">{{ mot }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <label for="fecha_baja" class="col-sm-4 control-label">Fecha de baja (*)</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="date" id="id_fecha_baja" name="fecha_baja" class="col-sm-12" placeholder="AAAA-MM-DD" required>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <label class="col-sm-4 control-label" for="observaciones_baja">Observaciones</label>
+                                                        <div class="col-sm-8">
+                                                            <textarea class="form-control" id="observaciones_baja" name="observaciones_baja" placeholder="Observaciones"></textarea>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <div class="col-sm-offset-0 col-sm-12">
+                                                          <button type="submit" class="btn btn-success">Dar de baja</button>
+                                                        </div>
+                                                      </div>
+
+                                                    </form>
                                                 </div>
-                                              </div>
 
-                                              <div class="form-group">
-                                                <label class="col-sm-4 control-label" for="motivos" name="motivos">Motivos (*)</label>
-                                                <div class="col-sm-8">
-                                                    <select class="form-control" id="motivos" name="motivos" required>
-                                                        <option value="-1">...</option>
-                                                        {% for mot in motivos %}
-                                                            <option value="{{ mot }}">{{ mot }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                <!-- Modal Footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar </button>
+                                                    <!--<button type="button" class="btn btn-primary">
+                                                        Save changes
+                                                    </button>-->
                                                 </div>
-                                              </div>
-
-                                              <div class="form-group">
-                                                <label for="fecha_baja" class="col-sm-4 control-label">Fecha de baja (*)</label>
-                                                <div class="col-sm-8">
-                                                    <input type="date" id="id_fecha_baja" name="fecha_baja" class="col-sm-12" placeholder="AAAA-MM-DD" required>
-                                                </div>
-                                              </div>
-
-                                              <div class="form-group">
-                                                <label class="col-sm-4 control-label" for="observaciones_baja">Observaciones</label>
-                                                <div class="col-sm-8">
-                                                    <textarea class="form-control" id="observaciones_baja" name="observaciones_baja" placeholder="Observaciones"></textarea>
-                                                </div>
-                                              </div>
-
-                                              <div class="form-group">
-                                                <div class="col-sm-offset-0 col-sm-12">
-                                                  <button type="submit" class="btn btn-success">Dar de baja</button>
-                                                </div>
-                                              </div>
-
-                                            </form>
-                                        </div>
-
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar </button>
-                                            <!--<button type="button" class="btn btn-primary">
-                                                Save changes
-                                            </button>-->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- Modal Ver Baja de Resolución -->
-                            <div class="modal fade" id="verBajaResolModal{{ doc.id }}" tabindex="-1" role="dialog"
-                                 aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <button type="button" class="close"
-                                               data-dismiss="modal">
-                                                   <span aria-hidden="true">&times;</span>
-                                                   <span class="sr-only">Cerrar</span>
-                                            </button>
-                                            <h4 class="modal-title" id="VerBajaResolModal{{ doc.id }}">
-                                                Ver Baja de Resolución <b>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</b>
-                                            </h4>
-                                        </div>
+                                    <!-- Modal Ver Baja de Resolución -->
+                                    <div class="modal fade" id="verBajaResolModal{{ doc.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"
+                                                       data-dismiss="modal">
+                                                           <span aria-hidden="true">&times;</span>
+                                                           <span class="sr-only">Cerrar</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="VerBajaResolModal{{ doc.id }}">
+                                                        Ver Baja de Resolución <b>{{ doc.resolucion_numero }}/{{ doc.resolucion_anio }}-UDC</b>
+                                                    </h4>
+                                                </div>
 
-                                        <!-- Modal Body -->
-                                        <div class="modal-body">
+                                                <!-- Modal Body -->
+                                                <div class="modal-body">
 
-                                          <div class="form-group">
-                                            <label for="resolucion_numero_baja" class="col-sm-4 control-label">Resol. Número baja (*)</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" disabled id="id_resolucion_numero_baja" name="resolucion_numero_baja" class="col-sm-12" value="{{ doc.resolucion_numero_baja }}/{{ doc.resolucion_anio_baja }}-UDC">
+                                                  <div class="form-group">
+                                                    <label for="resolucion_numero_baja" class="col-sm-4 control-label">Resol. Número baja (*)</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" disabled id="id_resolucion_numero_baja" name="resolucion_numero_baja" class="col-sm-12" value="{{ doc.resolucion_numero_baja }}/{{ doc.resolucion_anio_baja }}-UDC">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label class="col-sm-4 control-label" for="motivos" name="motivos">Motivos (*)</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" disabled id="id_motivo_baja" name="motivo_baja" class="col-sm-12" value="{{ doc.motivo_baja }}">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="fecha_baja" class="col-sm-4 control-label">Fecha de baja (*)</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="date" disabled id="id_fecha_baja" name="fecha_baja" class="col-sm-12" value="{{ doc.fecha_baja | date:"d/m/Y" }}">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label class="col-sm-4 control-label" for="observaciones_baja">Observaciones</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea class="form-control" disabled id="observaciones_baja" name="observaciones_baja">{{ doc.observaciones_baja }}</textarea>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <!-- Modal Footer -->
+                                                <div class="modal-footer" style="margin-top:60px">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"> Cerrar </button>
+                                                </div>
                                             </div>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="motivos" name="motivos">Motivos (*)</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" disabled id="id_motivo_baja" name="motivo_baja" class="col-sm-12" value="{{ doc.motivo_baja }}">
-                                            </div>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <label for="fecha_baja" class="col-sm-4 control-label">Fecha de baja (*)</label>
-                                            <div class="col-sm-8">
-                                                <input type="date" disabled id="id_fecha_baja" name="fecha_baja" class="col-sm-12" value="{{ doc.fecha_baja | date:"d/m/Y" }}">
-                                            </div>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="observaciones_baja">Observaciones</label>
-                                            <div class="col-sm-8">
-                                                <textarea class="form-control" disabled id="observaciones_baja" name="observaciones_baja">{{ doc.observaciones_baja }}</textarea>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer" style="margin-top:60px">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"> Cerrar </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <a href="/personas" class="btn btn-warning"> Todas la Personas</a>
-    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+          <div class="panel-footer">
+            <div class="btn-group">
+                <a href="/horasdocentes/{{ persona.id }}/asignar/" class="btn btn-info">
+                <i class="glyphicon glyphicon-plus-sign"></i> Asignar otra materia</a>
+                <a href="/personas/{{ persona.id }}/ver" class="btn btn-warning" title="Volver a ver las opciones del agente de la UDC.">
+                <i class="glyphicon glyphicon-dashboard"></i> Opciones del Agente</a>
+            </div>
+          </div>
+        </div>
+    {% else %}
+        <h3 class="alert alert-warning"> {{ persona.apellidos }}, {{ persona.nombres }} no tiene ninguna hora cátedra asignada! </h3>
+    {% endif %}
+
 {% endblock %}

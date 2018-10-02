@@ -20,6 +20,7 @@ from horas import views
 from django.views.generic import RedirectView
 from django.conf.urls import url
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', RedirectView.as_view(pattern_name='inicio', permanent=False)),
@@ -37,10 +38,12 @@ urlpatterns = [
     url(r'^horascatedras/(?P<pid>[0-9]+)/asignar/$', views.personasHorasNew),
     url(r'^horascatedras/(?P<phid>[0-9]+)/editar/$', views.personasHorasEdit),
     url(r'^horascatedras/(?P<asid>[0-9]+)/borrarbaja/$', views.personasHorasBorrarBaja),
+    url(r'^horascatedras/(?P<phid>[0-9]+)/eliminar/$', views.personasHorasDelete),
     url(r'^horasdocentes/(?P<pid>[0-9]+)/lista/$', views.docenteHorasList),
     url(r'^horasdocentes/(?P<pid>[0-9]+)/asignar/$', views.docenteHorasNew),
     url(r'^horasdocentes/(?P<dhid>[0-9]+)/editar/$', views.docenteHorasEdit),
     url(r'^horasdocentes/(?P<asid>[0-9]+)/borrarbaja/$', views.docenteHorasBorrarBaja),
+    url(r'^horasdocentes/(?P<dhid>[0-9]+)/eliminar/$', views.docentesHorasDelete),
     url(r'^admin/export/xls/$', views.export_admin_xls, name='export_admin_xls'),
     url(r'^doc/export/xls/$', views.export_doc_xls, name='export_doc_xls'),
     url(r'^doc/export/(?P<pid>[0-9]+)/certprestserv/$', views.export_cert_prest_serv, name='export_cert_prest_serv'),

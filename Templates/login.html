@@ -13,10 +13,12 @@
             <img src="{% static "img/logo_udc.png" %}" alt="Universidad del Chubut">
         </div>
         <div class="imgcontainer" style="margin-top: 20px">
-            <img src="{% static "img/icon_reloj-color_512.png" %}" width="200px" height="200px" alt="Sistema de Gestión de horas cátedras">
+            <img src="{% static "img/icon_reloj-color_512.png" %}" width="150px" height="150px" alt="Sistema de Gestión de horas cátedras" title="Sistema de Gestión de horas cátedras">
         </div>
+        <div class="row" align="center"><h4><b>Sistema de Gestión de Horas Cátedras</b></h4></div>
         <div class="container">
             {% csrf_token %}
+
             <label><b>Usuario</b></label>
             <input id="id_username" type="text" placeholder="Ingrese su Usuario" name="username" required>
 
@@ -27,6 +29,7 @@
 
             <input type="hidden" name="next" value="{{ next }}" />
             <button type="submit">Ingresar</button>
+
         </div>
     </form>
 </body>
