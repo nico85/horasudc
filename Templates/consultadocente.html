@@ -109,14 +109,14 @@
                 <div style="display: inline-block">
                     <div style="float:left">
                         <h4>Lista del Personal docente de la Universidad del Chubut</h4>
-                        <h5>(se encontraron {{ docentes.count }} resultados, de un total de {{ total_docs }} asignaciones)</h5>
+                        <h5>(se encontraron <span class="badge">{{ docentes.count }}</span> resultados, de un total de <span class="badge">{{ total_docs }}</span> asignaciones)</h5>
                         <h5 style="color: red">({{ total_docs_baja }} son asignaciones dadas de baja)</h5>
                     </div>
                     {% if isGet == False %}
                     <div style="float:left;padding: 10px">
                         <a href="/doc/export/xls/" class="btn btn-success">
                         <!--<img src="../static/img/icon_excel-white_24.png"></a>-->
-                        <img src="../static/img/icon_excel-color_32.png"></a>
+                        <img src="../static/img/icon_excel-color_32.png"> Total de horas a liquidar <b>{{ totalhoras }}</b></a>
                     </div>
                     {% endif %}
                 </div>

@@ -59,7 +59,7 @@
                     <select class="form-control" id="id_materia" name="materia">
                         <option value="-1" selected>Seleccionar</option>
                         {% for m in materias %}
-                            <option value="{{ m.id }}">({{ m.plan.carrera.carrera_abreviada }}) | Año {{ m.anio_academico }} - {{ m.periodo.periodo_nombre }} | {{ m.materia_nombre }}</option>
+                            <option value="{{ m.id }}">({{ m.plan.carrera.carrera_abreviada }}-{{m.plan.plan_nombre}}) | Año {{ m.anio_academico }} - {{ m.periodo.periodo_nombre }} | {{ m.materia_nombre }}</option>
                         {% endfor %}
                     </select>
                 </div>

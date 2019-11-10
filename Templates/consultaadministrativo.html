@@ -3,7 +3,8 @@
 {% block titulo %}Consulta Administrativos{% endblock %}
 
 {% block contenido %}
-  <div>
+
+  <div class="loader">
     <div class="col-sm-12">
         <div id="form-izquierda" class="col-sm-2 well well-sm">
             <h5 style="background-color: #1b6d85; padding: 10px; color: white; text-align: center"><b>Filtrar por</b></h5>
@@ -97,14 +98,14 @@
                 <div style="display: inline-block">
                     <div style="float:left">
                         <h4>Lista del Personal con horas cátedras de la Universidad del Chubut</h4>
-                        <h5>(se encontraron {{ administrativos.count }} resultados, de un total de {{ total_adms }} asignaciones)</h5>
+                        <h5>(se encontraron <span class="badge">{{ administrativos.count }}</span> resultados, de un total de <span class="badge">{{ total_adms }}</span> asignaciones)</h5>
                         <h5 style="color: red">({{ total_adms_baja }} son asignaciones dadas de baja)</h5>
                     </div>
                     {% if isGet == False %}
                     <div style="float:left;padding: 10px">
                         <a href="/admin/export/xls/" class="btn btn-success">
                         <!--<img src="../static/img/icono_filtrar-white_24.png">-->
-                        <img src="../static/img/icon_excel-color_32.png"></a>
+                        <img src="../static/img/icon_excel-color_32.png"> total de horas <b>{{ totalhoras }}</b></a>
                     </div>
                     {% endif %}
                 </div>
@@ -162,6 +163,7 @@
         </div>
     </div>
   </div>
+
 
 <script>
     var options = {
