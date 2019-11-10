@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block titulo %}Gráficos{% endblock %}
+
+{% block contenido %}
+    <div class="well well-lg">
+        aqui el grafico de {{ sedes.nombre }}
+    </div>
+    <div>
+        {% for s in sedes %}
+            <b>{{ s }}</b><br>
+        {% endfor %}
+    </div>
+    <div>
+        {% for dc in docHor %}
+            <b>{{ dc }}</b><br>
+        {% endfor %}
+    </div>
+    <div style="width: 600px; height: 400px">
+        <canvas id="piePrueba" width="600" height="400"></canvas>
+    </div>
+
+<script>
+
+sedes_arr = []
+{% for s in sedes %}
+    sedes_arr[{{ forloop.counter }}-1] = '{{ s.sede_nombre }}';
+{% endfor %}
+var piePruebaCanvas = document.getElementById("piePrueba");
+
+//Chart.defaults.global.defaultFontFamily = "Lato";
+//Chart.defaults.global.defaultFontSize = 18;
+
+var datos = {
+    //labels: ["Rawsons","Puerto Madryns","Trelews","Esquels","Gaimans"],
+    labels: sedes_arr,
+    datasets: [
+        {
+            data: [150, 120, 35, 68,10],
+            backgroundColor: [
+                "#FF6384",
+                "#63FF84",
+                "#84FF63",
+                "#8463FF",
+                "#6384FF"
+            ]
+        }]
+};
+
+var pieChart = new Chart(piePruebaCanvas, {
+  type: 'pie',
+  data: datos
+});
+</script>
+
+
+{% endblock %}
