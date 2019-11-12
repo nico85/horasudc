@@ -1154,32 +1154,41 @@ def export_cert_prest_serv(request, pid):
         #document.add_heading("Certificado de Prestación de Servicios", level=1)
         p2 = document.add_paragraph(u'CERTIFICO que el/la Sr./Sra. ')
         p2.add_run(persona.apellidos + ', ' + persona.nombres + ' (C.U.I.L. ' + persona.cuil + ') ').bold = True
-        p2.add_run(u'prestó servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
-
-        table = document.add_table(rows=1, cols=4)
-        #table.style = 'Table Grid'
-        hdr_cells = table.rows[0].cells
-        hdr_cells[0].text = u'Cargo o Función'
-        hdr_cells[1].text = u'Resolución'
-        hdr_cells[2].text = 'Desde'
-        hdr_cells[3].text = 'Hasta'
+        p2.add_run(u'presta/o servicios en esta Universidad, desempeñándose en la función y período que a continuación se detallan:')
+        
         if (docHoras.count() > 0):
+            table = document.add_table(rows=1, cols=6)
+            #table.style = 'Table Grid'
+            hdr_cells = table.rows[0].cells
+            hdr_cells[0].text = u'Resolución'
+            hdr_cells[1].text = 'Carrera'
+            hdr_cells[2].text = 'Materia'
+            hdr_cells[3].text = u'Cargo o Función'
+            hdr_cells[4].text = 'Desde'
+            hdr_cells[5].text = 'Hasta'
             for item in docHoras:
                 row_cells = table.add_row().cells
-                row_cells[0].text = item.docente_tipo.tipo_docente + " de la Asignatura " + \
-                                    '"' + item.materia.materia_nombre + '"' \
-                                    + '(' + item.materia.plan.carrera.carrera_nombre + ')'
-                row_cells[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                row_cells[0].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                row_cells[1].text = item.materia.plan.carrera.carrera_nombre
+                row_cells[2].text = item.materia.materia_nombre
+                row_cells[3].text = item.docente_tipo.tipo_docente
                 #row_cells[2].text = str(item.fecha_inicio).format("d/m/Y")
                 #row_cells[3].text = str(item.fecha_fin).format("d/m/Y")
-                row_cells[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
-                row_cells[3].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
-
+                row_cells[4].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
+                row_cells[5].text = str(item.fecha_fin.day)+'/'+str(item.fecha_fin.month)+'/'+str(item.fecha_fin.year)
+        p20 = document.add_paragraph('')
         if (persHoras.count() > 0):
+            table2 = document.add_table(rows=1, cols=4)
+            #table.style = 'Table Grid'
+            hdr_cells2 = table2.rows[0].cells
+            hdr_cells2[0].text = u'Resolución'            
+            hdr_cells2[1].text = 'Dependencia'
+            hdr_cells2[2].text = 'Desde'
+            hdr_cells2[3].text = 'Hasta'
             for item in persHoras:
-                row_cells2 = table.add_row().cells
-                row_cells2[0].text = item.dependencia.dependencia_nombre
-                row_cells2[1].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                row_cells2 = table2.add_row().cells
+                row_cells2[0].text = u'N° ' + str(item.resolucion_numero) + '/' + str(item.resolucion_anio) + '-UDC'
+                row_cells2[1].text = item.dependencia.dependencia_nombre
                 #row_cells2[2].text = str(item.fecha_inicio).format('d/m/Y')
                 #row_cells2[3].text = str(item.fecha_fin).format('d/m/Y')
                 row_cells2[2].text = str(item.fecha_inicio.day)+'/'+str(item.fecha_inicio.month)+'/'+str(item.fecha_inicio.year)
@@ -1190,7 +1199,7 @@ def export_cert_prest_serv(request, pid):
 
         p4 = document.add_paragraph('Aportes en el Instituto de Seguridad Social y Seguros - Chubut.')
 
-        p5 = document.add_paragraph('A pedido de el/la interesado/a y a solo efectos de acreditar haber prestado'
+        p5 = document.add_paragraph(u'A pedido de el/la interesado/a y a solo efectos de acreditar haber la prestación de'
                                     + u' servicios en nuestra institución, se extiende el presente en Rawson (Chubut)'
                                     + ' a los' + fecha_en_letras)
         document.save(response)
