@@ -155,6 +155,7 @@ class PersonaHoras (models.Model):
     hs_catedras = models.IntegerField('Horas cátedras')
     fecha_inicio = models.DateField('Fecha de Inicio')
     fecha_fin = models.DateField('Fecha de Fin')
+    remunerado = models.CharField(default='Remunerado', max_length=30)
     dependencia = models.ForeignKey(Dependencia)
     baja = models.BooleanField(default=False)
     resolucion_numero_baja = models.IntegerField(blank=True, null=True)

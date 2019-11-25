@@ -124,6 +124,7 @@
                                 <th>Fecha Baja</th>
                                 <th>Horas Cátedras</th>
                                 <th>Dependencia</th>
+                                <th>Pago</th>
                             </tr>
                         </thead>
                         {% if isGet == False %}
@@ -144,6 +145,7 @@
                                     <td>{{ p.fecha_baja | date:"d/m/Y" }}</td>
                                     <td>{{ p.hs_catedras }}</td>
                                     <td>{{ p.dependencia.dependencia_nombre }}</td>
+                                    <td>{{ p.remunerado }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

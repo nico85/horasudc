@@ -25,6 +25,18 @@
                     </select>
                 </div>
               </div>
+              
+              <div class="form-group">
+                  <label for="remunerado" class="col-sm-2 control-label">Remunerado</label>
+                  <div class="radio col-sm-5">
+                      {% for r in remunerados %}
+                          <label>
+                            <input type="radio" name="remunerado" id="id_remunerado" value="{{ r }}" required>
+                            {{ r }}
+                          </label>
+                      {% endfor %}
+                  </div>
+              </div>
 
               <div class="form-group">
                 <label for="hs_catedras" class="col-sm-2 control-label">Horas cátedras a asignar (*)</label>

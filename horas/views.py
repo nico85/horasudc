@@ -624,7 +624,7 @@ def personasHorasBorrarBaja(request, asid):
         return redirect('/inicio/')
 
 @login_required()
-def personasHorasNew(request, pid):
+def personasHorasNew(request, pid):	
     # filter the Group model for current logged in user instance
     query_set = Group.objects.filter(user=request.user)
 
@@ -635,6 +635,7 @@ def personasHorasNew(request, pid):
             user = group.name
 
     if user != "Consulta":
+        lista_remunerado = ['Remunerado', 'Ad Honorem']
         # obtener el Arreglo de años (actual al 2009)
         hoy = date.today()
         anio_actual = hoy.year
@@ -665,6 +666,7 @@ def personasHorasNew(request, pid):
                     'persona': persona,
                     'form': form,
                     'anios': lista_anios,
+                    'remunerados': lista_remunerado,
                     'dependencias': dependencias,
                     'user': user
                 })
@@ -673,6 +675,7 @@ def personasHorasNew(request, pid):
                 'persona': persona,
                 'form': form,
                 'anios': lista_anios,
+                'remunerados': lista_remunerado,
                 'dependencias': dependencias,
                 'user': user
             })
